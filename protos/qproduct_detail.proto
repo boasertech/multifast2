@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package qproduct_detail;
+
+import "error.proto";
+
+service QProductDetailService {
+	rpc GetQProductDetail (QProductDetailRequest) returns (OneOfQProductDetailResponse);
+}
+
+message QProductDetailRequest {
+	int64 productId = 1;
+	int32 branchId = 2;
+}
+
+message QStorage {
+	int64 storageId = 1;
+	string name = 2;
+	double quantity = 3;
+	int64 branchId = 4;
+}
+
+message QProductDetailResponse {
+	repeated QStorage storages = 1;
+}
+
+message OneOfQProductDetailResponse {
+	oneof response {
+		error.Error error = 1;
+		QProductDetailResponse qproductDetailResponse = 2;
+	}
+}

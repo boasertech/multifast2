@@ -1,0 +1,138 @@
+syntax = "proto3";
+
+package quotation;
+
+import "error.proto";
+
+service QuotationService {
+	rpc RegisterQuotation (QuotationRequest) returns (OneOfQuotationResponse);
+}
+
+message QuotationRequest {
+	string companyRuc = 1;
+	string emisionDate = 2;
+	int64 validityId = 3;
+	int32 validityDuration = 4;
+	string expirationDate = 5;
+	string coin = 6;
+	double changeType = 7;
+	int64 clientId = 8;
+	string clientTypeDocument = 9;
+	string clientDocument = 10;
+	string clientName = 11;
+	string clientEmail = 12;
+	string clientLocation = 13;
+	int64 paymentConditionId = 14;
+	string observations = 15;
+	int32 userId = 16;
+	int32 operationType = 17;
+	string operationCode = 18;
+	string totalWords = 19;
+	double totalSub = 20;
+	double tax = 21;
+	double rounding = 22;
+	double total = 23;
+	double discount = 24;
+	double discountWithOutTax = 25;
+	int64 branchId = 26;
+	string documentType = 27;
+	double weight = 28;
+	string seller = 29;
+	int64 formatId = 30;
+	bool outputNote = 31;
+	int64 storageId = 32;
+	int64 quotationTypeDocumentId = 33;
+	int32 typeId = 34;
+	int64 zoneId = 35;
+	int64 deliveryVehicle = 36;
+	string deliveryDate = 37;
+	int64 employeeId = 38;
+	int64 branchSaleId = 39;
+	string emisorRuc = 40;
+	string serie = 41;
+	string documentTypeCode = 42;
+	double globalDiscount = 43;
+	string responsible = 44;
+	string shipping = 45;
+	string supervisorRequesting = 46;
+	string warranty = 47;
+	double sellAmount = 48;
+	double sellBalance = 49;
+	int64 onlineServiceTypeid = 50;
+	int64 modeServiceId = 51;
+	int64 sellPlace = 52;
+	double sellerCommissionSale = 53;
+	double taxApplied = 54;
+	double taxUnitApplied = 55;
+	bool isTransfer = 56;
+	int64 storageDestinationId = 57;
+	bool isCreditSumulation = 58;
+	double cash = 59;
+	double changeCash = 60;
+	string periodImportDate = 61;
+	string note = 62;
+	string json = 63;
+	double freeAmount = 64;
+	double salesTax = 65;
+	string clientPhone = 66;
+	int64 dateId = 67;
+	string plate = 68;
+	int32 paymentConditionRestaurant = 69;
+	int32 vehicleType = 70;
+	int32 counterType = 71;
+	string restaurantChannel = 72;
+	string restaurantWaiter = 73;
+	string cardDetail = 74;
+	repeated QuotationDetail items = 75;
+}
+
+message QuotationDetail {
+	int64 quotationId = 1;
+	int64 productId = 2;
+	int32 itemId = 3;
+	string unitOfMeasure = 4;
+	double count = 5;
+	string name = 6;
+	string observations = 7;
+	string delivery = 8;
+	string effectTypeCode = 9;
+	double unitValue = 10;
+	double unitTax = 11;
+	double unitPrice = 12;
+	double unitPriceO = 13;
+	double discount = 14;
+	double rounding = 15;
+	double sellAmount = 16;
+	double tax = 17;
+	double total = 18;
+	int32 taxAppliedId = 19;
+	int32 effectTypeId = 20;
+	int32 editableId = 21;
+	double weight = 22;
+	double discountTaxt = 23;
+	double dicountPercent = 24;
+	int64 stockId = 25;
+	string lot = 26;
+	int64 quotationDadId = 27;
+	int64 quotationDadItemId = 28;
+	double unitDiscount = 29;
+	string clientCode = 30;
+	double boxCount = 31;
+	double itemPercentCommission = 32;
+	double itemCommission = 33;
+	int64 sellContractDetail = 34;
+	bool isBoxSell = 35;
+	double salesTax = 36;
+}
+
+message QuotationResponse {
+	int64 quotationId  = 1;
+	int64 number = 2;
+}
+
+message OneOfQuotationResponse {
+	oneof response {
+		error.Error error = 1;
+		QuotationResponse quotationResponse = 2;
+	}
+}

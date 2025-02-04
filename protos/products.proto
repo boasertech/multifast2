@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package products;
+
+message Property {
+  int64 propertyId = 1;
+  string propertyName = 2;
+  bool isDefault = 3;
+  double additionalPrice = 4;
+  bool isProduct = 5;
+  int64 productId = 6;
+}
+
+message Operator {
+  int64 operatorId = 1;
+  string operatorName = 2;
+  int32 selection = 3;
+  repeated Property properties = 4;
+}
+
+message Product {
+  int64 productId = 1;
+  string productName = 2;
+  string productImage = 3;
+  double unitPrice = 4;
+  int64 categoryId = 5;
+  int64 subCategoryId = 6; 
+  string subCategoryName = 7;
+  bool isCombo = 8;
+  int32 minSelection = 9;
+  int32 maxSelection = 10;
+  bool allowDuplicateItem = 11;
+  int64 taxTypeId = 12;
+  double taxAmount = 13;
+  string unitOfMeasure = 14;
+  repeated Operator operators = 15;
+}
+
+service ProductService {
+  rpc GetProducts (RequestProducts) returns (ProductList);
+}
+
+message RequestProducts {
+  string companyRuc = 1;
+  int64 branchId = 2;
+}
+
+message ProductList {
+  repeated Product products = 1;
+}

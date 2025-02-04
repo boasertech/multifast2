@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package auth;
+
+import "error.proto";
+
+service AuthService {
+  rpc Login (LoginRequest) returns (OneOfAuthResponse);
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+  string companyRuc = 3;
+  int64 branchId = 4;
+}
+
+message LoginResponse {
+  int32 userId = 1;
+}
+
+message ListEnterprisesRequest {
+  int32 userId = 1;
+  string companyRuc = 2;
+}
+
+message ListEnterprisesResponse {
+  repeated Enterprise enterprises = 1;
+}
+
+message ListBranchesRequest {
+  string companyRuc = 1;
+  int32 userId = 2;
+  int64 branchId = 3;
+}
+
+message ListBranchesResponse {
+  repeated Branch branches = 1;
+  Enterprise company = 2;
+}
+
+message Enterprise {
+  string companyRuc = 1;
+  string name = 2;
+  string validationCode = 3;
+}
+
+message Branch {
+  int64 branchId = 1;
+  string name = 2;
+}
+
+message UserRequest {
+  int32 userId = 1;
+  string companyRuc = 2;
+}
+
+message UserResponse {
+  string token = 1;
+  Enterprise company = 2;
+  Branch branch = 3;
+  string username = 4;
+  string fullname = 5;
+  string rolName = 6;
+  string lastConnection = 7;
+}
+
+message OneOfAuthResponse {
+	oneof response {
+		error.Error error = 1;
+		UserResponse userResponse = 2;
+		ListEnterprisesResponse listEnterprisesResponse = 3;
+		ListBranchesResponse listBranchesResponse = 4;
+	}
+}

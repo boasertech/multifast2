@@ -1,0 +1,1366 @@
+<html><head><base href=".">
+    <meta charset="UTF-8">
+    <title>4Ecobot - Traceability System</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #198754;
+            --secondary-green: #156e44;
+            --light-blue: #e3f2fd;
+            --dark-blue: #0d6efd;
+        }
+
+        body {
+            background-color: var(--light-blue);
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: var(--primary-green);
+        }
+
+        .nav-pills .nav-link {
+            color: var(--primary-green);
+        }
+
+        .btn-success {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+        .btn-success:hover {
+            background-color: var(--secondary-green);
+            border-color: var(--secondary-green);
+        }
+
+        .modal-content {
+            border-radius: 1rem;
+        }
+
+        .modal-header {
+            background-color: var(--primary-green);
+            color: white;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+
+        .modal-header .btn-close {
+            color: white;
+        }
+
+        .table {
+            background-color: white;
+            border-radius: 0.5rem;
+        }
+
+        .table thead {
+            background-color: var(--primary-green);
+            color: white;
+        }
+        
+        .card {
+            border: none;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            border-top-left-radius: 1rem !important;
+            border-top-right-radius: 1rem !important;
+        }
+        
+        .input-group .btn {
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container mt-4">
+        <div class="text-center mb-4">
+            <h1 class="text-success">4Ecobot</h1>
+            <h4 class="text-muted">Traceability System</h4>
+        </div>
+        <ul class="nav nav-pills mb-4">
+            <li class="nav-item">
+                <a class="nav-link" :class="{active: currentView === 'clientes'}" href="#" @click="currentView = 'clientes'">Clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" :class="{active: currentView === 'solicitudes'}" href="#" @click="currentView = 'solicitudes'">Solicitudes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" :class="{active: currentView === 'recolecciones'}" href="#" @click="currentView = 'recolecciones'">Recolecciones</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" :class="{active: currentView === 'almacen'}" href="#" @click="currentView = 'almacen'">Almacén</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" :class="{active: currentView === 'almacenesVenta'}" href="#" @click="currentView = 'almacenesVenta'">Almacenes de Venta</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" :class="{active: currentView === 'ventas'}" href="#" @click="currentView = 'ventas'">Ventas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" :class="{active: currentView === 'donaciones'}" href="#" @click="currentView = 'donaciones'">Donaciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" :class="{active: currentView === 'mermas'}" href="#" @click="currentView = 'mermas'">Mermas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" :class="{active: currentView === 'tiposResiduos'}" href="#" @click="currentView = 'tiposResiduos'">Tipos de Residuos</a>
+            </li>
+        </ul>
+
+        <!-- Vista de Clientes -->
+        <div v-if="currentView === 'clientes'">
+            <button class="btn btn-success mb-3" @click="showNewClientForm = true">Nuevo Cliente</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Ciudad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(cliente, index) in clientes" :key="index">
+                        <td>{{cliente.nombre}}</td>
+                        <td>{{cliente.telefono}}</td>
+                        <td>{{cliente.ciudad}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary me-2" @click="editarCliente(index)">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" @click="eliminarCliente(index)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Modal Nuevo/Editar Cliente -->
+            <div class="modal" :class="{show: showNewClientForm}" tabindex="-1" style="display: block;" v-if="showNewClientForm">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{editingIndex === null ? 'Nuevo Cliente' : 'Editar Cliente'}}</h5>
+                            <button type="button" class="btn-close" @click="closeClientForm"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" v-model="nuevoCliente.nombre">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" v-model="nuevoCliente.telefono">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ciudad</label>
+                                <select class="form-control" v-model="nuevoCliente.ciudad">
+                                    <option v-for="ciudad in ciudades" :value="ciudad">{{ciudad}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="closeClientForm">Cancelar</button>
+                            <button type="button" class="btn btn-primary" @click="guardarCliente">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vista de Solicitudes -->
+        <div v-if="currentView === 'solicitudes'">
+            <button class="btn btn-success mb-3" @click="showNewSolicitudForm = true">Nueva Solicitud</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>Horario</th>
+                        <th>Reciclaje (kg)</th>
+                        <th>Aceite (baldes)</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(solicitud, index) in solicitudes" :key="index">
+                        <td>{{getClienteName(solicitud.clienteId)}}</td>
+                        <td>{{solicitud.fecha}}</td>
+                        <td>{{solicitud.horario}}</td>
+                        <td>{{solicitud.reciclaje}}</td>
+                        <td>{{solicitud.aceite}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary me-2" @click="editarSolicitud(index)">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" @click="eliminarSolicitud(index)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success me-2" @click="enviarWhatsApp(solicitud)">
+                                <i class="fab fa-whatsapp"></i>
+                            </button>
+                            <template v-if="solicitud.estado === 'recolectado'">
+                                <button class="btn btn-sm btn-success" disabled>
+                                    <i class="fas fa-check-circle"></i>
+                                </button>
+                            </template>
+                            <template v-else>
+                                <button class="btn btn-sm btn-warning" @click="mostrarRecoleccion(index)">
+                                    Recolectar
+                                </button>
+                            </template>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Modal Nueva Solicitud -->
+            <div class="modal" :class="{show: showNewSolicitudForm}" tabindex="-1" style="display: block;" v-if="showNewSolicitudForm">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{editingSolicitudIndex === null ? 'Nueva Solicitud' : 'Editar Solicitud'}}</h5>
+                            <button type="button" class="btn-close" @click="showNewSolicitudForm = false"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Cliente</label>
+                                <select class="form-control" v-model="nuevaSolicitud.clienteId">
+                                    <option v-for="(cliente, index) in clientes" :value="index">{{cliente.nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Fecha</label>
+                                <input type="date" class="form-control" v-model="nuevaSolicitud.fecha">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Horario</label>
+                                <select class="form-control" v-model="nuevaSolicitud.horario">
+                                    <option value="mañana">Mañana (8 am - 12 m)</option>
+                                    <option value="tarde">Tarde (12 m - 4 pm)</option>
+                                    <option value="noche">Noche (4 pm - 8 pm)</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Reciclaje (kg)</label>
+                                <input type="number" class="form-control" v-model="nuevaSolicitud.reciclaje">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Aceite (baldes)</label>
+                                <input type="number" class="form-control" v-model="nuevaSolicitud.aceite">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="showNewSolicitudForm = false">Cancelar</button>
+                            <button type="button" class="btn btn-primary" @click="guardarSolicitud">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vista de Recolecciones -->
+        <div v-if="currentView === 'recolecciones'">
+            <h3>Historial de Recolecciones</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Fecha</th> 
+                        <th>Detalle</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(solicitud, index) in solicitudesRecolectadas" :key="index">
+                        <td>{{getClienteName(solicitud.clienteId)}}</td>
+                        <td>{{solicitud.fecha}}</td>
+                        <td>
+                            <ul class="list-unstyled">
+                                <li v-for="(cantidad, tipo) in solicitud.recoleccion" v-if="cantidad > 0">
+                                    {{tipo}}: {{cantidad}} × S/.{{preciosReciclaje[tipo]}} = S/.{{(cantidad * preciosReciclaje[tipo]).toFixed(2)}}
+                                </li>
+                            </ul>
+                        </td>
+                        <td>S/.{{solicitud.totalPago.toFixed(2)}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary me-2" @click="editarRecoleccion(index)">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger me-2" @click="eliminarRecoleccion(index)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success" @click="enviarRecoleccionWhatsAppHistorial(index)">
+                                <i class="fab fa-whatsapp"></i>
+                            </button>
+                            <span v-if="solicitud.destino === 'almacen'" class="text-success ms-2">
+                                <i class="fas fa-warehouse" title="Almacenado"></i>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Modal Recolectar -->
+        <div class="modal" :class="{show: showRecoleccionForm}" tabindex="-1" style="display: block;" v-if="showRecoleccionForm">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Registrar Recolección</h5>
+                        <button type="button" class="btn-close" @click="showRecoleccionForm = false"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3" v-for="(precio, tipo) in preciosReciclaje">
+                            <label class="form-label">{{tipo}} (S/. {{precio}} por kg/L)</label>
+                            <input type="number" class="form-control" v-model="recoleccion[tipo]" step="0.01">
+                        </div>
+                        <div class="btn-group mt-3">
+                            <button class="btn btn-primary me-2" @click="calcularGananciaRecoleccion">
+                                <i class="fas fa-calculator"></i> Calcular Pago
+                            </button>
+                            <button class="btn btn-secondary me-2" @click="imprimirRecoleccion">
+                                <i class="fas fa-print"></i> Imprimir
+                            </button>
+                            <button class="btn btn-success me-2" @click="enviarRecoleccionWhatsApp">
+                                <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @click="showRecoleccionForm = false">Cancelar</button>
+                        <button type="button" class="btn btn-success" @click="almacenarRecoleccion">Almacenar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Venta -->
+        <div class="modal" :class="{show: showVentaForm}" tabindex="-1" style="display: block;" v-if="showVentaForm">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Registrar Venta</h5>
+                        <button type="button" class="btn-close" @click="showVentaForm = false"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Lugar de Venta</label>
+                            <input type="text" class="form-control" v-model="venta.lugarVenta">
+                        </div>
+                        <div class="mb-3" v-for="(cantidad, tipo) in recoleccion" v-if="parseFloat(cantidad) > 0">
+                            <label class="form-label">Precio de venta por kg/L de {{tipo}}</label>
+                            <input type="number" class="form-control" v-model="venta.precios[tipo]" step="0.01">
+                        </div>
+                        <div class="alert alert-info">
+                            <p>Total Recolección: S/.{{totalRecoleccion.toFixed(2)}}</p>
+                            <p>Total Venta: S/.{{totalVenta.toFixed(2)}}</p> 
+                            <p>Ganancia: S/.{{ganancia.toFixed(2)}}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @click="showVentaForm = false">Cancelar</button>
+                        <button type="button" class="btn btn-info me-2" @click="calcularGananciaRecoleccion">Calcular Ganancia</button> 
+                        <button type="button" class="btn btn-primary" @click="guardarVenta">Guardar Venta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vista de Almacen -->
+        <div v-if="currentView === 'almacen'">
+            <h3>Almacén</h3>
+            <button class="btn btn-success mb-3" @click="showVenderForm = true">Vender Productos</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Cantidad Almacenada</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(cantidad, tipo) in almacen">
+                        <td>{{tipo}}</td>
+                        <td>{{cantidad}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Modal Vender Productos -->
+            <div class="modal" :class="{show: showVenderForm}" tabindex="-1" style="display: block;" v-if="showVenderForm">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Vender Productos</h5>
+                            <button type="button" class="btn-close" @click="closeVenderForm"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Almacén de Venta</label>
+                                <select class="form-control" v-model="ventaMultiple.almacenId">
+                                    <option v-for="(almacen, index) in almacenesVenta" :value="index">
+                                        {{almacen.razonSocial}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3" v-for="(cantidad, tipo) in almacen" v-if="cantidad > 0">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="form-label">{{tipo}}</label>
+                                        <input type="number" class="form-control" v-model="ventaMultiple.cantidades[tipo]" 
+                                               :max="cantidad" min="0" step="0.01">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Precio de venta por kg/L</label>
+                                        <input type="number" class="form-control" v-model="ventaMultiple.precios[tipo]" 
+                                               min="0" step="0.01">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Total</label>
+                                        <input type="text" class="form-control" 
+                                               :value="calcularTotalProducto(tipo)" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-info mt-3">
+                                <p>Total Venta: S/.{{totalVentaMultiple.toFixed(2)}}</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="closeVenderForm">Cancelar</button>
+                            <button type="button" class="btn btn-primary" @click="realizarVentaMultiple">Realizar Venta</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vista de Ventas -->
+        <div v-if="currentView === 'ventas'">
+          <h3>Historial de Ventas</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Almacén de Venta</th>
+                <th>Productos</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(venta, index) in ventasOrdenadas" :key="index">
+                <td>{{formatearFecha(venta.fecha)}}</td>
+                <td>{{venta.almacenVenta.razonSocial}}</td>
+                <td>
+                  <ul class="list-unstyled">
+                    <li v-for="producto in venta.productos">
+                      {{producto.tipo}}: {{producto.cantidad}} × S/.{{producto.precioVenta}} = S/.{{producto.total.toFixed(2)}}
+                    </li>
+                  </ul>
+                </td>
+                <td>S/.{{venta.totalVenta.toFixed(2)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Vista de Donaciones -->
+        <div v-if="currentView === 'donaciones'">
+          <h3>Donaciones</h3>
+          <button class="btn btn-success mb-3" @click="showNewDonationForm = true">Nueva Donación</button>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Donador</th>
+                <th>Tipo</th>
+                <th>Cantidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(donacion, index) in donacionesOrdenadas" :key="index">
+                <td>{{formatearFecha(donacion.fecha)}}</td>
+                <td>{{donacion.donador}}</td>
+                <td>{{donacion.tipo}}</td>
+                <td>{{donacion.cantidad}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Modal Nueva Donación -->
+          <div class="modal" :class="{show: showNewDonationForm}" tabindex="-1" style="display: block;" v-if="showNewDonationForm">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Nueva Donación</h5>
+                  <button type="button" class="btn-close" @click="closeDonationForm"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label class="form-label">Nombre del Donador</label>
+                    <input type="text" class="form-control" v-model="nuevaDonacion.donador">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Tipo de Residuo</label>
+                    <select class="form-control" v-model="nuevaDonacion.tipo">
+                      <option v-for="(precio, tipo) in preciosReciclaje" :value="tipo">{{tipo}}</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Cantidad</label>
+                    <input type="number" class="form-control" v-model="nuevaDonacion.cantidad" step="0.01">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" @click="closeDonationForm">Cancelar</button>
+                  <button type="button" class="btn btn-primary" @click="guardarDonacion">Guardar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vista de Mermas -->
+        <div v-if="currentView === 'mermas'">
+            <h3>Registro de Mermas</h3>
+            <button class="btn btn-success mb-3" @click="showNewMermaForm = true">Nueva Merma</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Responsable</th>
+                        <th>Tipo</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(merma, index) in mermasOrdenadas" :key="index">
+                        <td>{{formatearFecha(merma.fecha)}}</td>
+                        <td>{{merma.responsable}}</td>
+                        <td>{{merma.tipo}}</td>
+                        <td>{{merma.cantidad}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Modal Nueva Merma -->
+            <div class="modal" :class="{show: showNewMermaForm}" tabindex="-1" style="display: block;" v-if="showNewMermaForm">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Nueva Merma</h5>
+                            <button type="button" class="btn-close" @click="closeMermaForm"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Nombre del Responsable</label>
+                                <input type="text" class="form-control" v-model="nuevaMerma.responsable">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tipo de Residuo</label>
+                                <select class="form-control" v-model="nuevaMerma.tipo">
+                                    <option v-for="(precio, tipo) in preciosReciclaje" :value="tipo">{{tipo}}</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Cantidad</label>
+                                <input type="number" class="form-control" v-model="nuevaMerma.cantidad" step="0.01">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="closeMermaForm">Cancelar</button>
+                            <button type="button" class="btn btn-primary" @click="guardarMerma">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vista de Tipos de Residuos -->
+        <div v-if="currentView === 'tiposResiduos'">
+            <button class="btn btn-success mb-3" @click="showNewTipoResiduoForm = true">Nuevo Tipo de Residuo</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Precio (S/.)</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(precio, tipo) in preciosReciclaje" :key="tipo">
+                        <td>{{tipo}}</td>
+                        <td>{{precio}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary me-2" @click="editarTipoResiduo(tipo)">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" @click="eliminarTipoResiduo(tipo)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Modal Nuevo Tipo de Residuo -->
+            <div class="modal" :class="{show: showNewTipoResiduoForm}" tabindex="-1" style="display: block;" v-if="showNewTipoResiduoForm">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{editingTipoResiduo ? 'Editar' : 'Nuevo'}} Tipo de Residuo</h5>
+                            <button type="button" class="btn-close" @click="closeTipoResiduoForm"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Tipo de Residuo</label>
+                                <input type="text" class="form-control" v-model="nuevoTipoResiduo.tipo" :disabled="editingTipoResiduo">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Precio por kg/L (S/.)</label>
+                                <input type="number" class="form-control" v-model="nuevoTipoResiduo.precio" step="0.01">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="closeTipoResiduoForm">Cancelar</button>
+                            <button type="button" class="btn btn-primary" @click="guardarTipoResiduo">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vista de Almacenes de Venta -->
+        <div v-if="currentView === 'almacenesVenta'">
+            <button class="btn btn-success mb-3" @click="showNewAlmacenVentaForm = true">Nuevo Almacén de Venta</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Razón Social</th>
+                        <th>RUC</th>
+                        <th>Dirección</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(almacen, index) in almacenesVenta" :key="index">
+                        <td>{{almacen.razonSocial}}</td>
+                        <td>{{almacen.ruc}}</td>
+                        <td>{{almacen.direccion}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary me-2" @click="editarAlmacenVenta(index)">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" @click="eliminarAlmacenVenta(index)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Modal Nuevo Almacén de Venta -->
+            <div class="modal" :class="{show: showNewAlmacenVentaForm}" tabindex="-1" style="display: block;" v-if="showNewAlmacenVentaForm">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{editingAlmacenVentaIndex === null ? 'Nuevo Almacén de Venta' : 'Editar Almacén de Venta'}}</h5>
+                            <button type="button" class="btn-close" @click="closeAlmacenVentaForm"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Razón Social</label>
+                                <input type="text" class="form-control" v-model="nuevoAlmacenVenta.razonSocial">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">RUC</label>
+                                <input type="text" class="form-control" v-model="nuevoAlmacenVenta.ruc">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Dirección</label>
+                                <input type="text" class="form-control" v-model="nuevoAlmacenVenta.direccion">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="closeAlmacenVentaForm">Cancelar</button>
+                            <button type="button" class="btn btn-primary" @click="guardarAlmacenVenta">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBm7izw9SL4MXpfX7Qj8cFrHQJ9t3fV_cI",
+            authDomain: "grupo4ecos.firebaseapp.com",
+            projectId: "grupo4ecos",
+            storageBucket: "grupo4ecos.appspot.com",
+            messagingSenderId: "452418175090",
+            appId: "1:452418175090:web:9d91f3e7e5d11f5d7a1234"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        Vue.prototype.$saveData = async function () {
+            try {
+                await db.collection('data').doc('main').set({
+                    clientes: this.clientes,
+                    solicitudes: this.solicitudes,
+                    almacen: this.almacen,
+                    almacenesVenta: this.almacenesVenta,
+                    ventas: this.ventas,
+                    donaciones: this.donaciones,
+                    mermas: this.mermas
+                });
+            } catch (error) {
+                console.error('Error saving data:', error);
+            }
+        };
+        Vue.prototype.$loadData = async function () {
+            try {
+                const doc = await db.collection('data').doc('main').get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    this.clientes = data.clientes || [];
+                    this.solicitudes = data.solicitudes || [];
+                    this.almacen = data.almacen || {};
+                    this.almacenesVenta = data.almacenesVenta || [];
+                    this.ventas = data.ventas || [];
+                    this.donaciones = data.donaciones || [];
+                    this.mermas = data.mermas || [];
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        };
+        new Vue({
+            el: '#app',
+            data: {
+                currentView: 'clientes',
+                showNewClientForm: false, 
+                showNewSolicitudForm: false,
+                editingIndex: null,
+                editingSolicitudIndex: null,
+                recoleccionIndex: null,
+                showRecoleccionForm: false,
+                showVentaForm: false,
+                showVenderForm: false,
+                showNewTipoResiduoForm: false,
+                editingTipoResiduo: null,
+                nuevoTipoResiduo: {
+                    tipo: '',
+                    precio: 0
+                },
+                ciudades: ['Trujillo', 'Santa', 'Coishco', 'Chimbote', 'Nuevo Chimbote', 'Moro', 'Nepeña', 'Samanco', 'Casa'],
+                clientes: [],
+                nuevoCliente: {
+                    nombre: '',
+                    telefono: '',
+                    ciudad: ''
+                },
+                solicitudes: [],
+                nuevaSolicitud: {
+                    clienteId: null,
+                    fecha: '',
+                    horario: '',
+                    reciclaje: 0,
+                    aceite: 0,
+                    recoleccion: null,
+                    totalPago: 0,
+                    estado: null
+                },
+                preciosReciclaje: {
+                    'Aceite de Cocina Usado': 1.5,
+                    'Papel Color': 0.15,
+                    'Pet': 0.80,
+                    'Film Transparente': 0.50,
+                    'Galonera': 1.50,
+                    'Film Color': 0.40,
+                    'Acero Inox': 2.00,
+                    'Aluminio': 2.00,
+                    'Balde 20 L': 3.00
+                },
+                recoleccion: {},
+                venta: {
+                    lugarVenta: '',
+                    precios: {},
+                    totalVenta: 0,
+                    ganancia: 0
+                },
+                ventaMultiple: {
+                    almacenId: null,
+                    cantidades: {},
+                    precios: {}
+                },
+                almacen: {},
+                almacenesVenta: [],
+                showNewAlmacenVentaForm: false,
+                editingAlmacenVentaIndex: null,
+                nuevoAlmacenVenta: {
+                    razonSocial: '',
+                    ruc: '',
+                    direccion: ''
+                },
+                ventas: [],
+                donaciones: [],
+                showNewDonationForm: false,
+                nuevaDonacion: {
+                    donador: '',
+                    tipo: '',
+                    cantidad: 0,
+                    fecha: ''
+                },
+                mermas: [],
+                showNewMermaForm: false,
+                nuevaMerma: {
+                    responsable: '',
+                    tipo: '',
+                    cantidad: 0,
+                    fecha: ''
+                }
+            },
+            computed: {
+                totalRecoleccion() {
+                    return Object.entries(this.recoleccion).reduce((total, [tipo, cantidad]) => {
+                        return total + parseFloat(cantidad || 0) * this.preciosReciclaje[tipo];
+                    }, 0);
+                },
+                totalVenta() {
+                    return Object.entries(this.recoleccion).filter(([tipo, cantidad]) => parseFloat(cantidad || 0) > 0).reduce((total, [tipo, cantidad]) => {
+                        const precio = parseFloat(this.venta.precios[tipo] || 0);
+                        const cant = parseFloat(cantidad || 0);
+                        return total + cant * precio;
+                    }, 0);
+                },
+                ganancia() {
+                    return this.totalVenta - this.totalRecoleccion;
+                },
+                solicitudesRecolectadas() {
+                    return this.solicitudes.filter(s => s.recoleccion && s.estado === 'recolectado');
+                },
+                totalVentaMultiple() {
+                    return Object.entries(this.ventaMultiple.cantidades).reduce((total, [tipo, cantidad]) => {
+                      const precio = parseFloat(this.ventaMultiple.precios[tipo] || 0);
+                      return total + parseFloat(cantidad || 0) * precio;
+                    }, 0);
+                },
+                ventasOrdenadas() {
+                  if (!this.ventas) return [];
+                  return [...this.ventas].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+                },
+                donacionesOrdenadas() {
+                  if (!this.donaciones) return [];
+                  return [...this.donaciones].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+                },
+                mermasOrdenadas() {
+                  if (!this.mermas) return [];
+                  return [...this.mermas].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+                }
+            },
+            watch: {
+                'solicitudes': {
+                    handler(newVal) {
+                        this.$saveData();
+                    },
+                    deep: true
+                },
+                'almacen': {
+                    handler(newVal) {
+                        this.$saveData();
+                    },
+                    deep: true
+                },
+                'clientes': {
+                    handler(newVal) {
+                        this.$saveData();
+                    },
+                    deep: true
+                },
+                'almacenesVenta': {
+                    handler(newVal) {
+                        this.$saveData();
+                    },
+                    deep: true
+                },
+                'ventas': {
+                    handler(newVal) {
+                        this.$saveData();
+                    },
+                    deep: true
+                },
+                'donaciones': {
+                    handler(newVal) {
+                        this.$saveData();
+                    },
+                    deep: true
+                },
+                'mermas': {
+                    handler(newVal) {
+                        this.$saveData();
+                    },
+                    deep: true
+                }
+            },
+            mounted() {
+                this.$loadData();
+            },
+            methods: {
+                guardarCliente() {
+                    if (this.editingIndex === null) {
+                        this.clientes.push({
+                            ...this.nuevoCliente
+                        });
+                    } else {
+                        this.clientes[this.editingIndex] = {
+                            ...this.nuevoCliente
+                        };
+                    }
+                    this.$saveData();
+                    this.closeClientForm();
+                },
+                editarCliente(index) {
+                    this.editingIndex = index;
+                    this.nuevoCliente = {
+                        ...this.clientes[index]
+                    };
+                    this.showNewClientForm = true;
+                },
+                eliminarCliente(index) {
+                    this.clientes.splice(index, 1);
+                    this.$saveData();
+                },
+                closeClientForm() {
+                    this.showNewClientForm = false;
+                    this.editingIndex = null;
+                    this.nuevoCliente = {
+                        nombre: '',
+                        telefono: '',
+                        ciudad: ''
+                    };
+                },
+                editarSolicitud(index) {
+                    this.editingSolicitudIndex = index;
+                    this.nuevaSolicitud = {
+                        ...this.solicitudes[index]
+                    };
+                    this.showNewSolicitudForm = true;
+                },
+                eliminarSolicitud(index) {
+                    this.solicitudes.splice(index, 1);
+                    this.$saveData();
+                },
+                guardarSolicitud() {
+                    if (this.editingSolicitudIndex === null) {
+                        this.solicitudes.push({
+                            ...this.nuevaSolicitud
+                        });
+                    } else {
+                        this.solicitudes[this.editingSolicitudIndex] = {
+                            ...this.nuevaSolicitud
+                        };
+                    }
+                    this.$saveData();
+                    this.showNewSolicitudForm = false;
+                    this.editingSolicitudIndex = null;
+                    this.nuevaSolicitud = {
+                        clienteId: null,
+                        fecha: '',
+                        horario: '',
+                        reciclaje: 0,
+                        aceite: 0,
+                        recoleccion: null,
+                        totalPago: 0,
+                        estado: null
+                    };
+                },
+                getClienteName(index) {
+                    return this.clientes[index]?.nombre || 'Cliente no encontrado';
+                },
+                enviarWhatsApp(solicitud) {
+                    const cliente = this.clientes[solicitud.clienteId];
+                    if (!cliente) return;
+                    const detallesSolicitud = `
+Fecha: ${this.formatearFecha(solicitud.fecha)}
+Horario: ${solicitud.horario}
+Reciclaje: ${solicitud.reciclaje} kg
+Aceite: ${solicitud.aceite} baldes
+Estado: ${solicitud.estado || 'Pendiente'}`;
+                    const mensaje = encodeURIComponent(` Hola, soy 4Ecobot por encargo de Grupo4ecos adjuntamos su solicitud de recolección de residuos, muy pronto nuestro personal lo visitará en sus instalaciones\n\nDetalles de la solicitud:${detallesSolicitud}`);
+                    const telefono = cliente.telefono.replace(/\D/g, '');
+                    window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
+                },
+                formatearFecha(fecha) {
+                    return new Date(fecha).toLocaleDateString('es-ES', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                },
+                mostrarRecoleccion(index) {
+                    this.recoleccionIndex = index;
+                    this.recoleccion = {};
+                    Object.keys(this.preciosReciclaje).forEach(tipo => {
+                        this.recoleccion[tipo] = 0;
+                    });
+                    this.showRecoleccionForm = true;
+                },
+                guardarRecoleccion() {
+                    const solicitud = this.solicitudes[this.recoleccionIndex];
+                    solicitud.recoleccion = {
+                        ...this.recoleccion
+                    };
+                    solicitud.totalPago = Object.entries(this.recoleccion).reduce((total, [tipo, cantidad]) => {
+                        return total + parseFloat(cantidad || 0) * this.preciosReciclaje[tipo];
+                    }, 0);
+                    solicitud.estado = 'recolectado';
+                    this.showRecoleccionForm = false;
+                    this.recoleccionIndex = null;
+                    this.$saveData();
+                },
+                calcularGananciaRecoleccion() {
+                    const total = Object.entries(this.recoleccion).reduce((sum, [tipo, cantidad]) => {
+                        return sum + parseFloat(cantidad || 0) * this.preciosReciclaje[tipo];
+                    }, 0);
+                    const totalVenta = Object.entries(this.recoleccion).filter(([tipo, cantidad]) => parseFloat(cantidad || 0) > 0).reduce((sum, [tipo, cantidad]) => {
+                        const precio = parseFloat(this.venta.precios[tipo] || 0);
+                        const cant = parseFloat(cantidad || 0);
+                        return sum + cant * precio;
+                    }, 0);
+                    const calculos = Object.entries(this.recoleccion).filter(([_, cantidad]) => parseFloat(cantidad || 0) > 0).map(([tipo, cantidad]) => {
+                        const cantidadNum = parseFloat(cantidad || 0);
+                        const ganancia = cantidadNum * this.preciosReciclaje[tipo];
+                        return `${tipo}: ${cantidadNum} × S/.${this.preciosReciclaje[tipo]} = S/.${ganancia.toFixed(2)}`;
+                    }).join('\n');
+                    alert(`Cálculo de Pago:\n\n${calculos}\n\nTotal: S/.${total.toFixed(2)}\nTotal Venta: S/.${totalVenta.toFixed(2)}\nGanancia: S/.${(totalVenta - total).toFixed(2)}`);
+                },
+                imprimirRecoleccion() {
+                    const ventana = window.open('', '_blank');
+                    const detalles = Object.entries(this.recoleccion).filter(([_, cantidad]) => parseFloat(cantidad || 0) > 0).map(([tipo, cantidad]) => {
+                        const cantidadNum = parseFloat(cantidad || 0);
+                        const ganancia = cantidadNum * this.preciosReciclaje[tipo];
+                        return `<tr>
+                                <td>${tipo}</td>
+                                <td>${cantidadNum}</td>
+                                <td>S/.${this.preciosReciclaje[tipo]}</td>
+                                <td>S/.${ganancia.toFixed(2)}</td>
+                            </tr>`;
+                    }).join('');
+                    ventana.document.write(`
+                        <html>
+                            <head>
+                                <title>Nota de Incentivo</title>
+                                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+                            </head>
+                            <body class="p-4">
+                                <div class="text-center">
+                                  <h2 class="mb-4">Nota de Incentivo</h2>
+                                  <p class="mb-3">Fecha: ${new Date().toLocaleDateString()}</p>
+                                  <h4 class="mb-4">GRUPO4ECOS RECICLA</h4>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio Unitario</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${detalles}
+                                        <tr class="table-info">
+                                            <td colspan="3"><strong>Total General</strong></td>
+                                            <td><strong>S/.${this.totalRecoleccion.toFixed(2)}</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </body>
+                        </html>
+                    `);
+                    ventana.document.close();
+                    ventana.print();
+                },
+                enviarRecoleccionWhatsApp() {
+                    const solicitud = this.solicitudes[this.recoleccionIndex];
+                    const cliente = this.clientes[solicitud.clienteId];
+                    const detalles = Object.entries(this.recoleccion).filter(([_, cantidad]) => parseFloat(cantidad || 0) > 0).map(([tipo, cantidad]) => {
+                        const cantidadNum = parseFloat(cantidad || 0);
+                        const ganancia = cantidadNum * this.preciosReciclaje[tipo];
+                        return `${tipo}: ${cantidadNum} (S/.${ganancia.toFixed(2)})`;
+                    }).join('\n');
+                    const mensaje = encodeURIComponent(` Reporte de Recolección\n\nDetalles:\n${detalles}\n\nTotal: S/.${this.totalRecoleccion.toFixed(2)}`);
+                    const telefono = cliente.telefono.replace(/\D/g, '');
+                    window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
+                },
+                editarRecoleccion(index) {
+                    const solicitud = this.solicitudesRecolectadas[index];
+                    this.recoleccionIndex = this.solicitudes.findIndex(s => s === solicitud);
+                    this.recoleccion = {
+                        ...solicitud.recoleccion
+                    };
+                    this.showRecoleccionForm = true;
+                },
+                eliminarRecoleccion(index) {
+                    const solicitud = this.solicitudesRecolectadas[index];
+                    const solicitudIndex = this.solicitudes.findIndex(s => s === solicitud);
+                    this.solicitudes[solicitudIndex].recoleccion = null;
+                    this.solicitudes[solicitudIndex].totalPago = 0;
+                    this.solicitudes[solicitudIndex].estado = null;
+                    this.$saveData();
+                },
+                enviarRecoleccionWhatsAppHistorial(index) {
+                    const solicitud = this.solicitudesRecolectadas[index];
+                    const cliente = this.clientes[solicitud.clienteId];
+                    const detalles = Object.entries(solicitud.recoleccion).filter(([_, cantidad]) => cantidad > 0).map(([tipo, cantidad]) => {
+                        const ganancia = cantidad * this.preciosReciclaje[tipo];
+                        return `${tipo}: ${cantidad} (S/.${ganancia.toFixed(2)})`;
+                    }).join('\n');
+                    const mensaje = encodeURIComponent(`Reporte de Recolección\n\nFecha: ${this.formatearFecha(solicitud.fecha)}\n\nDetalles:\n${detalles}\n\nTotal: S/.${solicitud.totalPago.toFixed(2)}`);
+                    const telefono = cliente.telefono.replace(/\D/g, '');
+                    window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
+                },
+                almacenarRecoleccion() {
+                    Object.entries(this.recoleccion).forEach(([tipo, cantidad]) => {
+                        if (!this.almacen[tipo]) {
+                            this.almacen[tipo] = 0;
+                        }
+                        this.almacen[tipo] += parseFloat(cantidad || 0);
+                    });
+                    this.guardarRecoleccion();
+                    this.solicitudes[this.recoleccionIndex].destino = 'almacen';
+                    this.$saveData();
+                },
+                guardarVenta() {
+                    const totalVenta = Object.entries(this.recoleccion).filter(([tipo, cantidad]) => parseFloat(cantidad || 0) > 0).reduce((total, [tipo, cantidad]) => {
+                        const precio = parseFloat(this.venta.precios[tipo] || 0);
+                        const cant = parseFloat(cantidad || 0);
+                        return total + cant * precio;
+                    }, 0);
+                    const ganancia = totalVenta - this.totalRecoleccion;
+                    if (isNaN(totalVenta) || totalVenta <= 0) {
+                        alert("Por favor calcule la ganancia antes de guardar la venta");
+                        return;
+                    }
+                    this.venta.totalVenta = totalVenta;
+                    this.venta.ganancia = ganancia;
+                    this.guardarRecoleccion();
+                    this.solicitudes[this.recoleccionIndex].destino = 'venta';
+                    this.solicitudes[this.recoleccionIndex].venta = {
+                        ...this.venta
+                    };
+                    this.showVentaForm = false;
+                    this.$saveData();
+                },
+                closeVenderForm() {
+                    this.showVenderForm = false;
+                    this.ventaMultiple = {
+                        almacenId: null,
+                        cantidades: {},
+                        precios: {}
+                    };
+                },
+                calcularTotalProducto(tipo) {
+                    const cantidad = parseFloat(this.ventaMultiple.cantidades[tipo] || 0);
+                    const precio = parseFloat(this.ventaMultiple.precios[tipo] || 0);
+                    return `S/.${(cantidad * precio).toFixed(2)}`;
+                },
+                realizarVentaMultiple() {
+                    const ventasRealizadas = Object.entries(this.ventaMultiple.cantidades)
+                        .filter(([_, cantidad]) => parseFloat(cantidad) > 0);
+
+                    if (ventasRealizadas.length === 0) {
+                        alert('Por favor ingrese al menos una cantidad para vender');
+                        return;
+                    }
+
+                    // Actualizar almacén
+                    ventasRealizadas.forEach(([tipo, cantidad]) => {
+                        this.almacen[tipo] -= parseFloat(cantidad);
+                    });
+
+                    // Registrar venta
+                    const venta = {
+                        fecha: new Date().toISOString(),
+                        almacenVenta: this.almacenesVenta[this.ventaMultiple.almacenId],
+                        productos: ventasRealizadas.map(([tipo, cantidad]) => ({
+                            tipo,
+                            cantidad: parseFloat(cantidad),
+                            precioVenta: parseFloat(this.ventaMultiple.precios[tipo]),
+                            total: parseFloat(cantidad) * parseFloat(this.ventaMultiple.precios[tipo])
+                        })),
+                        totalVenta: this.totalVentaMultiple
+                    };
+
+                    if (!this.ventas) this.ventas = [];
+                    this.ventas.push(venta);
+                    
+                    this.$saveData();
+                    this.closeVenderForm();
+                    alert('Venta realizada con éxito');
+                },
+                guardarAlmacenVenta() {
+                    if (this.editingAlmacenVentaIndex === null) {
+                        this.almacenesVenta.push({
+                            ...this.nuevoAlmacenVenta
+                        });
+                    } else {
+                        this.almacenesVenta[this.editingAlmacenVentaIndex] = {
+                            ...this.nuevoAlmacenVenta
+                        };
+                    }
+                    this.$saveData();
+                    this.closeAlmacenVentaForm();
+                },
+                editarAlmacenVenta(index) {
+                    this.editingAlmacenVentaIndex = index;
+                    this.nuevoAlmacenVenta = {
+                        ...this.almacenesVenta[index]
+                    };
+                    this.showNewAlmacenVentaForm = true;
+                },
+                eliminarAlmacenVenta(index) {
+                    this.almacenesVenta.splice(index, 1);
+                    this.$saveData();
+                },
+                closeAlmacenVentaForm() {
+                    this.showNewAlmacenVentaForm = false;
+                    this.editingAlmacenVentaIndex = null;
+                    this.nuevoAlmacenVenta = {
+                        razonSocial: '',
+                        ruc: '',
+                        direccion: ''
+                    };
+                },
+                closeDonationForm() {
+                  this.showNewDonationForm = false;
+                  this.nuevaDonacion = {
+                    donador: '',
+                    tipo: '',
+                    cantidad: 0,
+                    fecha: ''
+                  };
+                },
+                guardarDonacion() {
+                  if (!this.nuevaDonacion.donador || !this.nuevaDonacion.tipo || !this.nuevaDonacion.cantidad) {
+                    alert('Por favor complete todos los campos');
+                    return;
+                  }
+
+                  // Update almacen
+                  if (!this.almacen[this.nuevaDonacion.tipo]) {
+                    this.almacen[this.nuevaDonacion.tipo] = 0;
+                  }
+                  this.almacen[this.nuevaDonacion.tipo] += parseFloat(this.nuevaDonacion.cantidad);
+
+                  // Save donation record
+                  const donacion = {
+                    ...this.nuevaDonacion,
+                    fecha: new Date().toISOString()
+                  };
+
+                  if (!this.donaciones) this.donaciones = [];
+                  this.donaciones.push(donacion);
+                  
+                  this.$saveData();
+                  this.closeDonationForm();
+                  alert('Donación registrada con éxito');
+                },
+                closeMermaForm() {
+                  this.showNewMermaForm = false;
+                  this.nuevaMerma = {
+                    responsable: '',
+                    tipo: '',
+                    cantidad: 0,
+                    fecha: ''
+                  };
+                },
+                guardarMerma() {
+                  if (!this.nuevaMerma.responsable || !this.nuevaMerma.tipo || !this.nuevaMerma.cantidad) {
+                    alert('Por favor complete todos los campos');
+                    return;
+                  }
+
+                  // Update almacen
+                  if (!this.almacen[this.nuevaMerma.tipo]) {
+                    alert('No hay suficiente cantidad en almacén');
+                    return;
+                  }
+
+                  const nuevaCantidad = this.almacen[this.nuevaMerma.tipo] - parseFloat(this.nuevaMerma.cantidad);
+                  if (nuevaCantidad < 0) {
+                    alert('No hay suficiente cantidad en almacén');
+                    return;
+                  }
+
+                  this.almacen[this.nuevaMerma.tipo] = nuevaCantidad;
+
+                  // Save merma record
+                  const merma = {
+                    ...this.nuevaMerma,
+                    fecha: new Date().toISOString()
+                  };
+
+                  if (!this.mermas) this.mermas = [];
+                  this.mermas.push(merma);
+                  
+                  this.$saveData();
+                  this.closeMermaForm();
+                  alert('Merma registrada con éxito');
+                },
+                editarTipoResiduo(tipo) {
+                    this.editingTipoResiduo = tipo;
+                    this.nuevoTipoResiduo = {
+                        tipo: tipo,
+                        precio: this.preciosReciclaje[tipo]
+                    };
+                    this.showNewTipoResiduoForm = true;
+                },
+                eliminarTipoResiduo(tipo) {
+                    if (confirm('¿Está seguro de eliminar este tipo de residuo?')) {
+                        Vue.delete(this.preciosReciclaje, tipo);
+                        this.$saveData();
+                    }
+                },
+                closeTipoResiduoForm() {
+                    this.showNewTipoResiduoForm = false;
+                    this.editingTipoResiduo = null;
+                    this.nuevoTipoResiduo = {
+                        tipo: '',
+                        precio: 0
+                    };
+                },
+                guardarTipoResiduo() {
+                    if (!this.nuevoTipoResiduo.tipo || !this.nuevoTipoResiduo.precio) {
+                        alert('Por favor complete todos los campos');
+                        return;
+                    }
+
+                    if (this.editingTipoResiduo) {
+                        Vue.set(this.preciosReciclaje, this.editingTipoResiduo, parseFloat(this.nuevoTipoResiduo.precio));
+                    } else {
+                        Vue.set(this.preciosReciclaje, this.nuevoTipoResiduo.tipo, parseFloat(this.nuevoTipoResiduo.precio));
+                    }
+
+                    this.$saveData();
+                    this.closeTipoResiduoForm();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package navmenu;
+
+import "protos/error.proto";
+
+service NavmenuService {
+	rpc GetNavmenu (NavmenuRequest) returns (OneOfNavmenuResponse);
+}
+
+message NavmenuRequest {
+	int32 userId = 1;
+	int32 viewType = 2;
+	string companyRuc = 3;
+}
+
+message Navmenu {
+	int64 menuId = 1;
+	string module = 2;
+	string name = 3;
+	string route = 4;
+	string icon = 5;
+}
+
+message ListNavmenuResponse {
+	repeated Navmenu navmenus = 1;
+}
+
+message OneOfNavmenuResponse {
+	oneof response {
+		ListNavmenuResponse listNavmenuResponse = 1;
+		error.Error error = 2;
+	}
+}

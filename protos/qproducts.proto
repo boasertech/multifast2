@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package qproducts;
+
+import "error.proto";
+
+service QProductService {
+	rpc GetQProducts (QProductRequest) returns (OneOfQProductsResponse);
+}
+
+message QProductRequest {
+	string companyRuc = 1;
+	int32 filterType = 2;
+	int32 type = 3;
+	int32 branchId = 4;
+	int64 storageId = 5;
+}
+
+message QProduct {
+  int64 productId = 1;
+  string barCodeOrName = 2;
+  double unitPrice = 3;
+  double taxAmount = 4;
+  double totalPrice = 5;
+  bool isFormulations = 6;
+  string unitOfMeasure = 7;
+  int32 typeEffect = 8;
+  double buyPrice = 9;
+  string sunatCode = 10;
+  string name = 11;
+  string clientCode = 12;
+  bool isTaxtEffect = 13;
+  string image = 14;
+  string barCode = 15;
+  string expirationDateLot = 16;
+  string curve = 17;
+  string category = 18;
+}
+
+message ListQProductsResponse {
+	repeated QProduct products = 1;
+}
+
+message OneOfQProductsResponse {
+	oneof response {
+		ListQProductsResponse listQProductsResponse = 1;
+		error.Error error = 2;
+	}
+}
