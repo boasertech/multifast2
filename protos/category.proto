@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package category;
+
+message Category {
+	int64 categoryId = 1;
+	string name = 2;
+}
+
+message SubCategory {
+	int64 subCategoryId = 1;
+	string name = 2;
+	int64 categoryId = 3;
+}

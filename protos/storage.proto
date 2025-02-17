@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package storage;
+
+message Storage {
+	int64 storageId = 1;
+	string name = 2;
+}

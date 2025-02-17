@@ -142,6 +142,7 @@ class QProduct extends $pb.GeneratedMessage {
     $core.String? expirationDateLot,
     $core.String? curve,
     $core.String? category,
+    $core.String? storagesJson,
   }) {
     final $result = create();
     if (productId != null) {
@@ -198,6 +199,9 @@ class QProduct extends $pb.GeneratedMessage {
     if (category != null) {
       $result.category = category;
     }
+    if (storagesJson != null) {
+      $result.storagesJson = storagesJson;
+    }
     return $result;
   }
   QProduct._() : super();
@@ -223,6 +227,7 @@ class QProduct extends $pb.GeneratedMessage {
     ..aOS(16, _omitFieldNames ? '' : 'expirationDateLot', protoName: 'expirationDateLot')
     ..aOS(17, _omitFieldNames ? '' : 'curve')
     ..aOS(18, _omitFieldNames ? '' : 'category')
+    ..aOS(19, _omitFieldNames ? '' : 'storagesJson', protoName: 'storagesJson')
     ..hasRequiredFields = false
   ;
 
@@ -408,6 +413,15 @@ class QProduct extends $pb.GeneratedMessage {
   $core.bool hasCategory() => $_has(17);
   @$pb.TagNumber(18)
   void clearCategory() => clearField(18);
+
+  @$pb.TagNumber(19)
+  $core.String get storagesJson => $_getSZ(18);
+  @$pb.TagNumber(19)
+  set storagesJson($core.String v) { $_setString(18, v); }
+  @$pb.TagNumber(19)
+  $core.bool hasStoragesJson() => $_has(18);
+  @$pb.TagNumber(19)
+  void clearStoragesJson() => clearField(19);
 }
 
 class ListQProductsResponse extends $pb.GeneratedMessage {

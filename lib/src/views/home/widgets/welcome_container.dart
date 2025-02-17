@@ -5,6 +5,7 @@ import 'package:multifast/src/repositories/user_repository.dart';
 import 'package:multifast/styles/app_images.dart';
 import 'package:multifast/styles/app_colors.dart';
 import 'package:multifast/styles/app_text_style.dart';
+import 'package:multifast/utils/date_format.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class WelcomeContainer extends StatelessWidget {
@@ -14,7 +15,8 @@ class WelcomeContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final userRepository = getIt<UserRepository>();
     final user = userRepository.user;
-    final name = user.fullname.substring(10);
+    final username = user.username;
+    final name = user.fullname;
     final rol = user.rolName;
     final lastSession = DateTime.parse(user.lastConnection);
     return ClipRect(
@@ -40,8 +42,7 @@ class WelcomeContainer extends StatelessWidget {
                         borderRadius: BorderRadius.circular(14.r), color: Colors.white.withValues(alpha: 0.3)),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 3),
-                      child: Text(
-                          'Último Inicio de Sesión: ${lastSession.day}/${lastSession.month}/${lastSession.year} ${lastSession.hour}:${lastSession.minute}:${lastSession.second}',
+                      child: Text('Último Inicio de Sesión: ${dateWithZeros(lastSession)}',
                           style: AppTextStyle.textSecondary.copyWith(fontSize: 11)),
                     ),
                   ),
@@ -65,7 +66,7 @@ class WelcomeContainer extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(text: 'Usuario: ', style: AppTextStyle.title.copyWith(fontSize: 13.5)),
-                            TextSpan(text: name, style: AppTextStyle.textSecondary),
+                            TextSpan(text: username, style: AppTextStyle.textSecondary),
                           ],
                         ),
                       ),

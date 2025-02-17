@@ -42,7 +42,8 @@ message ListBranchesResponse {
 message Enterprise {
   string companyRuc = 1;
   string name = 2;
-  string validationCode = 3;
+  string logo = 3;
+  string validationCode = 4;
 }
 
 message Branch {

@@ -104,14 +104,16 @@ const Enterprise$json = {
   '2': [
     {'1': 'companyRuc', '3': 1, '4': 1, '5': 9, '10': 'companyRuc'},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'validationCode', '3': 3, '4': 1, '5': 9, '10': 'validationCode'},
+    {'1': 'logo', '3': 3, '4': 1, '5': 9, '10': 'logo'},
+    {'1': 'validationCode', '3': 4, '4': 1, '5': 9, '10': 'validationCode'},
   ],
 };
 
 /// Descriptor for `Enterprise`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List enterpriseDescriptor = $convert.base64Decode(
     'CgpFbnRlcnByaXNlEh4KCmNvbXBhbnlSdWMYASABKAlSCmNvbXBhbnlSdWMSEgoEbmFtZRgCIA'
-    'EoCVIEbmFtZRImCg52YWxpZGF0aW9uQ29kZRgDIAEoCVIOdmFsaWRhdGlvbkNvZGU=');
+    'EoCVIEbmFtZRISCgRsb2dvGAMgASgJUgRsb2dvEiYKDnZhbGlkYXRpb25Db2RlGAQgASgJUg52'
+    'YWxpZGF0aW9uQ29kZQ==');
 
 @$core.Deprecated('Use branchDescriptor instead')
 const Branch$json = {

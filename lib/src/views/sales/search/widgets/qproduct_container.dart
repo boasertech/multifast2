@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:multifast/core/setup_locator.dart';
-import 'package:multifast/src/generated/qproduct_detail.pb.dart';
 import 'package:multifast/src/models/qproduct_model.dart';
-import 'package:multifast/src/repositories/branches_repository.dart';
-import 'package:multifast/src/views/sales/qproduct_detail/bloc/qproduct_detail_bloc.dart';
 import 'package:multifast/styles/app_colors.dart';
 import 'package:multifast/styles/app_images.dart';
 import 'package:multifast/styles/app_text_style.dart';
+import 'package:multifast/utils/actions.dart';
 
 class QProductContainer extends StatelessWidget {
   final QProductModel qproduct;
@@ -19,11 +15,7 @@ class QProductContainer extends StatelessWidget {
     final value = qproduct.entity;
     return GestureDetector(
       onTap: () {
-        int branchId = getIt<BranchesRepository>().branchSelected!.entity.branchId.toInt();
-        final request = QProductDetailRequest()
-          ..branchId = branchId
-          ..productId = value.productId;
-        context.read<QProductDetailBloc>().add(LoadQProductDetailEvent(request, qproduct));
+        actionLoadDetailProduct(context, qproduct);
       },
       child: Container(
         decoration: BoxDecoration(border: Border(bottom: BorderSide(color: AppColors.cls7, width: 1.5))),

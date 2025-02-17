@@ -28,9 +28,9 @@ Widget buildAppButton(BuildContext context, String name,
 }
 
 Widget buildAppButtonWithOutExpanded(BuildContext context, String name,
-    {VoidCallback? action, bool isCancel = false, double radiusCircular = 6}) {
+    {VoidCallback? action, bool isCancel = false, double radiusCircular = 6, isEnabled = true}) {
   return GestureDetector(
-    onTap: action,
+    onTap: isEnabled ? action : null,
     child: Container(
       padding: EdgeInsets.symmetric(vertical: 11),
       decoration: isCancel
@@ -39,7 +39,7 @@ Widget buildAppButtonWithOutExpanded(BuildContext context, String name,
               color: Colors.white,
               borderRadius: BorderRadius.circular(6),
             )
-          : BoxDecoration(color: AppColors.cls5, borderRadius: BorderRadius.circular(radiusCircular)),
+          : BoxDecoration(color: isEnabled ? AppColors.cls5 : AppColors.cls11, borderRadius: BorderRadius.circular(radiusCircular)),
       child: Center(
         child: Text(
           name,

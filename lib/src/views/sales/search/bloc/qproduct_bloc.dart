@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:multifast/core/config.dart';
 import 'package:multifast/core/setup_locator.dart';
 import 'package:multifast/src/generated/qproducts.pb.dart';
 import 'package:multifast/src/models/error_model.dart';
@@ -22,9 +21,7 @@ class QProductsBloc extends Bloc<QProductsEvent, QProductsState> {
   QProductsBloc({required this.service}) : super(QProductsInitial()) {
     on<LoadedQProducts>((event, emit) async {
       emit(QProductsLoading());
-      final stopwatch = Stopwatch()..start();
       var response = await service.getProducts(event.request);
-      stopwatch.stop();
       response.fold(
         (error) => emit(QProductsError(error)),
         (qproducts) {
@@ -36,7 +33,6 @@ class QProductsBloc extends Bloc<QProductsEvent, QProductsState> {
           emit(QProductsLoad());
         },
       );
-      Config.printDebug('GetQProducts(${repository.list.length}) - Time: ${stopwatch.elapsedMilliseconds} ms');
     });
 
     on<ReturnQProducts>((event, emit) async {

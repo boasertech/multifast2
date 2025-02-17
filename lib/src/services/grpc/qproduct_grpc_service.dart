@@ -11,7 +11,10 @@ class QProductGrpcService extends AbsQProductService {
   @override
   Future<Either<ErrorModel, List<QProduct>>> getProducts(QProductRequest request) async {
     try {
+      final stopwatch = Stopwatch()..start();
       final response = await _client.getQProducts(request, options: CallOptions(compression: GzipCodec()));
+      stopwatch.stop();
+      Config.printDebug('GetQProducts - Tiempo transcurrido: ${stopwatch.elapsedMilliseconds} ms');
       if (response.hasListQProductsResponse()) {
         return Either.right(response.listQProductsResponse.products);
       }

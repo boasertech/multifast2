@@ -7,11 +7,20 @@ class Config {
   static const String version = '2.1.0';
   static const String urlAPI = "http://localhost:7011";
   static final talker = TalkerFast.talker;
+  static String token = '';
 
   static void printDebug(Object object) {
     if (kDebugMode) {
       print(object);
     }
+  }
+
+  static CallOptions getCallOptions(String token) {
+    return CallOptions(
+      compression: GzipCodec(),
+      timeout: Duration(seconds: 30),
+      metadata: {'Authorization': 'Bearer $token'},
+    );
   }
 
   /*static GrpcWebClientChannel getConnectionGrpc() {
@@ -21,15 +30,39 @@ class Config {
 
   static ClientChannel getConnectionGrpc() {
     final channel = ClientChannel(
-      '192.168.1.27',
-      //'iginioggwp-001-site1.ltempurl.com',
-      //port: 50051,
-      port: 50051,
+      //'192.168.1.19',
+      'iginioggwp-001-site1.ltempurl.com',
+      port: 443,
       options: ChannelOptions(
         credentials: ChannelCredentials.secure(),
-        codecRegistry: CodecRegistry(codecs: [GzipCodec()])
+        codecRegistry: CodecRegistry(codecs: [GzipCodec()]),
       ),
     );
     return channel;
+  }
+}
+
+class AuthInterceptor extends ClientInterceptor {
+  static const List<String> excludedMethods = [
+    '/auth.AuthService/Login',
+  ];
+
+  @override
+  ResponseFuture<R> interceptUnary<Q, R>(
+    ClientMethod<Q, R> method,
+    Q request,
+    CallOptions options,
+    ClientUnaryInvoker<Q, R> invoker,
+  ) {
+    if (excludedMethods.contains(method.path)) {
+      // Si el método está en la lista de excluidos, se usa CallOptions sin token
+      return invoker(method, request, options);
+    }
+
+    // Si no está excluido, se agrega el token
+    final newOptions = options.mergedWith(
+      CallOptions(metadata: {'Authorization': 'Bearer ${Config.token}'}),
+    );
+    return invoker(method, request, newOptions);
   }
 }

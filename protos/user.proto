@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package user;
+
+import "error.proto";
+
+service UserService {
+  rpc UpdateUser (UserUpdateRequest) returns (OneOfUserUpdateResponse);
+}
+
+message UserUpdateRequest {
+	int32 userId = 1;
+	int32 documentTypeId = 2;
+	string document = 3;
+	string fullname = 4;
+	string birthDate = 5;
+	string gender = 6;
+	string email = 7;
+	string phone = 8;
+	int32 positionId = 9;
+}
+
+message UserUpdateResponse {
+	string code = 1;
+	string message = 2;
+}
+
+message OneOfUserUpdateResponse {
+	oneof response {
+		error.Error error = 1;
+		UserUpdateResponse userUpdateResponse = 2;
+	}
+}

@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package enterprise;
+
+import "error.proto";
+import "storage.proto";
+import "category.proto";
+
+service EnterpriseService {
+  rpc GetDocumentsType (GlobalRequest) returns (ListDocumentTypeResponse);
+  rpc GetDataEnterprise (EnterpriseRequest) returns (DataEnterpriseResponse);
+}
+
+message GlobalRequest {
+	bool isGlobal = 1;
+}
+
+message EnterpriseRequest {
+	string companyRuc = 1;
+	int64 branchId = 2;
+}
+
+message DocumentType {
+	int64 documentTypeId = 1;
+	string name = 2;
+}
+
+message ListDocumentTypeResponse {
+	repeated DocumentType documentsType = 1;
+}
+
+message ListStorageResponse {
+	repeated storage.Storage storages = 1;
+}
+
+message ListCategoryResponse {
+	repeated category.Category categories = 1;
+}
+
+message ListSubCategoryResponse {
+	repeated category.SubCategory subCategories = 1;
+}
+
+message DataEnterpriseResponse {
+  error.Error error = 1;
+  ListStorageResponse listStorageResponse = 2;
+  ListCategoryResponse listCategoryResponse = 3;
+  ListSubCategoryResponse listSubCategoryResponse = 4;
+}

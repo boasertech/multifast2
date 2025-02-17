@@ -10,7 +10,10 @@ class QProductDetailGrpcService extends AbsQProductDetailService {
   @override
   Future<Either<ErrorModel, QProductDetailResponse>> getQProductDetail(QProductDetailRequest request) async {
     try {
+      final stopwatch = Stopwatch()..start();
       final response = await _client.getQProductDetail(request);
+      stopwatch.stop();
+      Config.printDebug('GetQProductDetail - Tiempo transcurrido: ${stopwatch.elapsedMilliseconds} ms');
       if (response.hasQproductDetailResponse()) {
         return Either.right(response.qproductDetailResponse);
       }

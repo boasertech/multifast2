@@ -9,8 +9,9 @@ final class QProductDetailLoading extends QProductDetailState {}
 
 final class QProductDetailLoad extends QProductDetailState {
   final QProductModel detail;
+  final bool isScan;
 
-  QProductDetailLoad(this.detail);
+  QProductDetailLoad(this.detail, this.isScan);
 }
 
 final class QProductDetailError extends QProductDetailState {

@@ -4,6 +4,8 @@ class AppImages {
   static const String mainLogo = 'assets/pngs/main_logo.png';
   static const String mainMovil = 'assets/pngs/main_movil.png';
   static const String mainDesktop = 'assets/pngs/main_desktop.png';
+  static const String updateData = 'assets/pngs/update_data.png';
+  
 }
 
 class AppIcons {
@@ -21,6 +23,8 @@ class AppIcons {
   static const String location = 'assets/pngs/icons/location_icon.png';
   static const String lock = 'assets/pngs/icons/lock_icon.png';
   static const String more = 'assets/pngs/icons/more_icon.png';
+  static const String notification = 'assets/pngs/icons/notification_icon.png';
+  static const String reload = 'assets/pngs/icons/reload_icon.png';
   static const String restart = 'assets/pngs/icons/restart_icon.png';
   static const String rightArrowTail = 'assets/pngs/icons/right_arrow_tail_icon.png';
   static const String rightArrow = 'assets/pngs/icons/right_arrow_icon.png';
@@ -35,11 +39,17 @@ class AppIcons {
 }
 
 class AppOptionsImages {
+  static const String draft = 'assets/pngs/options/draft.png';
   static const String fastSale = 'assets/pngs/options/fast_sale.png';
   static const String newQuotation = 'assets/pngs/options/new_quotation.png';
   static const String newSale = 'assets/pngs/options/new_sale.png';
   static const String newVoucher = 'assets/pngs/options/new_voucher.png';
   static const String searchProduct = 'assets/pngs/options/search_product.png';
+  static const String salesElectronicSale = 'assets/pngs/options/sales_electronic_sale.png';
+  static const String salesQuotation = 'assets/pngs/options/sales_quotation.png';
+  static const String salesOrder = 'assets/pngs/options/sales_order.png';
+  static const String salesSearch = 'assets/pngs/options/sales_search.png';
+  static const String salesPrice = 'assets/pngs/options/sales_price.png';
 }
 
 class AppCoreImages {
@@ -49,6 +59,7 @@ class AppCoreImages {
   static const String logox57 = 'assets/pngs/core/logo_x57.png';
   static const String logox113 = 'assets/pngs/core/logo_x113.png';
   static const String logox513 = 'assets/pngs/core/logo_x513.png';
+  static const String notSearchedx256 = 'assets/pngs/core/not_searched_x256.png';
   static const String productDefaultx141 = 'assets/pngs/core/product_default_x141.png';
   static const String productDefaultDarkx141 = 'assets/pngs/core/product_default_dark_x141.png';
   static const String scanx417 = 'assets/pngs/core/scan_x417.png';

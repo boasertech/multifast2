@@ -1,10 +1,12 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:multifast/src/models/qcategory_model.dart';
 import 'package:multifast/src/models/qproduct_model.dart';
 import 'package:multifast/src/repositories/abs_stream_properties.dart';
 
 class CategoryRepository extends AbsStreamProperties<QCategoryModel, String> {
   late QCategoryModel selectAllCategories;
+  ValueNotifier<String> countCategoriesSelected = ValueNotifier<String>('Todos');
 
   @override
   void initStream() {
@@ -21,6 +23,17 @@ class CategoryRepository extends AbsStreamProperties<QCategoryModel, String> {
   @override
   String forSearch(QCategoryModel item) {
     return item.name;
+  }
+
+  @override
+  void saveChanges() {
+    super.saveChanges();
+    int selectedCount = list.where((item) => item.isSelected).length;
+    if (selectedCount == list.length) {
+      countCategoriesSelected.value = 'Todos';
+    } else {
+      countCategoriesSelected.value = '$selectedCount categorías seleccionadas';
+    }
   }
 
   @override
@@ -42,6 +55,14 @@ class CategoryRepository extends AbsStreamProperties<QCategoryModel, String> {
 
   void toggleSelectAllCategories() {
     selectAllCategories.isSelected = !selectAllCategories.isSelected;
+    for (var category in super.listTemp) {
+      category.isSelected = selectAllCategories.isSelected;
+    }
+    super.updateStreamWithTemp(super.listTemp);
+  }
+
+  void cleanFiltersCategories() {
+    selectAllCategories.isSelected = true;
     for (var category in super.listTemp) {
       category.isSelected = selectAllCategories.isSelected;
     }

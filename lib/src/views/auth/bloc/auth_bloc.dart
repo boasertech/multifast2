@@ -22,11 +22,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   bool rememberUser = false;
   AuthBloc({required this.service}) : super(AuthInitial()) {
     on<LoginEvent>((event, emit) async {
-      final stopwatch = Stopwatch()..start();
       final request = LoginRequest()
         ..username = usernameController.text //'902434392'
         ..password = passwordController.text; //'A90243489';
       if (repository.enterpriseSelected != null) {
+        emit(AuthEnterprisesLoading());
         request.companyRuc = repository.enterpriseSelected!.entity.companyRuc;
         if (getIt<BranchesRepository>().branchSelected != null) {
           request.branchId = getIt<BranchesRepository>().branchSelected!.entity.branchId;
@@ -35,13 +35,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthLoading());
       }
       var response = await service.login(request);
-      stopwatch.stop();
+      if (event.remember != null) {
+        rememberUser = event.remember!;
+      }
       response.fold(
-        (error) => emit(AuthError(error)),
-        (result) {
-          if (event.remember != null) {
-            rememberUser = event.remember!;
+        (error) {
+          if (error.code == 'DATA_OUTDATED') {
+            emit(AuthUpdateData(int.parse(error.message)));
+          } else {
+            emit(AuthError(error));
           }
+        },
+        (result) {
           if (result.hasListEnterprisesResponse()) {
             repository.saveEnterprises(result.listEnterprisesResponse.enterprises);
             emit(AuthEnterprises());
@@ -57,13 +62,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             if (rememberUser) {
               saveData(user.company.companyRuc, user.branch.branchId.toInt());
             }
+            Config.token = result.userResponse.token;
             emit(AuthSuccess());
           } else {
             emit(AuthError(ErrorModel.setError(result.error)));
           }
         },
       );
-      Config.printDebug('Login - Tiempo transcurrido: ${stopwatch.elapsedMilliseconds} ms');
     });
 
     on<AutoLoginEvent>((event, emit) async {
@@ -88,6 +93,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               user.company = user.company;
               user.branch = user.branch;
               getIt<UserRepository>().save(user);
+              Config.token = result.userResponse.token;
               emit(AuthSuccess());
             } else {
               emit(AuthError(ErrorModel.setError(result.error)));
@@ -98,6 +104,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthInitial());
       }
     });
+
+    on<CloseSessionEvent>((event, emit) async{
+      logout();
+      emit(AuthInitial());
+    });
   }
 
   void saveData(String companyRuc, int branchId) async {
@@ -107,5 +118,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await prefs.setString('password', passwordController.text);
     await prefs.setString('companyRuc', companyRuc);
     await prefs.setInt('branchId', branchId);
+  }
+
+  void logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('rememberUser');
+    await prefs.remove('username');
+    await prefs.remove('password');
+    await prefs.remove('companyRuc');
+    await prefs.remove('branchId');
   }
 }

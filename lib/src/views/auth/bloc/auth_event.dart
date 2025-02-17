@@ -10,3 +10,5 @@ final class LoginEvent extends AuthEvent {
 }
 
 final class AutoLoginEvent extends AuthEvent {}
+
+final class CloseSessionEvent extends AuthEvent {}

@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:multifast/core/setup_locator.dart';
-import 'package:multifast/src/generated/qproducts.pb.dart';
-import 'package:multifast/src/repositories/user_repository.dart';
 import 'package:multifast/src/views/auth/bloc/auth_bloc.dart';
 import 'package:multifast/src/views/auth/trip/bloc/trip_bloc.dart';
-import 'package:multifast/src/views/sales/search/bloc/qproduct_bloc.dart';
 import 'package:multifast/styles/app_colors.dart';
 import 'package:multifast/styles/app_images.dart';
 import 'package:multifast/styles/app_text_style.dart';
+import 'package:multifast/utils/actions.dart';
 
 class HandleTripScreen extends StatelessWidget {
   const HandleTripScreen({super.key});
@@ -20,11 +17,8 @@ class HandleTripScreen extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          final user = getIt<UserRepository>().user;
-          final request = QProductRequest()
-            ..companyRuc = user.company.companyRuc
-            ..branchId = user.branch.branchId.toInt();
-          context.read<QProductsBloc>().add(LoadedQProducts(request));
+          actionLoadProducts(context);
+          actionLoadDataEnterprise();
           context.go('/');
         } else if (state is AuthInitial || state is AuthError) {
           context.go('/auth');

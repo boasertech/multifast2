@@ -408,6 +408,7 @@ class Enterprise extends $pb.GeneratedMessage {
   factory Enterprise({
     $core.String? companyRuc,
     $core.String? name,
+    $core.String? logo,
     $core.String? validationCode,
   }) {
     final $result = create();
@@ -416,6 +417,9 @@ class Enterprise extends $pb.GeneratedMessage {
     }
     if (name != null) {
       $result.name = name;
+    }
+    if (logo != null) {
+      $result.logo = logo;
     }
     if (validationCode != null) {
       $result.validationCode = validationCode;
@@ -429,7 +433,8 @@ class Enterprise extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Enterprise', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'companyRuc', protoName: 'companyRuc')
     ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aOS(3, _omitFieldNames ? '' : 'validationCode', protoName: 'validationCode')
+    ..aOS(3, _omitFieldNames ? '' : 'logo')
+    ..aOS(4, _omitFieldNames ? '' : 'validationCode', protoName: 'validationCode')
     ..hasRequiredFields = false
   ;
 
@@ -473,13 +478,22 @@ class Enterprise extends $pb.GeneratedMessage {
   void clearName() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get validationCode => $_getSZ(2);
+  $core.String get logo => $_getSZ(2);
   @$pb.TagNumber(3)
-  set validationCode($core.String v) { $_setString(2, v); }
+  set logo($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasValidationCode() => $_has(2);
+  $core.bool hasLogo() => $_has(2);
   @$pb.TagNumber(3)
-  void clearValidationCode() => clearField(3);
+  void clearLogo() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get validationCode => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set validationCode($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasValidationCode() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearValidationCode() => clearField(4);
 }
 
 class Branch extends $pb.GeneratedMessage {

@@ -3,11 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:multifast/core/setup_locator.dart';
-import 'package:multifast/src/generated/qproducts.pb.dart';
 import 'package:multifast/src/models/internal/recent_model.dart';
 import 'package:multifast/src/models/qproduct_model.dart';
-import 'package:multifast/src/repositories/auth_repository.dart';
-import 'package:multifast/src/repositories/branches_repository.dart';
 import 'package:multifast/src/repositories/internal/recent_repository.dart';
 import 'package:multifast/src/repositories/product_repository.dart';
 import 'package:multifast/src/views/sales/qproduct_detail/bloc/qproduct_detail_bloc.dart';
@@ -18,6 +15,7 @@ import 'package:multifast/src/views/widgets/loading_widgets.dart';
 import 'package:multifast/styles/app_colors.dart';
 import 'package:multifast/styles/app_images.dart';
 import 'package:multifast/styles/app_text_style.dart';
+import 'package:multifast/utils/actions.dart';
 
 class QProductSearchScreen extends StatelessWidget {
   const QProductSearchScreen({super.key});
@@ -27,7 +25,11 @@ class QProductSearchScreen extends StatelessWidget {
     return BlocListener<QProductDetailBloc, QProductDetailState>(
       listener: (context, state) {
         if (state is QProductDetailLoad) {
-          context.push('/sales/qproduct/detail', extra: state.detail);
+          if (state.isScan) {
+            context.push('/sales/qproduct/detail/${state.isScan.toString()}', extra: state.detail);
+          } else {
+            context.push('/sales/qproduct/detail/${state.isScan.toString()}', extra: state.detail);
+          }
         }
       },
       child: BlocBuilder<QProductsBloc, QProductsState>(
@@ -338,7 +340,6 @@ class QProductSearchScreen extends StatelessWidget {
                   if (value.length < 2) {
                     getIt<RecentRepository>().isSearching(value.isNotEmpty);
                   }
-                  //context.read<QProductsBloc>().add(FoundQProducts(context.read<QProductsBloc>().searchController.text));
                 },
                 onFieldSubmitted: (value) {
                   getIt<RecentRepository>().saveRecentSearch(value);
@@ -372,11 +373,7 @@ class QProductSearchScreen extends StatelessWidget {
         SizedBox(width: 10.w),
         GestureDetector(
           onTap: () {
-            final int branchId = getIt<BranchesRepository>().branchSelected!.entity.branchId.toInt();
-            final request = QProductRequest()
-              ..companyRuc = getIt<AuthRepository>().enterpriseSelected!.entity.companyRuc
-              ..branchId = branchId;
-            context.read<QProductsBloc>().add(LoadedQProducts(request));
+            actionLoadProducts(context);
           },
           child: SizedBox(
             width: 16.r,

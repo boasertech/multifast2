@@ -10,7 +10,10 @@ class AuthGrpcService extends AbsAuthService {
   @override
   Future<Either<ErrorModel, OneOfAuthResponse>> login(LoginRequest request) async {
     try {
+      final stopwatch = Stopwatch()..start();
       final response = await _client.login(request);
+      stopwatch.stop();
+      Config.printDebug('Login - Tiempo transcurrido: ${stopwatch.elapsedMilliseconds} ms');
       if (!response.hasError()) {
         return Either.right(response);
       }

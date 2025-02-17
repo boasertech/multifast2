@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:multifast/src/views/home/app_bottom_navigation_bar.dart';
+import 'package:multifast/styles/app_colors.dart';
 import 'package:multifast/styles/app_text_style.dart';
 
 class AppBottomNavigation extends StatefulWidget {
-  final String moduleName;
-  final String iconName;
-  const AppBottomNavigation({super.key, required this.moduleName, required this.iconName});
+  final NavigationBottomBarButton nav;
+  final int optionSelected;
+  final VoidCallback? onTap;
+  final GlobalKey? keyWidget;
+  const AppBottomNavigation({super.key, required this.nav, required this.optionSelected, this.onTap, this.keyWidget});
 
   @override
   State<AppBottomNavigation> createState() => _AppBottomNavigationState();
@@ -14,17 +18,21 @@ class AppBottomNavigation extends StatefulWidget {
 class _AppBottomNavigationState extends State<AppBottomNavigation> {
   @override
   Widget build(BuildContext context) {
+    final navigation = widget.nav;
     return GestureDetector(
-      onTap: () {},
+      onTap: widget.onTap,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Column(
+          key: widget.keyWidget,
           children: [
             SizedBox(
-              width: 17.w,
-              height: 17.h,
-              child: Image.asset(widget.iconName)),
-            Text(widget.moduleName, style: AppTextStyle.textAlternative),
+                width: 17.w,
+                height: 17.h,
+                child: widget.optionSelected == navigation.id
+                    ? Image.asset(navigation.image, color: AppColors.cls5)
+                    : Image.asset(navigation.image)),
+            Text(navigation.name, style: AppTextStyle.textAlternative),
           ],
         ),
       ),

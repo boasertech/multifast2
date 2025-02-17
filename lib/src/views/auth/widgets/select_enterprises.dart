@@ -106,14 +106,30 @@ class _SelectEnterprisesState extends State<SelectEnterprises> {
           color: model.isSelected ? AppColors.cls4_2 : Colors.white, borderRadius: BorderRadius.circular(10.r)),
       child: Row(
         children: [
-          Container(
-            width: 24.w,
-            height: 24.w,
-            decoration: BoxDecoration(
-              color: AppColors.empty,
-              shape: BoxShape.circle,
+          if (model.entity.logo.isNotEmpty) ...[
+            SizedBox(
+              width: 24.w,
+              height: 24.w,
+              child: Image.network(
+                model.entity.logo,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return CircularProgressIndicator();
+                },
+              ),
             ),
-          ),
+          ] else ...[
+            Container(
+              width: 24.w,
+              height: 24.w,
+              decoration: BoxDecoration(
+                color: AppColors.empty,
+                shape: BoxShape.circle,
+              ),
+            ),
+          ],
           const SizedBox(width: 15),
           Expanded(
             child: Text(

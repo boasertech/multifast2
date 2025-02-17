@@ -53,6 +53,7 @@ const QProduct$json = {
     {'1': 'expirationDateLot', '3': 16, '4': 1, '5': 9, '10': 'expirationDateLot'},
     {'1': 'curve', '3': 17, '4': 1, '5': 9, '10': 'curve'},
     {'1': 'category', '3': 18, '4': 1, '5': 9, '10': 'category'},
+    {'1': 'storagesJson', '3': 19, '4': 1, '5': 9, '10': 'storagesJson'},
   ],
 };
 
@@ -68,7 +69,7 @@ final $typed_data.Uint8List qProductDescriptor = $convert.base64Decode(
     'RlEiIKDGlzVGF4dEVmZmVjdBgNIAEoCFIMaXNUYXh0RWZmZWN0EhQKBWltYWdlGA4gASgJUgVp'
     'bWFnZRIYCgdiYXJDb2RlGA8gASgJUgdiYXJDb2RlEiwKEWV4cGlyYXRpb25EYXRlTG90GBAgAS'
     'gJUhFleHBpcmF0aW9uRGF0ZUxvdBIUCgVjdXJ2ZRgRIAEoCVIFY3VydmUSGgoIY2F0ZWdvcnkY'
-    'EiABKAlSCGNhdGVnb3J5');
+    'EiABKAlSCGNhdGVnb3J5EiIKDHN0b3JhZ2VzSnNvbhgTIAEoCVIMc3RvcmFnZXNKc29u');
 
 @$core.Deprecated('Use listQProductsResponseDescriptor instead')
 const ListQProductsResponse$json = {

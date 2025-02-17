@@ -15,27 +15,35 @@ class CompanyContainer extends StatelessWidget {
     final company = user.company.name;
     final branch = user.branch.name;
     final rol = user.rolName;
+    final imgUrl = user.company.logo;
+    print("imgUrl: $imgUrl");
+    print("Es URL absoluta? ${Uri.parse(imgUrl).isAbsolute}");
     return SizedBox(
       width: 300.w,
       child: Row(
         children: [
-          /*SizedBox(
+          SizedBox(
             width: 32,
             height: 31,
-            child: Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvf44yYHmbN8JUtRD7OMsxATYRb22jCyL0Xw&s',
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                }
-                return CircularProgressIndicator();
-              },
+            child: ClipOval(
+              child: !Uri.parse(imgUrl).isAbsolute
+                  ? Icon(Icons.image, color: Colors.white)
+                  : Image.network(
+                      imgUrl,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return CircularProgressIndicator();
+                      },
+                    ),
             ),
-          ),*/
+          ),
+          SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('$company - $branch', style: AppTextStyle.textSecondary),
+              Text('$company - $branch', style: AppTextStyle.clsWhite()),
               Text(rol, style: AppTextStyle.text.copyWith(color: AppColors.brightGray))
             ],
           )

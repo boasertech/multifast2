@@ -90,11 +90,27 @@ class AppTextStyle {
     );
   }
 
+  static TextStyle cls8Style({double? fontSize, FontWeight? fontW, Color? color}) {
+    return _baseStyle.copyWith(
+      fontSize: fontSize ?? 15,
+      color: color ?? AppColors.cls8,
+      fontWeight: fontW ?? FontWeight.w500,
+    );
+  }
+
   static TextStyle clsWhite({double? fontSize, FontWeight? fontW, Color? color}) {
     return _baseStyle.copyWith(
       fontSize: fontSize ?? 15,
       color: color ?? Colors.white,
       fontWeight: fontW ?? FontWeight.w600,
+    );
+  }
+
+  static TextStyle error({double? fontSize, FontWeight? fontW, Color? color}) {
+    return _baseStyle.copyWith(
+      fontSize: fontSize ?? 13,
+      color: color ?? AppColors.error,
+      fontWeight: fontW ?? FontWeight.w500,
     );
   }
   
