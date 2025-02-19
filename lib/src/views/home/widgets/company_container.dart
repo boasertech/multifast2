@@ -16,8 +16,6 @@ class CompanyContainer extends StatelessWidget {
     final branch = user.branch.name;
     final rol = user.rolName;
     final imgUrl = user.company.logo;
-    print("imgUrl: $imgUrl");
-    print("Es URL absoluta? ${Uri.parse(imgUrl).isAbsolute}");
     return SizedBox(
       width: 300.w,
       child: Row(

@@ -12,7 +12,8 @@ import 'package:multifast/styles/app_text_style.dart';
 import 'package:multifast/utils/actions.dart';
 
 class ScanScreen extends StatefulWidget {
-  const ScanScreen({super.key});
+  final bool isQuotation;
+  const ScanScreen({super.key, required this.isQuotation});
 
   @override
   State<ScanScreen> createState() => _ScanScreenState();
@@ -42,11 +43,11 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = context.read<CameraControllerProvider>().controller;
-    final scanAreaSizeWidth = 230.w;
+    /*final scanAreaSizeWidth = 230.w;
     final scanAreaSizeHeight = 178.h;
     final screenSize = MediaQuery.of(context).size;
     final center = screenSize.center(Offset.zero);
-    final scanWindow = Rect.fromCenter(center: center, width: scanAreaSizeWidth, height: scanAreaSizeHeight);
+    final scanWindow = Rect.fromCenter(center: center, width: scanAreaSizeWidth, height: scanAreaSizeHeight);*/
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
@@ -85,7 +86,7 @@ class _ScanScreenState extends State<ScanScreen> {
                   Positioned.fill(
                     child: MobileScanner(
                       controller: controller,
-                      scanWindow: scanWindow,
+                      //scanWindow: scanWindow,
                       onDetect: (barcodeCapture) async {
                         if (isProcessing) return;
                         if (barcodeCapture.barcodes.isEmpty) return;
@@ -99,7 +100,7 @@ class _ScanScreenState extends State<ScanScreen> {
                           final value = barcode.rawValue;
                           final exists = repository.searchByBarCode(value ?? '');
                           if (exists != null) {
-                            actionLoadDetailProduct(context, exists, isScan: true);
+                            actionLoadDetailProduct(context, exists, widget.isQuotation, isScan: true);
                           } else {
                             setState(() {
                               reload = true;

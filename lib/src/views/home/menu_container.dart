@@ -69,7 +69,7 @@ const List<OptionMenu> options = [
     index: 1,
     moduleName: 'Buscar\nProducto',
     iconName: AppOptionsImages.searchProduct,
-    route: '/sales/search',
+    route: '/sales/search/false',
   ),
   /*OptionMenu(
     index: 2,

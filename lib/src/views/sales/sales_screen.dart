@@ -64,7 +64,7 @@ Widget buildSalesScreen(BuildContext context) {
                 return GestureDetector(
                   onTap: () {
                     if (option.isActive) {
-                      context.push('/sales/search');
+                      context.push(option.route);
                     } else {
                       Fluttertoast.showToast(
                         msg: "Próximamente disponible",
@@ -129,8 +129,8 @@ Widget _buildOptionSale(BuildContext context, OptionSale option) {
 
 final optionsSale = [
   OptionSale(0, 'Buscar Producto', 'Encuentra artículos de manera rápida y precisa.', AppOptionsImages.salesSearch,
-      '/sales/search', true),
-  OptionSale(1, 'Cotizaciones', 'Prepara propuestas rápidas y detalladas.', AppOptionsImages.salesQuotation, '', false),
+      '/sales/search/false', true),
+  OptionSale(1, 'Cotizaciones', 'Prepara propuestas rápidas y detalladas.', AppOptionsImages.salesQuotation, '/quotation', true),
   OptionSale(2, 'Venta Electrónica', 'Optimiza el registro y consulta de tus ventas.',
       AppOptionsImages.salesElectronicSale, '', false),
   OptionSale(

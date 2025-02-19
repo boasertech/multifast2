@@ -7,6 +7,7 @@ final class LoadQProductDetailEvent extends QProductDetailEvent {
   final QProductDetailRequest request;
   final QProductModel model;
   final bool isScan;
+  final bool isQuotation;
 
-  LoadQProductDetailEvent(this.request, this.model, {this.isScan = false});
+  LoadQProductDetailEvent(this.request, this.model, this.isQuotation, {this.isScan = false});
 }

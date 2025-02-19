@@ -3,9 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:multifast/core/setup_locator.dart';
+import 'package:multifast/src/controllers/new_quotation_controller.dart';
+import 'package:multifast/src/controllers/product_controller.dart';
 import 'package:multifast/src/models/qproduct_model.dart';
+import 'package:multifast/src/models/qproduct_quotation.dart';
 import 'package:multifast/src/repositories/user_repository.dart';
 import 'package:multifast/src/views/sales/qproduct_detail/bloc/qproduct_detail_bloc.dart';
+import 'package:multifast/src/views/sales/qproduct_detail/qproduct_quantity.dart';
 import 'package:multifast/src/views/sales/search/camera_controller.dart';
 import 'package:multifast/src/views/widgets/back_widget.dart';
 import 'package:multifast/styles/app_colors.dart';
@@ -15,14 +19,25 @@ import 'package:multifast/styles/app_text_style.dart';
 class QProductScreen extends StatefulWidget {
   final QProductModel qproduct;
   final bool isScan;
-  const QProductScreen({super.key, required this.qproduct, required this.isScan});
+  final bool isQuotation;
+  const QProductScreen({super.key, required this.qproduct, required this.isScan, required this.isQuotation});
 
   @override
   State<QProductScreen> createState() => _QProductScreenState();
 }
 
 class _QProductScreenState extends State<QProductScreen> {
+  ProductController productController = getIt<ProductController>();
   int _optionSelected = 1;
+  int quantity = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    productController
+        .initQuantity(getIt<NewQuotationController>().getQuantityProduct(widget.qproduct.entity.productId.toInt()));
+  }
+
   @override
   Widget build(BuildContext context) {
     final model = widget.qproduct.entity;
@@ -39,20 +54,23 @@ class _QProductScreenState extends State<QProductScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.cls1,
           automaticallyImplyLeading: false,
           title: Row(
             children: [
-              BackWidget(onTap: () {
-                context.read<CameraControllerProvider>().startCamera();
-                context.pop();
-              }),
-              Text('Ver Producto', style: AppTextStyle.appBarStyle())
+              BackWidget(
+                  color: Colors.white,
+                  onTap: () {
+                    context.read<CameraControllerProvider>().startCamera();
+                    context.pop();
+                  }),
+              Text('Ver Producto', style: AppTextStyle.clsWhite(fontSize: 16))
             ],
           ),
         ),
         body: Column(
           children: [
+            SizedBox(height: 10.h),
             Expanded(
               flex: 4,
               child: Padding(
@@ -225,6 +243,69 @@ class _QProductScreenState extends State<QProductScreen> {
                     ]
                   ],
                 ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+              decoration: BoxDecoration(border: Border(top: BorderSide(color: AppColors.border, width: 0.6))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('5 ítems:', style: AppTextStyle.cls3Style()),
+                      Text('S/ 510.25', style: AppTextStyle.cls5Style(fontSize: 14, fontW: FontWeight.bold))
+                    ],
+                  ),
+                  Stack(
+                    children: [Positioned(child: Icon(Icons.abc)), Positioned(child: Icon(Icons.remove))],
+                  ),
+                  Container(
+                    width: 151.w,
+                    height: 40.h,
+                    decoration: BoxDecoration(color: AppColors.cls5, borderRadius: BorderRadius.circular(14.r)),
+                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            if (productController.quantity > 0) {
+                              productController.removeQuantity();
+                              getIt<NewQuotationController>().setQProductQuantity(
+                                  QProductQuotation(widget.qproduct, quantity: productController.quantity));
+                            }
+                          },
+                          child:
+                              Container(padding: EdgeInsets.all(8.w), child: Icon(Icons.remove, color: Colors.white)),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            showQProductQuantity(context, productController);
+                          },
+                          child: ValueListenableBuilder(
+                            valueListenable: productController.notifierQuantity,
+                            builder: (context, value, child) {
+                              return Text(value.toString(), style: AppTextStyle.clsWhite(fontSize: 18));
+                            },
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            productController.addQuantity();
+                            getIt<NewQuotationController>().setQProductQuantity(
+                                QProductQuotation(widget.qproduct, quantity: productController.quantity));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8.w),
+                            child: Icon(Icons.add, color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

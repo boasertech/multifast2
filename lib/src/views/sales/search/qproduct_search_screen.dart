@@ -11,6 +11,7 @@ import 'package:multifast/src/views/sales/qproduct_detail/bloc/qproduct_detail_b
 import 'package:multifast/src/views/sales/search/bloc/qproduct_bloc.dart';
 import 'package:multifast/src/views/sales/search/widgets/qproduct_container.dart';
 import 'package:multifast/src/views/widgets/back_widget.dart';
+import 'package:multifast/src/views/widgets/buttons_controls.dart';
 import 'package:multifast/src/views/widgets/loading_widgets.dart';
 import 'package:multifast/styles/app_colors.dart';
 import 'package:multifast/styles/app_images.dart';
@@ -18,7 +19,8 @@ import 'package:multifast/styles/app_text_style.dart';
 import 'package:multifast/utils/actions.dart';
 
 class QProductSearchScreen extends StatelessWidget {
-  const QProductSearchScreen({super.key});
+  final bool isQuotation;
+  const QProductSearchScreen({super.key, required this.isQuotation});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +28,9 @@ class QProductSearchScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is QProductDetailLoad) {
           if (state.isScan) {
-            context.push('/sales/qproduct/detail/${state.isScan.toString()}', extra: state.detail);
+            context.push('/sales/qproduct/detail/${state.isScan.toString()}/${state.isQuotation.toString()}', extra: state.detail);
           } else {
-            context.push('/sales/qproduct/detail/${state.isScan.toString()}', extra: state.detail);
+            context.push('/sales/qproduct/detail/${state.isScan.toString()}/${state.isQuotation.toString()}', extra: state.detail);
           }
         }
       },
@@ -215,6 +217,11 @@ class QProductSearchScreen extends StatelessWidget {
             child: Text('Productos favoritos', style: AppTextStyle.defaultStyle(fontW: FontWeight.w600, fontSize: 14)),
           ),
           _listQProducts(state),
+          if (isQuotation)
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
+              child: buildAppButtonWithOutExpanded(context, 'ítems'),
+            ),
         ],
       );
     } else {
@@ -294,7 +301,7 @@ class QProductSearchScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               itemCount: qproducts.length,
               itemBuilder: (context, index) {
-                return QProductContainer(qproduct: qproducts[index]);
+                return QProductContainer(qproduct: qproducts[index], isQuotation: isQuotation);
               },
             );
           },
@@ -351,7 +358,7 @@ class QProductSearchScreen extends StatelessWidget {
         Spacer(),
         GestureDetector(
           onTap: () {
-            context.push('/sales/search/scan');
+            context.push('/sales/search/scan/false');
           },
           child: SizedBox(
             width: 16.r,

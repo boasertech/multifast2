@@ -8,14 +8,15 @@ import 'package:multifast/utils/actions.dart';
 
 class QProductContainer extends StatelessWidget {
   final QProductModel qproduct;
-  const QProductContainer({super.key, required this.qproduct});
+  final bool isQuotation;
+  const QProductContainer({super.key, required this.qproduct, required this.isQuotation});
 
   @override
   Widget build(BuildContext context) {
     final value = qproduct.entity;
     return GestureDetector(
       onTap: () {
-        actionLoadDetailProduct(context, qproduct);
+        actionLoadDetailProduct(context, qproduct, isQuotation);
       },
       child: Container(
         decoration: BoxDecoration(border: Border(bottom: BorderSide(color: AppColors.cls7, width: 1.5))),
@@ -42,7 +43,18 @@ class QProductContainer extends StatelessWidget {
                       Text('Cod: ${value.productId}', style: AppTextStyle.lightStyle(color: AppColors.cls10)),
                       Text(value.name, style: AppTextStyle.defaultStyle()),
                       Spacer(),
-                      Text('S/ ${value.totalPrice.toStringAsFixed(2)}', style: AppTextStyle.cls2Style()),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('S/ ${value.totalPrice.toStringAsFixed(2)}', style: AppTextStyle.cls2Style()),
+                          if (isQuotation)
+                            Container(
+                                width: 25.w,
+                                height: 25.w,
+                                decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(6)),
+                                child: Center(child: Text('+', style: AppTextStyle.clsWhite(fontSize: 20))))
+                        ],
+                      ),
                       SizedBox(height: 6)
                     ],
                   ),

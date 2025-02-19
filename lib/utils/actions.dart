@@ -29,12 +29,12 @@ actionLoadProducts(BuildContext context) {
   context.read<QProductsBloc>().add(LoadedQProducts(request));
 }
 
-actionLoadDetailProduct(BuildContext context, QProductModel exists, {bool isScan = false}) {
+actionLoadDetailProduct(BuildContext context, QProductModel exists, bool isQuotation, {bool isScan = false}) {
   final branchId = getIt<UserRepository>().user.branch.branchId.toInt();
   final request = QProductDetailRequest()
     ..branchId = branchId
     ..productId = exists.entity.productId;
-  context.read<QProductDetailBloc>().add(LoadQProductDetailEvent(request, exists, isScan: isScan));
+  context.read<QProductDetailBloc>().add(LoadQProductDetailEvent(request, exists, isQuotation, isScan: isScan));
 }
 
 actionLoadDataEnterprise() async {

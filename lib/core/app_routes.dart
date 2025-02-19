@@ -5,6 +5,7 @@ import 'package:multifast/src/views/auth/trip/handle_trip_screen.dart';
 import 'package:multifast/src/views/auth/update_data/update_data_screen.dart';
 import 'package:multifast/src/views/home/handle_home_navigation.dart';
 import 'package:multifast/src/views/quotation/client_data/client_data_screean.dart';
+import 'package:multifast/src/views/quotation/new_quotation_screen.dart';
 import 'package:multifast/src/views/quotation/quotation_screen.dart';
 import 'package:multifast/src/views/sales/qproduct_detail/qproduct_screen.dart';
 import 'package:multifast/src/views/sales/sales_screen.dart';
@@ -15,7 +16,7 @@ import 'package:multifast/src/views/sales/search/scan_screen.dart';
 class AppRoutes {
   static final routes = GoRouter(
     initialLocation: '/trip',
-    //initialLocation: '/quotation',
+    //initialLocation: '/quotation/create',
     routes: [
       GoRoute(
         path: '/auth',
@@ -28,22 +29,29 @@ class AppRoutes {
         builder: (context, state) => const HandleHomeNavigation(),
       ),
       GoRoute(
-        path: '/sales/search',
+        path: '/sales/search/:isQuotation',
         name: 'search',
-        builder: (context, state) => QProductSearchScreen(),
+        builder: (context, state) {
+          final isQuotation = (state.pathParameters['isQuotation'] ?? 'false') == 'true';
+          return QProductSearchScreen(isQuotation: isQuotation);
+        },
       ),
       GoRoute(
-        path: '/sales/search/scan',
+        path: '/sales/search/scan/:isQuotation',
         name: 'scanner',
-        builder: (context, state) => ScanScreen(),
+        builder: (context, state) {
+          final isQuotation = (state.pathParameters['isQuotation'] ?? 'false') == 'true';
+          return ScanScreen(isQuotation: isQuotation);
+        },
       ),
       GoRoute(
-        path: '/sales/qproduct/detail/:isScan',
+        path: '/sales/qproduct/detail/:isScan/:isQuotation',
         name: 'qproduct',
         builder: (context, state) {
           final qproduct = state.extra as QProductModel;
           final isScan = state.pathParameters['isScan'] == 'true';
-          return QProductScreen(qproduct: qproduct, isScan: isScan);
+          final isQuotation = state.pathParameters['isQuotation'] == 'true';
+          return QProductScreen(qproduct: qproduct, isScan: isScan, isQuotation: isQuotation);
         },
       ),
       GoRoute(
@@ -78,6 +86,11 @@ class AppRoutes {
         path: '/quotation',
         name: 'quotation',
         builder: (context, state) => QuotationScreen(),
+      ),
+      GoRoute(
+        path: '/quotation/create',
+        name: 'quotation create',
+        builder: (context, state) => NewQuotationScreen(),
       ),
     ],
   );

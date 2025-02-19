@@ -18,7 +18,7 @@ class QProductDetailBloc extends Bloc<QProductDetailEvent, QProductDetailState> 
         (error) => emit(QProductDetailError(error)),
         (detail) {
           event.model.detail = detail;
-          emit(QProductDetailLoad(event.model, event.isScan));
+          emit(QProductDetailLoad(event.model, event.isScan, event.isQuotation));
         },
       );
     });

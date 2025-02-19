@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:multifast/src/controllers/new_quotation_controller.dart';
+import 'package:multifast/src/controllers/product_controller.dart';
 import 'package:multifast/src/local_repositories/category_repository.dart' as local;
 import 'package:multifast/src/local_repositories/storage_repository.dart';
 import 'package:multifast/src/local_repositories/sub_category_repository.dart';
@@ -39,6 +41,11 @@ void setupLocator() {
   getIt.registerLazySingleton<AbsQProductDetailService>(() => QProductDetailGrpcService());
   getIt.registerLazySingleton<AbsUserService>(() => UserGrpcService());
   getIt.registerLazySingleton<AbsEnterpriseService>(() => EnterpriseGrpcService());
+
+  //controllers
+  getIt.registerLazySingleton<NewQuotationController>(() => NewQuotationController());
+  //getIt.registerLazySingleton<QuotationGenerate>(() => QuotationGenerate());
+  getIt.registerFactory<ProductController>(() => ProductController());
   /*getIt.registerSingleton<MyService>(MyService());
   getIt.registerLazySingleton<AnotherService>(() => AnotherService());
   getIt.registerFactory<YetAnotherService>(() => YetAnotherService());*/
