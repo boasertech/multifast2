@@ -19,6 +19,7 @@ class AppColors {
   static const Color border = Color(0XFFE4E4E7);
   static const Color empty = Color(0XFFC4C4C4);
   static const Color error = Color(0XFFF65050);
+  static const Color locked = Color(0XFFF7F7F7);
   static const Color gradient1 = Color(0XFFF97316);
 
   static const Color orange = Color(0xFFF1891B);

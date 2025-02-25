@@ -6,6 +6,15 @@ import "error.proto";
 
 service AuthService {
   rpc Login (LoginRequest) returns (OneOfAuthResponse);
+  rpc Logout (CloseRequest) returns (CloseResponse);
+}
+
+message CloseRequest {
+  int32 userId = 1;
+}
+
+message CloseResponse {
+  int32 userId = 1;
 }
 
 message LoginRequest {
@@ -64,6 +73,7 @@ message UserResponse {
   string fullname = 5;
   string rolName = 6;
   string lastConnection = 7;
+  int32 userId = 8;
 }
 
 message OneOfAuthResponse {

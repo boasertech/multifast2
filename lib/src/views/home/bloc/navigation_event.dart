@@ -8,3 +8,5 @@ final class NavScreenEvent extends NavigationEvent {
 
   NavScreenEvent(this.route);
 }
+
+final class CloseNavigation extends NavigationEvent {}

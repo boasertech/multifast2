@@ -10,6 +10,11 @@ abstract class AbsValueNotifier {
   set list(List<AbsModel> value) => _list = List.from(value);
   set listTemp(List<AbsModel> value) => _listTemp = List.from(value);
 
+  void close() {
+    _list = [];
+    _listTemp = [];
+  }
+
   void setListOriginal() {
     listTemp = list.map((item) => item.clone()).toList();
     notifierList.value = listTemp;
@@ -29,6 +34,10 @@ abstract class AbsValueNotifier {
 
   bool isSelectAll() {
     return listTemp.isNotEmpty && listTemp.every((item) => item.isSelected);
+  }
+
+  bool isSelectNone() {
+    return listTemp.isEmpty || listTemp.every((item) => !item.isSelected);
   }
 
   void logoutCleandData() {

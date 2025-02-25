@@ -25,6 +25,10 @@ class AuthServiceClient extends $grpc.Client {
       '/auth.AuthService/Login',
       ($0.LoginRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.OneOfAuthResponse.fromBuffer(value));
+  static final _$logout = $grpc.ClientMethod<$0.CloseRequest, $0.CloseResponse>(
+      '/auth.AuthService/Logout',
+      ($0.CloseRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.CloseResponse.fromBuffer(value));
 
   AuthServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -34,6 +38,10 @@ class AuthServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.OneOfAuthResponse> login($0.LoginRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$login, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.CloseResponse> logout($0.CloseRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$logout, request, options: options);
   }
 }
 
@@ -49,11 +57,23 @@ abstract class AuthServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.LoginRequest.fromBuffer(value),
         ($0.OneOfAuthResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.CloseRequest, $0.CloseResponse>(
+        'Logout',
+        logout_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.CloseRequest.fromBuffer(value),
+        ($0.CloseResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.OneOfAuthResponse> login_Pre($grpc.ServiceCall call, $async.Future<$0.LoginRequest> request) async {
     return login(call, await request);
   }
 
+  $async.Future<$0.CloseResponse> logout_Pre($grpc.ServiceCall call, $async.Future<$0.CloseRequest> request) async {
+    return logout(call, await request);
+  }
+
   $async.Future<$0.OneOfAuthResponse> login($grpc.ServiceCall call, $0.LoginRequest request);
+  $async.Future<$0.CloseResponse> logout($grpc.ServiceCall call, $0.CloseRequest request);
 }

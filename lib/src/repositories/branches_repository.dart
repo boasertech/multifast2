@@ -54,12 +54,14 @@ class BranchesRepository {
 
   void searchBranch(String value) {
     final list = List.of(branches);
-    if (value.isEmpty) {
-      _branchesController.add(list);
-      return;
-    }
-    final filteredList =
-        list.where((enterprise) => enterprise.entity.name.toLowerCase().contains(value.toLowerCase())).toList();
+    final searchTerms = value.trim().split(RegExp(r'\s+')).map((e) => e.toUpperCase()).toList();
+
+    final filteredList = list.where((branch) {
+      final searchField = branch.entity.name.toUpperCase();
+
+      return searchTerms.every((term) => searchField.contains(term));
+    }).toList();
+
     _branchesController.add(filteredList);
   }
 }

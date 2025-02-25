@@ -7,7 +7,7 @@ class QuotationDb {
     final db = await FastCloudDb.instance.database;
     return await db.insert(
       'quotation',
-      quotation.toMap(),
+      quotation.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -17,7 +17,13 @@ class QuotationDb {
     final List<Map<String, dynamic>> maps = await db.query('quotation');
 
     return List.generate(maps.length, (i) {
-      return QuotationSql.fromMap(maps[i]);
+      return QuotationSql.fromJson(maps[i]);
     });
   }
+
+  Future<int> getQuotationCount() async {
+  final db = await FastCloudDb.instance.database;
+  final result = await db.rawQuery('SELECT COUNT(*) as count FROM quotation');
+  return Sqflite.firstIntValue(result) ?? 0;
+}
 }

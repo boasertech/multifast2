@@ -3,8 +3,8 @@ class QuotationSql {
   final int numberQuotation;
   final int? clientId;
   final String? dateRegister;
-  final String? validatyId;
-  final String? validatyDuration;
+  final int? validityId;
+  final String? validityDuration;
   final int? documentTypeId;
   final int? coinId;
   final double? coinChange;
@@ -18,8 +18,8 @@ class QuotationSql {
     required this.numberQuotation,
     this.clientId,
     this.dateRegister,
-    this.validatyId,
-    this.validatyDuration,
+    this.validityId,
+    this.validityDuration,
     this.documentTypeId,
     this.coinId,
     this.coinChange,
@@ -29,14 +29,14 @@ class QuotationSql {
     this.observation,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'quotationId': quotationId,
       'numberQuotation': numberQuotation,
       'clientId': clientId,
       'dateRegister': dateRegister,
-      'validatyId': validatyId,
-      'validatyDuration': validatyDuration,
+      'validityId': validityId,
+      'validityDuration': validityDuration,
       'documentTypeId': documentTypeId,
       'coinId': coinId,
       'coinChange': coinChange,
@@ -47,21 +47,21 @@ class QuotationSql {
     };
   }
 
-  factory QuotationSql.fromMap(Map<String, dynamic> map) {
+  factory QuotationSql.fromJson(Map<String, dynamic> json) {
     return QuotationSql(
-      quotationId: map['quotationId'],
-      numberQuotation: map['numberQuotation'],
-      clientId: map['clientId'],
-      dateRegister: map['dateRegister'],
-      validatyId: map['validatyId'],
-      validatyDuration: map['validatyDuration'],
-      documentTypeId: map['documentTypeId'],
-      coinId: map['coinId'],
-      coinChange: map['coinChange'],
-      userSaleId: map['userSaleId'],
-      payId: map['payId'],
-      formatPrintId: map['formatPrintId'],
-      observation: map['observation'],
+      quotationId: json['quotationId'] as int?,
+      numberQuotation: json['numberQuotation'] as int,
+      clientId: json['clientId'] as int?,
+      dateRegister: json['dateRegister'] as String?,
+      validityId: json['validityId'] as int?,
+      validityDuration: json['validityDuration'] as String?,
+      documentTypeId: json['documentTypeId'] as int?,
+      coinId: json['coinId'] as int?,
+      coinChange: (json['coinChange'] as num?)?.toDouble(),
+      userSaleId: json['userSaleId'] as int?,
+      payId: json['payId'] as int?,
+      formatPrintId: json['formatPrintId'] as int?,
+      observation: json['observation'] as String?,
     );
   }
 }

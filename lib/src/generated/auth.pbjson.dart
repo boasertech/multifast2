@@ -13,6 +13,30 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use closeRequestDescriptor instead')
+const CloseRequest$json = {
+  '1': 'CloseRequest',
+  '2': [
+    {'1': 'userId', '3': 1, '4': 1, '5': 5, '10': 'userId'},
+  ],
+};
+
+/// Descriptor for `CloseRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List closeRequestDescriptor = $convert.base64Decode(
+    'CgxDbG9zZVJlcXVlc3QSFgoGdXNlcklkGAEgASgFUgZ1c2VySWQ=');
+
+@$core.Deprecated('Use closeResponseDescriptor instead')
+const CloseResponse$json = {
+  '1': 'CloseResponse',
+  '2': [
+    {'1': 'userId', '3': 1, '4': 1, '5': 5, '10': 'userId'},
+  ],
+};
+
+/// Descriptor for `CloseResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List closeResponseDescriptor = $convert.base64Decode(
+    'Cg1DbG9zZVJlc3BvbnNlEhYKBnVzZXJJZBgBIAEoBVIGdXNlcklk');
+
 @$core.Deprecated('Use loginRequestDescriptor instead')
 const LoginRequest$json = {
   '1': 'LoginRequest',
@@ -154,6 +178,7 @@ const UserResponse$json = {
     {'1': 'fullname', '3': 5, '4': 1, '5': 9, '10': 'fullname'},
     {'1': 'rolName', '3': 6, '4': 1, '5': 9, '10': 'rolName'},
     {'1': 'lastConnection', '3': 7, '4': 1, '5': 9, '10': 'lastConnection'},
+    {'1': 'userId', '3': 8, '4': 1, '5': 5, '10': 'userId'},
   ],
 };
 
@@ -163,7 +188,7 @@ final $typed_data.Uint8List userResponseDescriptor = $convert.base64Decode(
     '5hdXRoLkVudGVycHJpc2VSB2NvbXBhbnkSJAoGYnJhbmNoGAMgASgLMgwuYXV0aC5CcmFuY2hS'
     'BmJyYW5jaBIaCgh1c2VybmFtZRgEIAEoCVIIdXNlcm5hbWUSGgoIZnVsbG5hbWUYBSABKAlSCG'
     'Z1bGxuYW1lEhgKB3JvbE5hbWUYBiABKAlSB3JvbE5hbWUSJgoObGFzdENvbm5lY3Rpb24YByAB'
-    'KAlSDmxhc3RDb25uZWN0aW9u');
+    'KAlSDmxhc3RDb25uZWN0aW9uEhYKBnVzZXJJZBgIIAEoBVIGdXNlcklk');
 
 @$core.Deprecated('Use oneOfAuthResponseDescriptor instead')
 const OneOfAuthResponse$json = {

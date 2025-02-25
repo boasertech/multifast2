@@ -39,17 +39,14 @@ class _QuotationScreenState extends State<QuotationScreen> {
             scale: 1.8,
             color: Colors.white,
           ),
-          Container(
-            //padding: EdgeInsets.only(top: 0.w),
-            child: SizedBox(
-              height: 30.h,
-              width: 80.w,
-              child: buildAppButtonWithOutExpanded(
-                context,
-                "Registradas",
-                radiusCircular: 10.r,
-                action: () {},
-              ),
+          SizedBox(
+            height: 30.h,
+            width: 80.w,
+            child: buildAppButtonWithOutExpanded(
+              context,
+              "Registradas",
+              radiusCircular: 10.r,
+              action: () {},
             ),
           )
         ],

@@ -105,8 +105,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
-    on<CloseSessionEvent>((event, emit) async{
+    on<CloseSessionEvent>((event, emit) async {
       logout();
+      final userId = getIt<UserRepository>().user.userId;
+      final request = CloseRequest()..userId = userId;
+      await service.logout(request);
       emit(AuthInitial());
     });
   }

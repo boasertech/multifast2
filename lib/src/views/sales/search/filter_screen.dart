@@ -62,19 +62,20 @@ class _FilterScreenState extends State<FilterScreen> {
                       );
                     },
                   ),
-                  ValueListenableBuilder(
-                    valueListenable: getIt<SubCategoryRepository>().allSelect,
-                    builder: (context, value, child) {
-                      return _buildFilterType(
-                        context,
-                        FilterType(2, 'Sub Categoría', value, AppIcons.storages),
-                        action: () {
-                          getIt<SubCategoryRepository>().setListOriginal();
-                          _showBottomSheetSubCategories(context);
-                        },
-                      );
-                    },
-                  ),
+                  if (getIt<SubCategoryRepository>().list.isNotEmpty)
+                    ValueListenableBuilder(
+                      valueListenable: getIt<SubCategoryRepository>().allSelect,
+                      builder: (context, value, child) {
+                        return _buildFilterType(
+                          context,
+                          FilterType(2, 'Sub Categoría', value, AppIcons.storages),
+                          action: () {
+                            getIt<SubCategoryRepository>().setListOriginal();
+                            _showBottomSheetSubCategories(context);
+                          },
+                        );
+                      },
+                    ),
                   ValueListenableBuilder(
                     valueListenable: getIt<StorageRepository>().allSelect,
                     builder: (context, value, child) {

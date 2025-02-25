@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:multifast/core/setup_locator.dart';
+import 'package:multifast/src/controllers/new_quotation_controller.dart';
 import 'package:multifast/src/controllers/product_controller.dart';
+import 'package:multifast/src/models/qproduct_model.dart';
+import 'package:multifast/src/models/qproduct_quotation.dart';
 import 'package:multifast/src/views/widgets/buttons_controls.dart';
 import 'package:multifast/styles/app_colors.dart';
 import 'package:multifast/styles/app_text_style.dart';
 
 class QProductQuantity extends StatefulWidget {
   final ProductController productController;
-  const QProductQuantity({super.key, required this.productController});
+  final QProductModel qproduct;
+  const QProductQuantity({super.key, required this.productController, required this.qproduct});
 
   @override
   State<QProductQuantity> createState() => _QProductQuantityState();
@@ -24,7 +29,7 @@ class _QProductQuantityState extends State<QProductQuantity> {
 
   @override
   Widget build(BuildContext context) {
-    int count = int.parse(_quantityController.text);
+    int count = int.tryParse(_quantityController.text) ?? 0;
     return Container(
       width: 226.w,
       height: 217.h,
@@ -61,6 +66,9 @@ class _QProductQuantityState extends State<QProductQuantity> {
                   controller: _quantityController,
                   style: AppTextStyle.cls3Style(fontSize: 21, fontW: FontWeight.bold),
                   textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    setState(() {});
+                  },
                 ),
               ),
               GestureDetector(
@@ -83,7 +91,9 @@ class _QProductQuantityState extends State<QProductQuantity> {
             context,
             'Guardar',
             action: () {
+              int count = int.tryParse(_quantityController.text) ?? 0;
               widget.productController.initQuantity(count);
+              getIt<NewQuotationController>().setQProductQuantity(QProductQuotation(widget.qproduct, quantity: count));
               context.pop();
             },
           )
@@ -93,13 +103,13 @@ class _QProductQuantityState extends State<QProductQuantity> {
   }
 }
 
-showQProductQuantity(BuildContext context, ProductController productController) {
+showQProductQuantity(BuildContext context, ProductController productController, QProductModel qproduct) {
   showDialog(
     context: context,
     builder: (context) {
       return Dialog(
         backgroundColor: Colors.white,
-        child: QProductQuantity(productController: productController),
+        child: QProductQuantity(productController: productController, qproduct: qproduct),
       );
     },
   );

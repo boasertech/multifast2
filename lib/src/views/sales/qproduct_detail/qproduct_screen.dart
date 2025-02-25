@@ -245,69 +245,78 @@ class _QProductScreenState extends State<QProductScreen> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-              decoration: BoxDecoration(border: Border(top: BorderSide(color: AppColors.border, width: 0.6))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('5 ítems:', style: AppTextStyle.cls3Style()),
-                      Text('S/ 510.25', style: AppTextStyle.cls5Style(fontSize: 14, fontW: FontWeight.bold))
-                    ],
-                  ),
-                  Stack(
-                    children: [Positioned(child: Icon(Icons.abc)), Positioned(child: Icon(Icons.remove))],
-                  ),
-                  Container(
-                    width: 151.w,
-                    height: 40.h,
-                    decoration: BoxDecoration(color: AppColors.cls5, borderRadius: BorderRadius.circular(14.r)),
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            if (productController.quantity > 0) {
-                              productController.removeQuantity();
+            if (widget.isQuotation)
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                decoration: BoxDecoration(border: Border(top: BorderSide(color: AppColors.border, width: 0.6))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ValueListenableBuilder(
+                      valueListenable: getIt<NewQuotationController>().notifierList,
+                      builder: (context, value, child) {
+                        int count = value.length;
+                        String countPrefix = count == 1 ? 'ítem' : 'ítems';
+                        double total = getIt<NewQuotationController>().getTotal();
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('$count $countPrefix:', style: AppTextStyle.cls3Style()),
+                            Text('S/ ${total.toStringAsFixed(2)}', style: AppTextStyle.cls5Style(fontSize: 14, fontW: FontWeight.bold))
+                          ],
+                        );
+                      },
+                    ),
+                    Stack(
+                      children: [Positioned(child: Icon(Icons.abc)), Positioned(child: Icon(Icons.remove))],
+                    ),
+                    Container(
+                      width: 151.w,
+                      height: 40.h,
+                      decoration: BoxDecoration(color: AppColors.cls5, borderRadius: BorderRadius.circular(14.r)),
+                      padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              if (productController.quantity > 0) {
+                                productController.removeQuantity();
+                                getIt<NewQuotationController>().setQProductQuantity(
+                                    QProductQuotation(widget.qproduct, quantity: productController.quantity));
+                              }
+                            },
+                            child:
+                                Container(padding: EdgeInsets.all(8.w), child: Icon(Icons.remove, color: Colors.white)),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              showQProductQuantity(context, productController, widget.qproduct);
+                            },
+                            child: ValueListenableBuilder(
+                              valueListenable: productController.notifierQuantity,
+                              builder: (context, value, child) {
+                                return Text(value.toString(), style: AppTextStyle.clsWhite(fontSize: 18));
+                              },
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              productController.addQuantity();
                               getIt<NewQuotationController>().setQProductQuantity(
                                   QProductQuotation(widget.qproduct, quantity: productController.quantity));
-                            }
-                          },
-                          child:
-                              Container(padding: EdgeInsets.all(8.w), child: Icon(Icons.remove, color: Colors.white)),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            showQProductQuantity(context, productController);
-                          },
-                          child: ValueListenableBuilder(
-                            valueListenable: productController.notifierQuantity,
-                            builder: (context, value, child) {
-                              return Text(value.toString(), style: AppTextStyle.clsWhite(fontSize: 18));
                             },
+                            child: Container(
+                              padding: EdgeInsets.all(8.w),
+                              child: Icon(Icons.add, color: Colors.white),
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            productController.addQuantity();
-                            getIt<NewQuotationController>().setQProductQuantity(
-                                QProductQuotation(widget.qproduct, quantity: productController.quantity));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(8.w),
-                            child: Icon(Icons.add, color: Colors.white),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
           ],
         ),
       ),

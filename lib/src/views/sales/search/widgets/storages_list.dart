@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:multifast/core/setup_locator.dart';
 import 'package:multifast/src/local_repositories/storage_repository.dart';
 import 'package:multifast/src/models/abs_model.dart';
@@ -89,6 +90,18 @@ class StoragesList extends StatelessWidget {
                     context,
                     'Guardar',
                     action: () {
+                      if (repository.isSelectNone()) {
+                        Fluttertoast.showToast(
+                          msg: "Debe de mantener almenos un almacen",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 2,
+                          backgroundColor: Colors.black54,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                        return;
+                      }
                       repository.saveChanges();
                       Navigator.of(context).pop();
                     },

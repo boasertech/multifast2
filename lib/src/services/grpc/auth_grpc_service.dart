@@ -24,4 +24,18 @@ class AuthGrpcService extends AbsAuthService {
       return Either.left(ErrorModel('FAIL_CONECCTION', 'Se interrumpió la conexión con el servidor'));
     }
   }
+
+  @override
+  Future<Either<ErrorModel, CloseResponse>> logout(CloseRequest request) async {
+    try {
+      final stopwatch = Stopwatch()..start();
+      final response = await _client.logout(request, options: Config.getCallOptions(Config.token));
+      stopwatch.stop();
+      Config.printDebug('Logout - Tiempo transcurrido: ${stopwatch.elapsedMilliseconds} ms');
+      return Either.right(response);
+    } catch (e) {
+      Config.talker.error('FAIL_CONECCTION', e);
+      return Either.left(ErrorModel('FAIL_CONECCTION', 'Se interrumpió la conexión con el servidor'));
+    }
+  }
 }

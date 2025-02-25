@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:multifast/src/const_repositories/enterprise_repository.dart';
 import 'package:multifast/src/controllers/new_quotation_controller.dart';
 import 'package:multifast/src/controllers/product_controller.dart';
 import 'package:multifast/src/local_repositories/category_repository.dart' as local;
@@ -34,7 +35,8 @@ void setupLocator() {
   getIt.registerLazySingleton<StorageRepository>(() => StorageRepository());
   getIt.registerLazySingleton<local.CategoryRepository>(() => local.CategoryRepository());
   getIt.registerLazySingleton<SubCategoryRepository>(() => SubCategoryRepository());
-  
+  getIt.registerLazySingleton<EnterpriseRepository>(() => EnterpriseRepository());
+
   //services
   getIt.registerLazySingleton<AbsQProductService>(() => QProductGrpcService());
   getIt.registerLazySingleton<AbsAuthService>(() => AuthGrpcService());

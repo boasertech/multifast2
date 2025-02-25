@@ -16,6 +16,106 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'error.pb.dart' as $1;
 
+class CloseRequest extends $pb.GeneratedMessage {
+  factory CloseRequest({
+    $core.int? userId,
+  }) {
+    final $result = create();
+    if (userId != null) {
+      $result.userId = userId;
+    }
+    return $result;
+  }
+  CloseRequest._() : super();
+  factory CloseRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CloseRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CloseRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'userId', $pb.PbFieldType.O3, protoName: 'userId')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CloseRequest clone() => CloseRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CloseRequest copyWith(void Function(CloseRequest) updates) => super.copyWith((message) => updates(message as CloseRequest)) as CloseRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static CloseRequest create() => CloseRequest._();
+  CloseRequest createEmptyInstance() => create();
+  static $pb.PbList<CloseRequest> createRepeated() => $pb.PbList<CloseRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CloseRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CloseRequest>(create);
+  static CloseRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get userId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set userId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUserId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUserId() => clearField(1);
+}
+
+class CloseResponse extends $pb.GeneratedMessage {
+  factory CloseResponse({
+    $core.int? userId,
+  }) {
+    final $result = create();
+    if (userId != null) {
+      $result.userId = userId;
+    }
+    return $result;
+  }
+  CloseResponse._() : super();
+  factory CloseResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CloseResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CloseResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'auth'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'userId', $pb.PbFieldType.O3, protoName: 'userId')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CloseResponse clone() => CloseResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CloseResponse copyWith(void Function(CloseResponse) updates) => super.copyWith((message) => updates(message as CloseResponse)) as CloseResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static CloseResponse create() => CloseResponse._();
+  CloseResponse createEmptyInstance() => create();
+  static $pb.PbList<CloseResponse> createRepeated() => $pb.PbList<CloseResponse>();
+  @$core.pragma('dart2js:noInline')
+  static CloseResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CloseResponse>(create);
+  static CloseResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get userId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set userId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUserId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUserId() => clearField(1);
+}
+
 class LoginRequest extends $pb.GeneratedMessage {
   factory LoginRequest({
     $core.String? username,
@@ -633,6 +733,7 @@ class UserResponse extends $pb.GeneratedMessage {
     $core.String? fullname,
     $core.String? rolName,
     $core.String? lastConnection,
+    $core.int? userId,
   }) {
     final $result = create();
     if (token != null) {
@@ -656,6 +757,9 @@ class UserResponse extends $pb.GeneratedMessage {
     if (lastConnection != null) {
       $result.lastConnection = lastConnection;
     }
+    if (userId != null) {
+      $result.userId = userId;
+    }
     return $result;
   }
   UserResponse._() : super();
@@ -670,6 +774,7 @@ class UserResponse extends $pb.GeneratedMessage {
     ..aOS(5, _omitFieldNames ? '' : 'fullname')
     ..aOS(6, _omitFieldNames ? '' : 'rolName', protoName: 'rolName')
     ..aOS(7, _omitFieldNames ? '' : 'lastConnection', protoName: 'lastConnection')
+    ..a<$core.int>(8, _omitFieldNames ? '' : 'userId', $pb.PbFieldType.O3, protoName: 'userId')
     ..hasRequiredFields = false
   ;
 
@@ -760,6 +865,15 @@ class UserResponse extends $pb.GeneratedMessage {
   $core.bool hasLastConnection() => $_has(6);
   @$pb.TagNumber(7)
   void clearLastConnection() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.int get userId => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set userId($core.int v) { $_setSignedInt32(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasUserId() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearUserId() => clearField(8);
 }
 
 enum OneOfAuthResponse_Response {

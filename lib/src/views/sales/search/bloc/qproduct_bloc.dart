@@ -63,5 +63,9 @@ class QProductsBloc extends Bloc<QProductsEvent, QProductsState> {
         return events.debounceTime(const Duration(milliseconds: 200)).flatMap(mapper);
       },
     );
+
+    on<CloseQProducts>((event, emit) async {
+      emit(QProductsInitial());
+    });
   }
 }

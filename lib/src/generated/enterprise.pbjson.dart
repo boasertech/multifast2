@@ -13,6 +13,36 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use validityOfferDescriptor instead')
+const ValidityOffer$json = {
+  '1': 'ValidityOffer',
+  '2': [
+    {'1': 'validityOfferId', '3': 1, '4': 1, '5': 5, '10': 'validityOfferId'},
+    {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'duration', '3': 3, '4': 1, '5': 5, '10': 'duration'},
+  ],
+};
+
+/// Descriptor for `ValidityOffer`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List validityOfferDescriptor = $convert.base64Decode(
+    'Cg1WYWxpZGl0eU9mZmVyEigKD3ZhbGlkaXR5T2ZmZXJJZBgBIAEoBVIPdmFsaWRpdHlPZmZlck'
+    'lkEhIKBG5hbWUYAiABKAlSBG5hbWUSGgoIZHVyYXRpb24YAyABKAVSCGR1cmF0aW9u');
+
+@$core.Deprecated('Use payConditionDescriptor instead')
+const PayCondition$json = {
+  '1': 'PayCondition',
+  '2': [
+    {'1': 'payConditionId', '3': 1, '4': 1, '5': 5, '10': 'payConditionId'},
+    {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'isSunat', '3': 3, '4': 1, '5': 8, '10': 'isSunat'},
+  ],
+};
+
+/// Descriptor for `PayCondition`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List payConditionDescriptor = $convert.base64Decode(
+    'CgxQYXlDb25kaXRpb24SJgoOcGF5Q29uZGl0aW9uSWQYASABKAVSDnBheUNvbmRpdGlvbklkEh'
+    'IKBG5hbWUYAiABKAlSBG5hbWUSGAoHaXNTdW5hdBgDIAEoCFIHaXNTdW5hdA==');
+
 @$core.Deprecated('Use globalRequestDescriptor instead')
 const GlobalRequest$json = {
   '1': 'GlobalRequest',
@@ -105,6 +135,32 @@ final $typed_data.Uint8List listSubCategoryResponseDescriptor = $convert.base64D
     'ChdMaXN0U3ViQ2F0ZWdvcnlSZXNwb25zZRI7Cg1zdWJDYXRlZ29yaWVzGAEgAygLMhUuY2F0ZW'
     'dvcnkuU3ViQ2F0ZWdvcnlSDXN1YkNhdGVnb3JpZXM=');
 
+@$core.Deprecated('Use listValidityOfferResponseDescriptor instead')
+const ListValidityOfferResponse$json = {
+  '1': 'ListValidityOfferResponse',
+  '2': [
+    {'1': 'validityOffers', '3': 1, '4': 3, '5': 11, '6': '.enterprise.ValidityOffer', '10': 'validityOffers'},
+  ],
+};
+
+/// Descriptor for `ListValidityOfferResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listValidityOfferResponseDescriptor = $convert.base64Decode(
+    'ChlMaXN0VmFsaWRpdHlPZmZlclJlc3BvbnNlEkEKDnZhbGlkaXR5T2ZmZXJzGAEgAygLMhkuZW'
+    '50ZXJwcmlzZS5WYWxpZGl0eU9mZmVyUg52YWxpZGl0eU9mZmVycw==');
+
+@$core.Deprecated('Use listPayConditionResponseDescriptor instead')
+const ListPayConditionResponse$json = {
+  '1': 'ListPayConditionResponse',
+  '2': [
+    {'1': 'payConditions', '3': 1, '4': 3, '5': 11, '6': '.enterprise.PayCondition', '10': 'payConditions'},
+  ],
+};
+
+/// Descriptor for `ListPayConditionResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listPayConditionResponseDescriptor = $convert.base64Decode(
+    'ChhMaXN0UGF5Q29uZGl0aW9uUmVzcG9uc2USPgoNcGF5Q29uZGl0aW9ucxgBIAMoCzIYLmVudG'
+    'VycHJpc2UuUGF5Q29uZGl0aW9uUg1wYXlDb25kaXRpb25z');
+
 @$core.Deprecated('Use dataEnterpriseResponseDescriptor instead')
 const DataEnterpriseResponse$json = {
   '1': 'DataEnterpriseResponse',
@@ -113,6 +169,8 @@ const DataEnterpriseResponse$json = {
     {'1': 'listStorageResponse', '3': 2, '4': 1, '5': 11, '6': '.enterprise.ListStorageResponse', '10': 'listStorageResponse'},
     {'1': 'listCategoryResponse', '3': 3, '4': 1, '5': 11, '6': '.enterprise.ListCategoryResponse', '10': 'listCategoryResponse'},
     {'1': 'listSubCategoryResponse', '3': 4, '4': 1, '5': 11, '6': '.enterprise.ListSubCategoryResponse', '10': 'listSubCategoryResponse'},
+    {'1': 'listValidityOfferResponse', '3': 5, '4': 1, '5': 11, '6': '.enterprise.ListValidityOfferResponse', '10': 'listValidityOfferResponse'},
+    {'1': 'listPayConditionResponse', '3': 6, '4': 1, '5': 11, '6': '.enterprise.ListPayConditionResponse', '10': 'listPayConditionResponse'},
   ],
 };
 
@@ -123,5 +181,9 @@ final $typed_data.Uint8List dataEnterpriseResponseDescriptor = $convert.base64De
     'YWdlUmVzcG9uc2VSE2xpc3RTdG9yYWdlUmVzcG9uc2USVAoUbGlzdENhdGVnb3J5UmVzcG9uc2'
     'UYAyABKAsyIC5lbnRlcnByaXNlLkxpc3RDYXRlZ29yeVJlc3BvbnNlUhRsaXN0Q2F0ZWdvcnlS'
     'ZXNwb25zZRJdChdsaXN0U3ViQ2F0ZWdvcnlSZXNwb25zZRgEIAEoCzIjLmVudGVycHJpc2UuTG'
-    'lzdFN1YkNhdGVnb3J5UmVzcG9uc2VSF2xpc3RTdWJDYXRlZ29yeVJlc3BvbnNl');
+    'lzdFN1YkNhdGVnb3J5UmVzcG9uc2VSF2xpc3RTdWJDYXRlZ29yeVJlc3BvbnNlEmMKGWxpc3RW'
+    'YWxpZGl0eU9mZmVyUmVzcG9uc2UYBSABKAsyJS5lbnRlcnByaXNlLkxpc3RWYWxpZGl0eU9mZm'
+    'VyUmVzcG9uc2VSGWxpc3RWYWxpZGl0eU9mZmVyUmVzcG9uc2USYAoYbGlzdFBheUNvbmRpdGlv'
+    'blJlc3BvbnNlGAYgASgLMiQuZW50ZXJwcmlzZS5MaXN0UGF5Q29uZGl0aW9uUmVzcG9uc2VSGG'
+    'xpc3RQYXlDb25kaXRpb25SZXNwb25zZQ==');
 

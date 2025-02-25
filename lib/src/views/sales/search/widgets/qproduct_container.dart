@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:multifast/core/setup_locator.dart';
+import 'package:multifast/src/controllers/new_quotation_controller.dart';
 import 'package:multifast/src/models/qproduct_model.dart';
 import 'package:multifast/styles/app_colors.dart';
 import 'package:multifast/styles/app_images.dart';
@@ -14,6 +16,12 @@ class QProductContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final value = qproduct.entity;
+    int quantity = 0;
+    String quantityText = '';
+    if (isQuotation) {
+      quantity = getIt<NewQuotationController>().getQuantityProduct(qproduct.entity.productId.toInt());
+      quantityText = quantity == 0 ? '+' : quantity.toString();
+    }
     return GestureDetector(
       onTap: () {
         actionLoadDetailProduct(context, qproduct, isQuotation);
@@ -52,7 +60,7 @@ class QProductContainer extends StatelessWidget {
                                 width: 25.w,
                                 height: 25.w,
                                 decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(6)),
-                                child: Center(child: Text('+', style: AppTextStyle.clsWhite(fontSize: 20))))
+                                child: Center(child: Text(quantityText, style: AppTextStyle.clsWhite(fontSize: 20))))
                         ],
                       ),
                       SizedBox(height: 6)

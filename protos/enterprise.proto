@@ -11,6 +11,19 @@ service EnterpriseService {
   rpc GetDataEnterprise (EnterpriseRequest) returns (DataEnterpriseResponse);
 }
 
+message ValidityOffer {
+	int32 validityOfferId = 1;
+	string name = 2;
+	int32 duration = 3;
+}
+
+message PayCondition {
+	int32 payConditionId = 1;
+	string name = 2;
+	bool isSunat = 3;
+}
+
+
 message GlobalRequest {
 	bool isGlobal = 1;
 }
@@ -41,9 +54,19 @@ message ListSubCategoryResponse {
 	repeated category.SubCategory subCategories = 1;
 }
 
+message ListValidityOfferResponse {
+	repeated ValidityOffer validityOffers = 1;
+}
+
+message ListPayConditionResponse {
+	repeated PayCondition payConditions = 1;
+}
+
 message DataEnterpriseResponse {
   error.Error error = 1;
   ListStorageResponse listStorageResponse = 2;
   ListCategoryResponse listCategoryResponse = 3;
   ListSubCategoryResponse listSubCategoryResponse = 4;
+  ListValidityOfferResponse listValidityOfferResponse = 5;
+  ListPayConditionResponse listPayConditionResponse = 6;
 }

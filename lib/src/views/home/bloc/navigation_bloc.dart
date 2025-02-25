@@ -13,5 +13,9 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
         emit(NavigationHomeScreen());
       }
     });
+
+    on<CloseNavigation>((event, emit) {
+      emit(NavigationInitial());
+    });
   }
 }

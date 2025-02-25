@@ -4,4 +4,5 @@ import 'package:multifast/src/models/error_model.dart';
 
 abstract class AbsAuthService {
   Future<Either<ErrorModel, OneOfAuthResponse>> login(LoginRequest request);
+  Future<Either<ErrorModel, CloseResponse>> logout(CloseRequest request);
 }

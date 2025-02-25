@@ -15,6 +15,12 @@ abstract class AbsStreamProperties<T, E> {
   T clone(T item);
   String forSearch(T item);
 
+  void closeStream() {
+    _list = [];
+    _listTemp = [];
+    _controller.add([]);
+  }
+
   void initStream() {
     Future.delayed(Duration(milliseconds: 100), () {
       _controller.add(list);

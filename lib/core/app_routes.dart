@@ -1,10 +1,12 @@
 import 'package:go_router/go_router.dart';
 import 'package:multifast/src/models/qproduct_model.dart';
+import 'package:multifast/src/models/qproduct_quotation.dart';
 import 'package:multifast/src/views/auth/handle_login_screen.dart';
 import 'package:multifast/src/views/auth/trip/handle_trip_screen.dart';
 import 'package:multifast/src/views/auth/update_data/update_data_screen.dart';
 import 'package:multifast/src/views/home/handle_home_navigation.dart';
-import 'package:multifast/src/views/quotation/client_data/client_data_screean.dart';
+import 'package:multifast/src/views/quotation/client_data/client_data_screen.dart';
+import 'package:multifast/src/views/quotation/detail_qproduct_quotation.dart';
 import 'package:multifast/src/views/quotation/new_quotation_screen.dart';
 import 'package:multifast/src/views/quotation/quotation_screen.dart';
 import 'package:multifast/src/views/sales/qproduct_detail/qproduct_screen.dart';
@@ -55,7 +57,7 @@ class AppRoutes {
         },
       ),
       GoRoute(
-        path: '/sales/search/filter',
+        path: '/sales/filter',
         name: 'filter',
         builder: (context, state) => FilterScreen(),
       ),
@@ -75,7 +77,7 @@ class AppRoutes {
       GoRoute(
         path: '/client_data',
         name: 'client data',
-        builder: (context, state) => ClientDataScreean(),
+        builder: (context, state) => ClientDataScreen(),
       ),
       GoRoute(
         path: '/sales',
@@ -91,6 +93,15 @@ class AppRoutes {
         path: '/quotation/create',
         name: 'quotation create',
         builder: (context, state) => NewQuotationScreen(),
+      ),
+      GoRoute(
+        path: '/sales/quotation/qproduct/detail/:isEdit',
+        name: 'qproduct quotation detail',
+        builder: (context, state) {
+          final qproduct = state.extra as QProductQuotation;
+          final isEdit = state.pathParameters['isEdit'] == 'true';
+          return DetailQProductQuotation(qproduct: qproduct, isEdit: isEdit);
+        },
       ),
     ],
   );

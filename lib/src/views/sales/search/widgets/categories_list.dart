@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:multifast/core/setup_locator.dart';
 import 'package:multifast/src/models/qcategory_model.dart';
 import 'package:multifast/src/repositories/category_repository.dart';
@@ -105,6 +106,18 @@ class _CategoriesListState extends State<CategoriesList> {
                     context,
                     'Guardar',
                     action: () {
+                      if (repository.isSelectNone()) {
+                        Fluttertoast.showToast(
+                          msg: "Debe de mantener almenos una categoría",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 2,
+                          backgroundColor: Colors.black54,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                        return;
+                      }
                       repository.saveChanges();
                       Navigator.of(context).pop();
                     },

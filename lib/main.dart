@@ -19,6 +19,7 @@ import 'package:multifast/src/views/auth/bloc/auth_bloc.dart';
 import 'package:multifast/src/views/auth/trip/bloc/trip_bloc.dart';
 import 'package:multifast/src/views/auth/update_data/bloc/update_data_bloc.dart';
 import 'package:multifast/src/views/home/bloc/navigation_bloc.dart';
+import 'package:multifast/src/views/quotation/client_data/bloc/client_data_bloc.dart';
 import 'package:multifast/src/views/sales/qproduct_detail/bloc/qproduct_detail_bloc.dart';
 import 'package:multifast/src/views/sales/search/bloc/qproduct_bloc.dart';
 import 'package:multifast/src/views/sales/search/camera_controller.dart';
@@ -56,6 +57,7 @@ void main() async {
     BlocProvider(create: (context) => QProductDetailBloc(service: getIt<AbsQProductDetailService>())),
     BlocProvider(create: (context) => UpdateDataBloc(service: getIt<AbsUserService>())),
     BlocProvider(create: (context) => NavigationBloc()),
+    BlocProvider(create: (context) => ClientDataBloc()),
     ChangeNotifierProvider(create: (context) => CameraControllerProvider()),
     BlocProvider(
       create: (context) {

@@ -3,10 +3,10 @@ class DetailQuotationSql {
   final int? quotationId;
   final int? productId;
   final double? originalPrice;
-  final double? quantity;
+  final int? quantity;
   final int? taxTypeId;
   final String? observation;
-  final double? percentDiscount;
+  final double? newPrice;
 
   DetailQuotationSql({
     this.detailQuotationId,
@@ -16,10 +16,10 @@ class DetailQuotationSql {
     this.quantity,
     this.taxTypeId,
     this.observation,
-    this.percentDiscount,
+    this.newPrice,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'detailQuotationId': detailQuotationId,
       'quotationId': quotationId,
@@ -28,20 +28,20 @@ class DetailQuotationSql {
       'quantity': quantity,
       'taxTypeId': taxTypeId,
       'observation': observation,
-      'percentDiscount': percentDiscount,
+      'newPrice': newPrice, // Corrección aquí
     };
   }
 
-  factory DetailQuotationSql.fromMap(Map<String, dynamic> map) {
+  factory DetailQuotationSql.fromJson(Map<String, dynamic> json) {
     return DetailQuotationSql(
-      detailQuotationId: map['detailQuotationId'],
-      quotationId: map['quotationId'],
-      productId: map['productId'],
-      originalPrice: map['originalPrice'],
-      quantity: map['quantity'],
-      taxTypeId: map['taxTypeId'],
-      observation: map['observation'],
-      percentDiscount: map['percentDiscount'],
+      detailQuotationId: json['detailQuotationId'],
+      quotationId: json['quotationId'],
+      productId: json['productId'],
+      originalPrice: (json['originalPrice'] as num?)?.toDouble(),
+      quantity: json['quantity'],
+      taxTypeId: json['taxTypeId'],
+      observation: json['observation'],
+      newPrice: (json['newPrice'] as num?)?.toDouble(),
     );
   }
 }

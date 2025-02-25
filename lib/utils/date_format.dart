@@ -29,6 +29,11 @@ String dateWithZeros(DateTime value) {
   return '$date $time';
 }
 
+String onlyDate(DateTime value) {
+  String date = '${verifyDigits(value.day.toString())}/${verifyDigits(value.month.toString())}/${value.year}';
+  return date;
+}
+
 String verifyDigits(String value) {
   return value.length == 1 ? '0$value' : value;
 }

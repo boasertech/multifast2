@@ -53,6 +53,10 @@ class CategoryRepository extends AbsStreamProperties<QCategoryModel, String> {
     return categories;
   }
 
+  bool isSelectNone() {
+    return listTemp.isEmpty || listTemp.every((item) => !item.isSelected);
+  }
+
   void toggleSelectAllCategories() {
     selectAllCategories.isSelected = !selectAllCategories.isSelected;
     for (var category in super.listTemp) {

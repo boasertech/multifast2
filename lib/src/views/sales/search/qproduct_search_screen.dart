@@ -369,7 +369,7 @@ class QProductSearchScreen extends StatelessWidget {
         SizedBox(width: 10.w),
         GestureDetector(
           onTap: () {
-            context.push('/sales/search/filter');
+            context.push('/sales/filter');
           },
           child: SizedBox(
             width: 16.r,

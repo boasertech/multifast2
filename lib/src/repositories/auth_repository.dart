@@ -15,6 +15,11 @@ class AuthRepository {
   Stream<List<EnterpriseModel>> get enterprisesStream => _enterprisesController.stream;
   Stream<EnterpriseModel?> get enterpriseSelectedStream => _enterpriseSelectedController.stream;
 
+  void close() {
+    _enterprises = [];
+    _enterpriseSelected = null;
+  }
+
   void initStream() {
     Future.delayed(Duration(milliseconds: 100), () {
       _enterprisesController.add(enterprises);

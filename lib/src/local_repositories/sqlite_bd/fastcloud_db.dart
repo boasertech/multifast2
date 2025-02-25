@@ -27,7 +27,7 @@ class FastCloudDb {
             numberQuotation INTEGER not null,
             clientId INTEGER,
             dateRegister TEXT,
-            validatyId TEXT,
+            validatyId INTEGER,
             validatyDuration TEXT,
             documentTypeId INTEGER,
             coinId INTEGER,
@@ -48,7 +48,8 @@ class FastCloudDb {
             quantity REAL,
             taxTypeId INTEGER,
             observation TEXT,
-            percentDiscount REAL
+            percentDiscount REAL,
+            observation TEXT
           )
         ''');
       },

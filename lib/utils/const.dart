@@ -18,10 +18,21 @@ final List<ConstValue> constPositionsTypes = [
   ConstValue(6, 'Asistente'),
 ];
 
+final List<ConstValue> constAffectation = [
+  ConstValue(10, 'Gravado - Operación Onerosa', abbreviation: 'GRV-ONR'),
+  ConstValue(20, 'Exonerado - Operación Onerosa', abbreviation: 'EXN-ONR'),
+];
+
+final List<ConstValue> constCoins = [
+  ConstValue('PEN', 'Soles'),
+  ConstValue('USD', 'Dólares')
+];
+
 class ConstValue {
   final dynamic id;
   final String name;
   final int? length;
+  final String? abbreviation;
 
-  ConstValue(this.id, this.name, {this.length});
+  ConstValue(this.id, this.name, {this.length, this.abbreviation});
 }

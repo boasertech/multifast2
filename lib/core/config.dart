@@ -30,11 +30,11 @@ class Config {
 
   static ClientChannel getConnectionGrpc() {
     final channel = ClientChannel(
-      //'192.168.1.19',
-      'iginioggwp-001-site1.ltempurl.com',
+      '192.168.1.31',
+      //'iginioggwp-001-site1.ltempurl.com',
       port: 443,
       options: ChannelOptions(
-        credentials: ChannelCredentials.secure(),
+        credentials: ChannelCredentials.insecure(),
         codecRegistry: CodecRegistry(codecs: [GzipCodec()]),
       ),
     );

@@ -18,6 +18,162 @@ import 'category.pb.dart' as $2;
 import 'error.pb.dart' as $3;
 import 'storage.pb.dart' as $1;
 
+class ValidityOffer extends $pb.GeneratedMessage {
+  factory ValidityOffer({
+    $core.int? validityOfferId,
+    $core.String? name,
+    $core.int? duration,
+  }) {
+    final $result = create();
+    if (validityOfferId != null) {
+      $result.validityOfferId = validityOfferId;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    if (duration != null) {
+      $result.duration = duration;
+    }
+    return $result;
+  }
+  ValidityOffer._() : super();
+  factory ValidityOffer.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ValidityOffer.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ValidityOffer', package: const $pb.PackageName(_omitMessageNames ? '' : 'enterprise'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'validityOfferId', $pb.PbFieldType.O3, protoName: 'validityOfferId')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'duration', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ValidityOffer clone() => ValidityOffer()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ValidityOffer copyWith(void Function(ValidityOffer) updates) => super.copyWith((message) => updates(message as ValidityOffer)) as ValidityOffer;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ValidityOffer create() => ValidityOffer._();
+  ValidityOffer createEmptyInstance() => create();
+  static $pb.PbList<ValidityOffer> createRepeated() => $pb.PbList<ValidityOffer>();
+  @$core.pragma('dart2js:noInline')
+  static ValidityOffer getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ValidityOffer>(create);
+  static ValidityOffer? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get validityOfferId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set validityOfferId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValidityOfferId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValidityOfferId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get duration => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set duration($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDuration() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDuration() => clearField(3);
+}
+
+class PayCondition extends $pb.GeneratedMessage {
+  factory PayCondition({
+    $core.int? payConditionId,
+    $core.String? name,
+    $core.bool? isSunat,
+  }) {
+    final $result = create();
+    if (payConditionId != null) {
+      $result.payConditionId = payConditionId;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    if (isSunat != null) {
+      $result.isSunat = isSunat;
+    }
+    return $result;
+  }
+  PayCondition._() : super();
+  factory PayCondition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PayCondition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PayCondition', package: const $pb.PackageName(_omitMessageNames ? '' : 'enterprise'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'payConditionId', $pb.PbFieldType.O3, protoName: 'payConditionId')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..aOB(3, _omitFieldNames ? '' : 'isSunat', protoName: 'isSunat')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PayCondition clone() => PayCondition()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PayCondition copyWith(void Function(PayCondition) updates) => super.copyWith((message) => updates(message as PayCondition)) as PayCondition;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static PayCondition create() => PayCondition._();
+  PayCondition createEmptyInstance() => create();
+  static $pb.PbList<PayCondition> createRepeated() => $pb.PbList<PayCondition>();
+  @$core.pragma('dart2js:noInline')
+  static PayCondition getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PayCondition>(create);
+  static PayCondition? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get payConditionId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set payConditionId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPayConditionId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPayConditionId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get isSunat => $_getBF(2);
+  @$pb.TagNumber(3)
+  set isSunat($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasIsSunat() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearIsSunat() => clearField(3);
+}
+
 class GlobalRequest extends $pb.GeneratedMessage {
   factory GlobalRequest({
     $core.bool? isGlobal,
@@ -372,12 +528,102 @@ class ListSubCategoryResponse extends $pb.GeneratedMessage {
   $core.List<$2.SubCategory> get subCategories => $_getList(0);
 }
 
+class ListValidityOfferResponse extends $pb.GeneratedMessage {
+  factory ListValidityOfferResponse({
+    $core.Iterable<ValidityOffer>? validityOffers,
+  }) {
+    final $result = create();
+    if (validityOffers != null) {
+      $result.validityOffers.addAll(validityOffers);
+    }
+    return $result;
+  }
+  ListValidityOfferResponse._() : super();
+  factory ListValidityOfferResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListValidityOfferResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListValidityOfferResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'enterprise'), createEmptyInstance: create)
+    ..pc<ValidityOffer>(1, _omitFieldNames ? '' : 'validityOffers', $pb.PbFieldType.PM, protoName: 'validityOffers', subBuilder: ValidityOffer.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ListValidityOfferResponse clone() => ListValidityOfferResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ListValidityOfferResponse copyWith(void Function(ListValidityOfferResponse) updates) => super.copyWith((message) => updates(message as ListValidityOfferResponse)) as ListValidityOfferResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListValidityOfferResponse create() => ListValidityOfferResponse._();
+  ListValidityOfferResponse createEmptyInstance() => create();
+  static $pb.PbList<ListValidityOfferResponse> createRepeated() => $pb.PbList<ListValidityOfferResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ListValidityOfferResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListValidityOfferResponse>(create);
+  static ListValidityOfferResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<ValidityOffer> get validityOffers => $_getList(0);
+}
+
+class ListPayConditionResponse extends $pb.GeneratedMessage {
+  factory ListPayConditionResponse({
+    $core.Iterable<PayCondition>? payConditions,
+  }) {
+    final $result = create();
+    if (payConditions != null) {
+      $result.payConditions.addAll(payConditions);
+    }
+    return $result;
+  }
+  ListPayConditionResponse._() : super();
+  factory ListPayConditionResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListPayConditionResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListPayConditionResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'enterprise'), createEmptyInstance: create)
+    ..pc<PayCondition>(1, _omitFieldNames ? '' : 'payConditions', $pb.PbFieldType.PM, protoName: 'payConditions', subBuilder: PayCondition.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ListPayConditionResponse clone() => ListPayConditionResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ListPayConditionResponse copyWith(void Function(ListPayConditionResponse) updates) => super.copyWith((message) => updates(message as ListPayConditionResponse)) as ListPayConditionResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListPayConditionResponse create() => ListPayConditionResponse._();
+  ListPayConditionResponse createEmptyInstance() => create();
+  static $pb.PbList<ListPayConditionResponse> createRepeated() => $pb.PbList<ListPayConditionResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ListPayConditionResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListPayConditionResponse>(create);
+  static ListPayConditionResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<PayCondition> get payConditions => $_getList(0);
+}
+
 class DataEnterpriseResponse extends $pb.GeneratedMessage {
   factory DataEnterpriseResponse({
     $3.Error? error,
     ListStorageResponse? listStorageResponse,
     ListCategoryResponse? listCategoryResponse,
     ListSubCategoryResponse? listSubCategoryResponse,
+    ListValidityOfferResponse? listValidityOfferResponse,
+    ListPayConditionResponse? listPayConditionResponse,
   }) {
     final $result = create();
     if (error != null) {
@@ -392,6 +638,12 @@ class DataEnterpriseResponse extends $pb.GeneratedMessage {
     if (listSubCategoryResponse != null) {
       $result.listSubCategoryResponse = listSubCategoryResponse;
     }
+    if (listValidityOfferResponse != null) {
+      $result.listValidityOfferResponse = listValidityOfferResponse;
+    }
+    if (listPayConditionResponse != null) {
+      $result.listPayConditionResponse = listPayConditionResponse;
+    }
     return $result;
   }
   DataEnterpriseResponse._() : super();
@@ -403,6 +655,8 @@ class DataEnterpriseResponse extends $pb.GeneratedMessage {
     ..aOM<ListStorageResponse>(2, _omitFieldNames ? '' : 'listStorageResponse', protoName: 'listStorageResponse', subBuilder: ListStorageResponse.create)
     ..aOM<ListCategoryResponse>(3, _omitFieldNames ? '' : 'listCategoryResponse', protoName: 'listCategoryResponse', subBuilder: ListCategoryResponse.create)
     ..aOM<ListSubCategoryResponse>(4, _omitFieldNames ? '' : 'listSubCategoryResponse', protoName: 'listSubCategoryResponse', subBuilder: ListSubCategoryResponse.create)
+    ..aOM<ListValidityOfferResponse>(5, _omitFieldNames ? '' : 'listValidityOfferResponse', protoName: 'listValidityOfferResponse', subBuilder: ListValidityOfferResponse.create)
+    ..aOM<ListPayConditionResponse>(6, _omitFieldNames ? '' : 'listPayConditionResponse', protoName: 'listPayConditionResponse', subBuilder: ListPayConditionResponse.create)
     ..hasRequiredFields = false
   ;
 
@@ -470,6 +724,28 @@ class DataEnterpriseResponse extends $pb.GeneratedMessage {
   void clearListSubCategoryResponse() => clearField(4);
   @$pb.TagNumber(4)
   ListSubCategoryResponse ensureListSubCategoryResponse() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  ListValidityOfferResponse get listValidityOfferResponse => $_getN(4);
+  @$pb.TagNumber(5)
+  set listValidityOfferResponse(ListValidityOfferResponse v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasListValidityOfferResponse() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearListValidityOfferResponse() => clearField(5);
+  @$pb.TagNumber(5)
+  ListValidityOfferResponse ensureListValidityOfferResponse() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  ListPayConditionResponse get listPayConditionResponse => $_getN(5);
+  @$pb.TagNumber(6)
+  set listPayConditionResponse(ListPayConditionResponse v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasListPayConditionResponse() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearListPayConditionResponse() => clearField(6);
+  @$pb.TagNumber(6)
+  ListPayConditionResponse ensureListPayConditionResponse() => $_ensure(5);
 }
 
 

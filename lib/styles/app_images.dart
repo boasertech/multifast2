@@ -16,6 +16,8 @@ class AppIcons {
   static const String clock = 'assets/pngs/icons/clock_icon.png';
   static const String config = 'assets/pngs/icons/config_icon.png';
   static const String downArrow = 'assets/pngs/icons/down_arrow_icon.png';
+  static const String edit = 'assets/pngs/icons/edit_icon.png';
+  static const String editPen = 'assets/pngs/icons/edit_pen_icon.png';
   static const String eye = 'assets/pngs/icons/eye_icon.png';
   static const String filter = 'assets/pngs/icons/filter_icon.png';
   static const String go = 'assets/pngs/icons/go_icon.png';
@@ -35,6 +37,7 @@ class AppIcons {
   static const String storages = 'assets/pngs/icons/storages_icon.png';
   static const String store = 'assets/pngs/icons/store_icon.png';
   static const String subCategory = 'assets/pngs/icons/sub_category_icon.png';
+  static const String trash = 'assets/pngs/icons/trash_icon.png';
   static const String user = 'assets/pngs/icons/user_icon.png';
 }
 

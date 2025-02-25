@@ -22,3 +22,6 @@ final class FoundQProducts extends QProductsEvent {
 }
 
 final class ReturnQProducts extends QProductsEvent {}
+
+final class CloseQProducts extends QProductsEvent {}
+

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:multifast/core/config.dart';
 import 'package:multifast/core/setup_locator.dart';
+import 'package:multifast/src/const_repositories/enterprise_repository.dart';
 import 'package:multifast/src/generated/enterprise.pb.dart';
 import 'package:multifast/src/generated/qproduct_detail.pb.dart';
 import 'package:multifast/src/generated/qproducts.pb.dart';
@@ -10,14 +11,24 @@ import 'package:multifast/src/local_repositories/category_repository.dart';
 import 'package:multifast/src/local_repositories/storage_repository.dart';
 import 'package:multifast/src/local_repositories/sub_category_repository.dart';
 import 'package:multifast/src/models/qproduct_model.dart';
+import 'package:multifast/src/repositories/auth_repository.dart';
+import 'package:multifast/src/repositories/product_repository.dart';
 import 'package:multifast/src/repositories/user_repository.dart';
 import 'package:multifast/src/services/abs_enterprise_service.dart';
 import 'package:multifast/src/views/auth/bloc/auth_bloc.dart';
+import 'package:multifast/src/views/home/bloc/navigation_bloc.dart';
 import 'package:multifast/src/views/sales/qproduct_detail/bloc/qproduct_detail_bloc.dart';
 import 'package:multifast/src/views/sales/search/bloc/qproduct_bloc.dart';
 
 actionCloseSession(BuildContext context) {
   context.read<AuthBloc>().add(CloseSessionEvent());
+  context.read<QProductsBloc>().add(CloseQProducts());
+  context.read<NavigationBloc>().add(CloseNavigation());
+  getIt<AuthRepository>().close();
+  getIt<ProductRepository>().closeStream();
+  getIt<StorageRepository>().close();
+  getIt<SubCategoryRepository>().close();
+  getIt<CategoryRepository>().close();
   context.go('/auth');
 }
 
@@ -57,6 +68,12 @@ actionLoadDataEnterprise() async {
       }
       if (response.hasListSubCategoryResponse()) {
         getIt<SubCategoryRepository>().setAllData(response.listSubCategoryResponse);
+      }
+      if (response.hasListValidityOfferResponse()) {
+        getIt<EnterpriseRepository>().initValidityOffers(response.listValidityOfferResponse.validityOffers);
+      }
+      if (response.hasListPayConditionResponse()) {
+        getIt<EnterpriseRepository>().initPayConditions(response.listPayConditionResponse.payConditions);
       }
     },
   );
