@@ -27,8 +27,10 @@ actionCloseSession(BuildContext context) {
   getIt<AuthRepository>().close();
   getIt<ProductRepository>().closeStream();
   getIt<StorageRepository>().close();
+  getIt<StorageRepository>().closeMixin();
   getIt<SubCategoryRepository>().close();
   getIt<CategoryRepository>().close();
+  getIt<CategoryRepository>().closeMixin();
   context.go('/auth');
 }
 
@@ -74,6 +76,15 @@ actionLoadDataEnterprise() async {
       }
       if (response.hasListPayConditionResponse()) {
         getIt<EnterpriseRepository>().initPayConditions(response.listPayConditionResponse.payConditions);
+      }
+      if (response.hasListVoucherTypeResponse()) {
+        getIt<EnterpriseRepository>().initVoucherTypes(response.listVoucherTypeResponse.vouchersType);
+      }
+      if (response.hasDefaultClientResponse()) {
+        getIt<EnterpriseRepository>().initDefaultClient(response.defaultClientResponse);
+      }
+      if (response.hasListSellerResponse()) {
+        getIt<EnterpriseRepository>().initSellers(response.listSellerResponse.sellers);
       }
     },
   );

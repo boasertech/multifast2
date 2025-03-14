@@ -28,7 +28,7 @@ class DetailQuotationSql {
       'quantity': quantity,
       'taxTypeId': taxTypeId,
       'observation': observation,
-      'newPrice': newPrice, // Corrección aquí
+      'newPrice': newPrice,
     };
   }
 

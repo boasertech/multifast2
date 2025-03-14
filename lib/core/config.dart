@@ -4,7 +4,7 @@ import 'package:multifast/utils/talker_fast.dart';
 //import 'package:grpc/grpc_web.dart';
 
 class Config {
-  static const String version = '2.1.0';
+  static const String version = '0.1.0';
   static const String urlAPI = "http://localhost:7011";
   static final talker = TalkerFast.talker;
   static String token = '';
@@ -30,11 +30,14 @@ class Config {
 
   static ClientChannel getConnectionGrpc() {
     final channel = ClientChannel(
-      '192.168.1.31',
+      //'192.168.1.31',
+      //'204.188.228.43',
+      'dantejauregui-001-site1.mtempurl.com',
       //'iginioggwp-001-site1.ltempurl.com',
+      //'apicloud.sistemafast.pe',
       port: 443,
       options: ChannelOptions(
-        credentials: ChannelCredentials.insecure(),
+        credentials: ChannelCredentials.secure(),
         codecRegistry: CodecRegistry(codecs: [GzipCodec()]),
       ),
     );

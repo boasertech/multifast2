@@ -5,7 +5,6 @@ class AppImages {
   static const String mainMovil = 'assets/pngs/main_movil.png';
   static const String mainDesktop = 'assets/pngs/main_desktop.png';
   static const String updateData = 'assets/pngs/update_data.png';
-  
 }
 
 class AppIcons {
@@ -16,12 +15,15 @@ class AppIcons {
   static const String clock = 'assets/pngs/icons/clock_icon.png';
   static const String config = 'assets/pngs/icons/config_icon.png';
   static const String downArrow = 'assets/pngs/icons/down_arrow_icon.png';
+  static const String duplicate = 'assets/pngs/icons/duplicate_icon.png';
   static const String edit = 'assets/pngs/icons/edit_icon.png';
   static const String editPen = 'assets/pngs/icons/edit_pen_icon.png';
   static const String eye = 'assets/pngs/icons/eye_icon.png';
   static const String filter = 'assets/pngs/icons/filter_icon.png';
   static const String go = 'assets/pngs/icons/go_icon.png';
   static const String home = 'assets/pngs/icons/home_icon.png';
+  static const String infoCircle = 'assets/pngs/icons/info_circle_icon.png';
+  static const String list = 'assets/pngs/icons/list_icon.png';
   static const String location = 'assets/pngs/icons/location_icon.png';
   static const String lock = 'assets/pngs/icons/lock_icon.png';
   static const String more = 'assets/pngs/icons/more_icon.png';
@@ -33,6 +35,7 @@ class AppIcons {
   static const String sales = 'assets/pngs/icons/sales_icon.png';
   static const String scanner = 'assets/pngs/icons/scanner_icon.png';
   static const String search = 'assets/pngs/icons/search_icon.png';
+  static const String selectAll = 'assets/pngs/icons/select_all_icon.png';
   static const String storage = 'assets/pngs/icons/storage_icon.png';
   static const String storages = 'assets/pngs/icons/storages_icon.png';
   static const String store = 'assets/pngs/icons/store_icon.png';
@@ -53,6 +56,10 @@ class AppOptionsImages {
   static const String salesOrder = 'assets/pngs/options/sales_order.png';
   static const String salesSearch = 'assets/pngs/options/sales_search.png';
   static const String salesPrice = 'assets/pngs/options/sales_price.png';
+}
+
+class AppModalImages {
+  static const String trash = 'assets/pngs/modals/trash_modal.png';
 }
 
 class AppCoreImages {

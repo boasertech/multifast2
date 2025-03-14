@@ -28,7 +28,7 @@ class StoragesList extends StatelessWidget {
             children: [
               Center(child: SizedBox(width: 91.w, child: Divider(color: AppColors.border, thickness: 3))),
               SizedBox(height: 6),
-              Text('Todas los almacenes', style: AppTextStyle.cls2Style()),
+              Text('Todos los almacenes', style: AppTextStyle.cls2Style()),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: GestureDetector(

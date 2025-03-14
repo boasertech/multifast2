@@ -14,9 +14,10 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'category.pb.dart' as $2;
-import 'error.pb.dart' as $3;
-import 'storage.pb.dart' as $1;
+import 'category.pb.dart' as $3;
+import 'client.pb.dart' as $0;
+import 'error.pb.dart' as $4;
+import 'storage.pb.dart' as $2;
 
 class ValidityOffer extends $pb.GeneratedMessage {
   factory ValidityOffer({
@@ -172,6 +173,204 @@ class PayCondition extends $pb.GeneratedMessage {
   $core.bool hasIsSunat() => $_has(2);
   @$pb.TagNumber(3)
   void clearIsSunat() => clearField(3);
+}
+
+class VoucherType extends $pb.GeneratedMessage {
+  factory VoucherType({
+    $core.int? voucherTypeId,
+    $core.String? code,
+    $core.String? name,
+    $core.bool? isDefault,
+    $core.String? abbreviation,
+    $core.bool? isDni,
+  }) {
+    final $result = create();
+    if (voucherTypeId != null) {
+      $result.voucherTypeId = voucherTypeId;
+    }
+    if (code != null) {
+      $result.code = code;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    if (isDefault != null) {
+      $result.isDefault = isDefault;
+    }
+    if (abbreviation != null) {
+      $result.abbreviation = abbreviation;
+    }
+    if (isDni != null) {
+      $result.isDni = isDni;
+    }
+    return $result;
+  }
+  VoucherType._() : super();
+  factory VoucherType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory VoucherType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VoucherType', package: const $pb.PackageName(_omitMessageNames ? '' : 'enterprise'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'voucherTypeId', $pb.PbFieldType.O3, protoName: 'voucherTypeId')
+    ..aOS(2, _omitFieldNames ? '' : 'code')
+    ..aOS(3, _omitFieldNames ? '' : 'name')
+    ..aOB(4, _omitFieldNames ? '' : 'isDefault', protoName: 'isDefault')
+    ..aOS(5, _omitFieldNames ? '' : 'abbreviation')
+    ..aOB(6, _omitFieldNames ? '' : 'isDni', protoName: 'isDni')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  VoucherType clone() => VoucherType()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  VoucherType copyWith(void Function(VoucherType) updates) => super.copyWith((message) => updates(message as VoucherType)) as VoucherType;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static VoucherType create() => VoucherType._();
+  VoucherType createEmptyInstance() => create();
+  static $pb.PbList<VoucherType> createRepeated() => $pb.PbList<VoucherType>();
+  @$core.pragma('dart2js:noInline')
+  static VoucherType getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<VoucherType>(create);
+  static VoucherType? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get voucherTypeId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set voucherTypeId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasVoucherTypeId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearVoucherTypeId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get code => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set code($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCode() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get name => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set name($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasName() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearName() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.bool get isDefault => $_getBF(3);
+  @$pb.TagNumber(4)
+  set isDefault($core.bool v) { $_setBool(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasIsDefault() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearIsDefault() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get abbreviation => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set abbreviation($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasAbbreviation() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearAbbreviation() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.bool get isDni => $_getBF(5);
+  @$pb.TagNumber(6)
+  set isDni($core.bool v) { $_setBool(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasIsDni() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearIsDni() => clearField(6);
+}
+
+class Seller extends $pb.GeneratedMessage {
+  factory Seller({
+    $core.int? employeeId,
+    $core.String? name,
+    $core.double? saleCommissionPercentage,
+  }) {
+    final $result = create();
+    if (employeeId != null) {
+      $result.employeeId = employeeId;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    if (saleCommissionPercentage != null) {
+      $result.saleCommissionPercentage = saleCommissionPercentage;
+    }
+    return $result;
+  }
+  Seller._() : super();
+  factory Seller.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Seller.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Seller', package: const $pb.PackageName(_omitMessageNames ? '' : 'enterprise'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'employeeId', $pb.PbFieldType.O3, protoName: 'employeeId')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'saleCommissionPercentage', $pb.PbFieldType.OD, protoName: 'saleCommissionPercentage')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Seller clone() => Seller()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Seller copyWith(void Function(Seller) updates) => super.copyWith((message) => updates(message as Seller)) as Seller;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static Seller create() => Seller._();
+  Seller createEmptyInstance() => create();
+  static $pb.PbList<Seller> createRepeated() => $pb.PbList<Seller>();
+  @$core.pragma('dart2js:noInline')
+  static Seller getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Seller>(create);
+  static Seller? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get employeeId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set employeeId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEmployeeId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEmployeeId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get saleCommissionPercentage => $_getN(2);
+  @$pb.TagNumber(3)
+  set saleCommissionPercentage($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSaleCommissionPercentage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSaleCommissionPercentage() => clearField(3);
 }
 
 class GlobalRequest extends $pb.GeneratedMessage {
@@ -398,7 +597,7 @@ class ListDocumentTypeResponse extends $pb.GeneratedMessage {
 
 class ListStorageResponse extends $pb.GeneratedMessage {
   factory ListStorageResponse({
-    $core.Iterable<$1.Storage>? storages,
+    $core.Iterable<$2.Storage>? storages,
   }) {
     final $result = create();
     if (storages != null) {
@@ -411,7 +610,7 @@ class ListStorageResponse extends $pb.GeneratedMessage {
   factory ListStorageResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListStorageResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'enterprise'), createEmptyInstance: create)
-    ..pc<$1.Storage>(1, _omitFieldNames ? '' : 'storages', $pb.PbFieldType.PM, subBuilder: $1.Storage.create)
+    ..pc<$2.Storage>(1, _omitFieldNames ? '' : 'storages', $pb.PbFieldType.PM, subBuilder: $2.Storage.create)
     ..hasRequiredFields = false
   ;
 
@@ -437,12 +636,12 @@ class ListStorageResponse extends $pb.GeneratedMessage {
   static ListStorageResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$1.Storage> get storages => $_getList(0);
+  $core.List<$2.Storage> get storages => $_getList(0);
 }
 
 class ListCategoryResponse extends $pb.GeneratedMessage {
   factory ListCategoryResponse({
-    $core.Iterable<$2.Category>? categories,
+    $core.Iterable<$3.Category>? categories,
   }) {
     final $result = create();
     if (categories != null) {
@@ -455,7 +654,7 @@ class ListCategoryResponse extends $pb.GeneratedMessage {
   factory ListCategoryResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListCategoryResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'enterprise'), createEmptyInstance: create)
-    ..pc<$2.Category>(1, _omitFieldNames ? '' : 'categories', $pb.PbFieldType.PM, subBuilder: $2.Category.create)
+    ..pc<$3.Category>(1, _omitFieldNames ? '' : 'categories', $pb.PbFieldType.PM, subBuilder: $3.Category.create)
     ..hasRequiredFields = false
   ;
 
@@ -481,12 +680,12 @@ class ListCategoryResponse extends $pb.GeneratedMessage {
   static ListCategoryResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$2.Category> get categories => $_getList(0);
+  $core.List<$3.Category> get categories => $_getList(0);
 }
 
 class ListSubCategoryResponse extends $pb.GeneratedMessage {
   factory ListSubCategoryResponse({
-    $core.Iterable<$2.SubCategory>? subCategories,
+    $core.Iterable<$3.SubCategory>? subCategories,
   }) {
     final $result = create();
     if (subCategories != null) {
@@ -499,7 +698,7 @@ class ListSubCategoryResponse extends $pb.GeneratedMessage {
   factory ListSubCategoryResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListSubCategoryResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'enterprise'), createEmptyInstance: create)
-    ..pc<$2.SubCategory>(1, _omitFieldNames ? '' : 'subCategories', $pb.PbFieldType.PM, protoName: 'subCategories', subBuilder: $2.SubCategory.create)
+    ..pc<$3.SubCategory>(1, _omitFieldNames ? '' : 'subCategories', $pb.PbFieldType.PM, protoName: 'subCategories', subBuilder: $3.SubCategory.create)
     ..hasRequiredFields = false
   ;
 
@@ -525,7 +724,7 @@ class ListSubCategoryResponse extends $pb.GeneratedMessage {
   static ListSubCategoryResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$2.SubCategory> get subCategories => $_getList(0);
+  $core.List<$3.SubCategory> get subCategories => $_getList(0);
 }
 
 class ListValidityOfferResponse extends $pb.GeneratedMessage {
@@ -616,14 +815,105 @@ class ListPayConditionResponse extends $pb.GeneratedMessage {
   $core.List<PayCondition> get payConditions => $_getList(0);
 }
 
+class ListVoucherTypeResponse extends $pb.GeneratedMessage {
+  factory ListVoucherTypeResponse({
+    $core.Iterable<VoucherType>? vouchersType,
+  }) {
+    final $result = create();
+    if (vouchersType != null) {
+      $result.vouchersType.addAll(vouchersType);
+    }
+    return $result;
+  }
+  ListVoucherTypeResponse._() : super();
+  factory ListVoucherTypeResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListVoucherTypeResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListVoucherTypeResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'enterprise'), createEmptyInstance: create)
+    ..pc<VoucherType>(1, _omitFieldNames ? '' : 'vouchersType', $pb.PbFieldType.PM, protoName: 'vouchersType', subBuilder: VoucherType.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ListVoucherTypeResponse clone() => ListVoucherTypeResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ListVoucherTypeResponse copyWith(void Function(ListVoucherTypeResponse) updates) => super.copyWith((message) => updates(message as ListVoucherTypeResponse)) as ListVoucherTypeResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListVoucherTypeResponse create() => ListVoucherTypeResponse._();
+  ListVoucherTypeResponse createEmptyInstance() => create();
+  static $pb.PbList<ListVoucherTypeResponse> createRepeated() => $pb.PbList<ListVoucherTypeResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ListVoucherTypeResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListVoucherTypeResponse>(create);
+  static ListVoucherTypeResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<VoucherType> get vouchersType => $_getList(0);
+}
+
+class ListSellerResponse extends $pb.GeneratedMessage {
+  factory ListSellerResponse({
+    $core.Iterable<Seller>? sellers,
+  }) {
+    final $result = create();
+    if (sellers != null) {
+      $result.sellers.addAll(sellers);
+    }
+    return $result;
+  }
+  ListSellerResponse._() : super();
+  factory ListSellerResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListSellerResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListSellerResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'enterprise'), createEmptyInstance: create)
+    ..pc<Seller>(1, _omitFieldNames ? '' : 'sellers', $pb.PbFieldType.PM, subBuilder: Seller.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ListSellerResponse clone() => ListSellerResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ListSellerResponse copyWith(void Function(ListSellerResponse) updates) => super.copyWith((message) => updates(message as ListSellerResponse)) as ListSellerResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListSellerResponse create() => ListSellerResponse._();
+  ListSellerResponse createEmptyInstance() => create();
+  static $pb.PbList<ListSellerResponse> createRepeated() => $pb.PbList<ListSellerResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ListSellerResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListSellerResponse>(create);
+  static ListSellerResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<Seller> get sellers => $_getList(0);
+}
+
 class DataEnterpriseResponse extends $pb.GeneratedMessage {
   factory DataEnterpriseResponse({
-    $3.Error? error,
+    $4.Error? error,
     ListStorageResponse? listStorageResponse,
     ListCategoryResponse? listCategoryResponse,
     ListSubCategoryResponse? listSubCategoryResponse,
     ListValidityOfferResponse? listValidityOfferResponse,
     ListPayConditionResponse? listPayConditionResponse,
+    ListVoucherTypeResponse? listVoucherTypeResponse,
+    $0.DocumentResponse? defaultClientResponse,
+    ListSellerResponse? listSellerResponse,
   }) {
     final $result = create();
     if (error != null) {
@@ -644,6 +934,15 @@ class DataEnterpriseResponse extends $pb.GeneratedMessage {
     if (listPayConditionResponse != null) {
       $result.listPayConditionResponse = listPayConditionResponse;
     }
+    if (listVoucherTypeResponse != null) {
+      $result.listVoucherTypeResponse = listVoucherTypeResponse;
+    }
+    if (defaultClientResponse != null) {
+      $result.defaultClientResponse = defaultClientResponse;
+    }
+    if (listSellerResponse != null) {
+      $result.listSellerResponse = listSellerResponse;
+    }
     return $result;
   }
   DataEnterpriseResponse._() : super();
@@ -651,12 +950,15 @@ class DataEnterpriseResponse extends $pb.GeneratedMessage {
   factory DataEnterpriseResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DataEnterpriseResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'enterprise'), createEmptyInstance: create)
-    ..aOM<$3.Error>(1, _omitFieldNames ? '' : 'error', subBuilder: $3.Error.create)
+    ..aOM<$4.Error>(1, _omitFieldNames ? '' : 'error', subBuilder: $4.Error.create)
     ..aOM<ListStorageResponse>(2, _omitFieldNames ? '' : 'listStorageResponse', protoName: 'listStorageResponse', subBuilder: ListStorageResponse.create)
     ..aOM<ListCategoryResponse>(3, _omitFieldNames ? '' : 'listCategoryResponse', protoName: 'listCategoryResponse', subBuilder: ListCategoryResponse.create)
     ..aOM<ListSubCategoryResponse>(4, _omitFieldNames ? '' : 'listSubCategoryResponse', protoName: 'listSubCategoryResponse', subBuilder: ListSubCategoryResponse.create)
     ..aOM<ListValidityOfferResponse>(5, _omitFieldNames ? '' : 'listValidityOfferResponse', protoName: 'listValidityOfferResponse', subBuilder: ListValidityOfferResponse.create)
     ..aOM<ListPayConditionResponse>(6, _omitFieldNames ? '' : 'listPayConditionResponse', protoName: 'listPayConditionResponse', subBuilder: ListPayConditionResponse.create)
+    ..aOM<ListVoucherTypeResponse>(7, _omitFieldNames ? '' : 'listVoucherTypeResponse', protoName: 'listVoucherTypeResponse', subBuilder: ListVoucherTypeResponse.create)
+    ..aOM<$0.DocumentResponse>(8, _omitFieldNames ? '' : 'defaultClientResponse', protoName: 'defaultClientResponse', subBuilder: $0.DocumentResponse.create)
+    ..aOM<ListSellerResponse>(9, _omitFieldNames ? '' : 'listSellerResponse', protoName: 'listSellerResponse', subBuilder: ListSellerResponse.create)
     ..hasRequiredFields = false
   ;
 
@@ -682,15 +984,15 @@ class DataEnterpriseResponse extends $pb.GeneratedMessage {
   static DataEnterpriseResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $3.Error get error => $_getN(0);
+  $4.Error get error => $_getN(0);
   @$pb.TagNumber(1)
-  set error($3.Error v) { setField(1, v); }
+  set error($4.Error v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasError() => $_has(0);
   @$pb.TagNumber(1)
   void clearError() => clearField(1);
   @$pb.TagNumber(1)
-  $3.Error ensureError() => $_ensure(0);
+  $4.Error ensureError() => $_ensure(0);
 
   @$pb.TagNumber(2)
   ListStorageResponse get listStorageResponse => $_getN(1);
@@ -746,6 +1048,39 @@ class DataEnterpriseResponse extends $pb.GeneratedMessage {
   void clearListPayConditionResponse() => clearField(6);
   @$pb.TagNumber(6)
   ListPayConditionResponse ensureListPayConditionResponse() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  ListVoucherTypeResponse get listVoucherTypeResponse => $_getN(6);
+  @$pb.TagNumber(7)
+  set listVoucherTypeResponse(ListVoucherTypeResponse v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasListVoucherTypeResponse() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearListVoucherTypeResponse() => clearField(7);
+  @$pb.TagNumber(7)
+  ListVoucherTypeResponse ensureListVoucherTypeResponse() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  $0.DocumentResponse get defaultClientResponse => $_getN(7);
+  @$pb.TagNumber(8)
+  set defaultClientResponse($0.DocumentResponse v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasDefaultClientResponse() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearDefaultClientResponse() => clearField(8);
+  @$pb.TagNumber(8)
+  $0.DocumentResponse ensureDefaultClientResponse() => $_ensure(7);
+
+  @$pb.TagNumber(9)
+  ListSellerResponse get listSellerResponse => $_getN(8);
+  @$pb.TagNumber(9)
+  set listSellerResponse(ListSellerResponse v) { setField(9, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasListSellerResponse() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearListSellerResponse() => clearField(9);
+  @$pb.TagNumber(9)
+  ListSellerResponse ensureListSellerResponse() => $_ensure(8);
 }
 
 

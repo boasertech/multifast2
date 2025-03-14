@@ -28,12 +28,21 @@ abstract class AbsValueNotifier {
     notifierList.value = listTemp.where((item) => item.name.toUpperCase().contains(value.toUpperCase())).toList();
   }
 
+  void deleteItem(int id) {
+    int index = _list.indexWhere((element) => element.id == id);
+    _list.removeAt(index);
+  }
+
   bool hasData() {
     return list.isNotEmpty;
   }
 
   bool isSelectAll() {
     return listTemp.isNotEmpty && listTemp.every((item) => item.isSelected);
+  }
+
+  bool isSelectAllOriginal() {
+    return list.isNotEmpty && list.every((item) => item.isSelected);
   }
 
   bool isSelectNone() {

@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:multifast/core/setup_locator.dart';
+import 'package:multifast/src/controllers/new_quotation_controller.dart';
 import 'package:multifast/src/models/qproduct_quotation.dart';
 import 'package:multifast/styles/app_colors.dart';
 import 'package:multifast/styles/app_images.dart';
 import 'package:multifast/styles/app_text_style.dart';
+import 'package:multifast/utils/formats.dart';
 
 class QProductQuotationContainer extends StatefulWidget {
   final QProductQuotation qproduct;
   final Color color;
-  const QProductQuotationContainer({super.key, required this.qproduct, this.color = Colors.white});
+  final int index;
+  final bool onlySee;
+  const QProductQuotationContainer(
+      {super.key, required this.qproduct, this.color = Colors.white, required this.index, this.onlySee = false});
 
   @override
   State<QProductQuotationContainer> createState() => _QProductQuotationContainerState();
@@ -64,8 +70,8 @@ class _QProductQuotationContainerState extends State<QProductQuotationContainer>
   Widget build(BuildContext context) {
     final item = widget.qproduct;
     return GestureDetector(
-      onHorizontalDragUpdate: _onHorizontalDragUpdate,
-      onHorizontalDragEnd: _onHorizontalDragEnd,
+      onHorizontalDragUpdate: widget.color != Colors.white ? null : _onHorizontalDragUpdate,
+      onHorizontalDragEnd: widget.color != Colors.white ? null : _onHorizontalDragEnd,
       child: Transform.translate(
         offset: Offset(_dragDistance, 0),
         child: Container(
@@ -79,6 +85,17 @@ class _QProductQuotationContainerState extends State<QProductQuotationContainer>
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      if (widget.onlySee) ...[
+                        Center(
+                            child: Row(
+                          children: [
+                            Text(item.quantity.toString(), style: AppTextStyle.cls10Style()),
+                            SizedBox(width: 2),
+                            Icon(Icons.close, size: 10, color: AppColors.cls10),
+                            SizedBox(width: 2)
+                          ],
+                        ))
+                      ],
                       if (!viewOptions) ...[
                         Stack(
                           children: [
@@ -108,48 +125,57 @@ class _QProductQuotationContainerState extends State<QProductQuotationContainer>
                       ],
                       SizedBox(width: 10),
                       Expanded(
-                          child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(item.qproduct.entity.name, style: AppTextStyle.defaultStyle()),
+                                  Text('Cod: ${item.qproduct.entity.productId}',
+                                      style: AppTextStyle.lightStyle(color: AppColors.cls10, fontSize: 13)),
+                                  Spacer(),
+                                  Text(item.getAffectationType(),
+                                      style: AppTextStyle.lightStyle(color: AppColors.cls10, fontSize: 13)),
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text(item.qproduct.entity.name, style: AppTextStyle.defaultStyle()),
-                                Text('Cod: ${item.qproduct.entity.productId}',
-                                    style: AppTextStyle.lightStyle(color: AppColors.cls10, fontSize: 13)),
-                                Spacer(),
-                                Text(item.getAffectationType(),
-                                    style: AppTextStyle.lightStyle(color: AppColors.cls10, fontSize: 13)),
+                                if (widget.onlySee) Spacer(),
+                                Text('P.U. S/ ${formatAmount(item.getNewPrice())}',
+                                    style: AppTextStyle.lightStyle(color: AppColors.cls10, fontSize: 11)),
+                                Text(
+                                  'S/ ${formatAmount(item.getNewTotal())}',
+                                  style: AppTextStyle.defaultStyle(fontSize: 13, fontW: FontWeight.bold),
+                                ),
+                                if (!widget.onlySee) ...[
+                                  Spacer(),
+                                  Container(
+                                    width: 25.w,
+                                    height: 25.w,
+                                    decoration:
+                                        BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(6)),
+                                    child: Center(
+                                      child: Text(
+                                        item.quantity.toString(),
+                                        style: AppTextStyle.clsWhite(fontSize: 20),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ],
                             ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text('P.U. S/ ${item.getNewPrice().toStringAsFixed(2)}',
-                                  style: AppTextStyle.lightStyle(color: AppColors.cls10, fontSize: 11)),
-                              Text(
-                                'S/ ${item.getNewTotal().toStringAsFixed(2)}',
-                                style: AppTextStyle.defaultStyle(fontSize: 13, fontW: FontWeight.bold),
-                              ),
-                              Spacer(),
-                              Container(
-                                  width: 25.w,
-                                  height: 25.w,
-                                  decoration:
-                                      BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(6)),
-                                  child: Center(
-                                      child:
-                                          Text(item.quantity.toString(), style: AppTextStyle.clsWhite(fontSize: 20))))
-                            ],
-                          ),
-                        ],
-                      )),
+                          ],
+                        ),
+                      ),
                       if (viewOptions) ...[
                         SizedBox(width: 8),
                         GestureDetector(
                           onTap: () {
-                            context.push('/sales/quotation/qproduct/detail/true', extra: widget.qproduct);
+                            context.push('/sales/quotation/qproduct/detail/true/${widget.index}/${widget.onlySee}',
+                                extra: widget.qproduct);
                           },
                           child: Container(
                             width: 43.w,
@@ -158,12 +184,18 @@ class _QProductQuotationContainerState extends State<QProductQuotationContainer>
                             child: Image.asset(AppIcons.edit, scale: 2),
                           ),
                         ),
-                        Container(
-                          width: 43.w,
-                          height: double.infinity,
-                          color: AppColors.cls5,
-                          child: Image.asset(AppIcons.trash, scale: 2),
-                        )
+                        if (!widget.onlySee)
+                          GestureDetector(
+                            onTap: () {
+                              getIt<NewQuotationController>().deleteDetail(widget.index);
+                            },
+                            child: Container(
+                              width: 43.w,
+                              height: double.infinity,
+                              color: AppColors.cls5,
+                              child: Image.asset(AppIcons.trash, scale: 2),
+                            ),
+                          )
                       ]
                     ],
                   ),

@@ -12,7 +12,10 @@ import 'package:multifast/utils/const.dart';
 class DetailQProductQuotation extends StatefulWidget {
   final QProductQuotation qproduct;
   final bool isEdit;
-  const DetailQProductQuotation({super.key, required this.qproduct, required this.isEdit});
+  final int index;
+  final bool onlySee;
+  const DetailQProductQuotation(
+      {super.key, required this.qproduct, required this.isEdit, required this.index, this.onlySee = false});
 
   @override
   State<DetailQProductQuotation> createState() => _DetailQProductQuotationState();
@@ -58,7 +61,8 @@ class _DetailQProductQuotationState extends State<DetailQProductQuotation> {
               child: Icon(Icons.close),
             ),
             SizedBox(width: 5),
-            Text('Ajustar Detalles del Producto', style: AppTextStyle.cls3Style(fontSize: 15, fontW: FontWeight.w600))
+            Text(widget.onlySee ? 'Detalles del Producto' : 'Ajustar Detalles del Producto',
+                style: AppTextStyle.cls3Style(fontSize: 15, fontW: FontWeight.w600))
           ],
         ),
       ),
@@ -72,10 +76,23 @@ class _DetailQProductQuotationState extends State<DetailQProductQuotation> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    if (!widget.onlySee)
+                      Container(
                         padding: EdgeInsets.symmetric(horizontal: 10.w),
                         decoration: BoxDecoration(color: AppColors.cls4_2, borderRadius: BorderRadius.circular(8.r)),
-                        child: QProductQuotationContainer(qproduct: widget.qproduct, color: AppColors.cls4_2)),
+                        child: QProductQuotationContainer(
+                          qproduct: widget.qproduct,
+                          color: AppColors.cls4_2,
+                          index: widget.index,
+                        ),
+                      ),
+                    if (widget.onlySee)
+                      QProductQuotationContainer(
+                        qproduct: widget.qproduct,
+                        color: const Color.fromARGB(246, 255, 255, 255),
+                        index: widget.index,
+                        onlySee: widget.onlySee,
+                      ),
                     Padding(
                       padding: EdgeInsets.only(top: 5.h, bottom: 7.h),
                       child: Text('Precio Unitario',
@@ -98,6 +115,8 @@ class _DetailQProductQuotationState extends State<DetailQProductQuotation> {
                           'Precio nuevo',
                           137.w,
                           prefixText: 'S/ ',
+                          enabled: !widget.onlySee,
+                          inputType: TextInputType.numberWithOptions(decimal: true),
                           onChanged: (value) {
                             setState(() {
                               double newprice = double.tryParse(value) ?? 0;
@@ -127,6 +146,8 @@ class _DetailQProductQuotationState extends State<DetailQProductQuotation> {
                           _discountPercentController,
                           'Descuento (%)',
                           137.w,
+                          enabled: !widget.onlySee,
+                          inputType: TextInputType.numberWithOptions(decimal: true),
                           onChanged: (value) {
                             double discountAmount = double.tryParse(value) ?? 0;
                             double newUnitPrice = widget.qproduct.getNewPriceEdit(1, discountAmount);
@@ -145,6 +166,8 @@ class _DetailQProductQuotationState extends State<DetailQProductQuotation> {
                           'Descuento (monto)',
                           137.w,
                           prefixText: 'S/ ',
+                          enabled: !widget.onlySee,
+                          inputType: TextInputType.numberWithOptions(decimal: true),
                           onChanged: (value) {
                             double discountAmount = double.tryParse(value) ?? 0;
                             double newUnitPrice = widget.qproduct.getNewPriceEdit(2, discountAmount);
@@ -172,6 +195,8 @@ class _DetailQProductQuotationState extends State<DetailQProductQuotation> {
                           _discountGeneralPercentController,
                           'Descuento (%)',
                           137.w,
+                          enabled: !widget.onlySee,
+                          inputType: TextInputType.numberWithOptions(decimal: true),
                           onChanged: (value) {
                             double discountAmount = double.tryParse(value) ?? 0;
                             double newUnitPrice = widget.qproduct.getNewPriceEdit(3, discountAmount);
@@ -190,6 +215,8 @@ class _DetailQProductQuotationState extends State<DetailQProductQuotation> {
                           'Descuento (monto)',
                           137.w,
                           prefixText: 'S/ ',
+                          enabled: !widget.onlySee,
+                          inputType: TextInputType.numberWithOptions(decimal: true),
                           onChanged: (value) {
                             double discountAmount = double.tryParse(value) ?? 0;
                             double newUnitPrice = widget.qproduct.getNewPriceEdit(4, discountAmount);
@@ -213,20 +240,30 @@ class _DetailQProductQuotationState extends State<DetailQProductQuotation> {
                       hintText: 'Tipos de Operación',
                       list: constAffectation,
                       constSelected: widget.qproduct.getTypeTaxSelectd(),
-                      action: (value) {
-                        widget.qproduct.typeTaxId = value!.id ?? 10;
-                      },
+                      action: widget.onlySee
+                          ? null
+                          : (value) {
+                              widget.qproduct.typeTaxId = value!.id ?? 10;
+                            },
                     ),
                     SizedBox(height: 10.h),
-                    buildTextFormFieldCustom(context, _observationController, 'Observación', 290.w, height: 40),
+                    buildTextFormFieldCustom(
+                      context,
+                      _observationController,
+                      'Observación',
+                      290.w,
+                      height: 40,
+                      enabled: !widget.onlySee,
+                    ),
                   ],
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
+            if (!widget.onlySee)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
                     width: 140.w,
                     child: buildAppButtonWithOutExpanded(
                       context,
@@ -237,8 +274,9 @@ class _DetailQProductQuotationState extends State<DetailQProductQuotation> {
                         widget.qproduct.observation = _observationController.text;
                         context.pop();
                       },
-                    )),
-                SizedBox(
+                    ),
+                  ),
+                  SizedBox(
                     width: 140.w,
                     child: buildAppButtonWithOutExpanded(
                       context,
@@ -247,9 +285,10 @@ class _DetailQProductQuotationState extends State<DetailQProductQuotation> {
                       action: () {
                         context.pop();
                       },
-                    )),
-              ],
-            )
+                    ),
+                  ),
+                ],
+              )
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:multifast/core/setup_locator.dart';
+import 'package:multifast/src/controllers/new_quotation_controller.dart';
 import 'package:multifast/src/models/internal/recent_model.dart';
 import 'package:multifast/src/models/qproduct_model.dart';
 import 'package:multifast/src/repositories/internal/recent_repository.dart';
@@ -11,12 +12,12 @@ import 'package:multifast/src/views/sales/qproduct_detail/bloc/qproduct_detail_b
 import 'package:multifast/src/views/sales/search/bloc/qproduct_bloc.dart';
 import 'package:multifast/src/views/sales/search/widgets/qproduct_container.dart';
 import 'package:multifast/src/views/widgets/back_widget.dart';
-import 'package:multifast/src/views/widgets/buttons_controls.dart';
 import 'package:multifast/src/views/widgets/loading_widgets.dart';
 import 'package:multifast/styles/app_colors.dart';
 import 'package:multifast/styles/app_images.dart';
 import 'package:multifast/styles/app_text_style.dart';
 import 'package:multifast/utils/actions.dart';
+import 'package:multifast/utils/formats.dart';
 
 class QProductSearchScreen extends StatelessWidget {
   final bool isQuotation;
@@ -28,9 +29,11 @@ class QProductSearchScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is QProductDetailLoad) {
           if (state.isScan) {
-            context.push('/sales/qproduct/detail/${state.isScan.toString()}/${state.isQuotation.toString()}', extra: state.detail);
+            context.push('/sales/qproduct/detail/${state.isScan.toString()}/${state.isQuotation.toString()}',
+                extra: state.detail);
           } else {
-            context.push('/sales/qproduct/detail/${state.isScan.toString()}/${state.isQuotation.toString()}', extra: state.detail);
+            context.push('/sales/qproduct/detail/${state.isScan.toString()}/${state.isQuotation.toString()}',
+                extra: state.detail);
           }
         }
       },
@@ -220,13 +223,39 @@ class QProductSearchScreen extends StatelessWidget {
           if (isQuotation)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
-              child: buildAppButtonWithOutExpanded(context, 'ítems'),
+              child: GestureDetector(
+                onTap: () {
+                  context.read<QProductsBloc>().searchController.text = '';
+                  context.pop();
+                },
+                child: Container(
+                  height: 35.h,
+                  decoration: BoxDecoration(color: AppColors.cls5, borderRadius: BorderRadius.circular(8.r)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(AppIcons.list, scale: 1.8),
+                      SizedBox(width: 10),
+                      Text(
+                          '${formatItems(getIt<NewQuotationController>().list.length)} = S/. ${formatAmount(getIt<NewQuotationController>().getTotal())}',
+                          style: AppTextStyle.clsWhite()),
+                    ],
+                  ),
+                ),
+              ),
             ),
         ],
       );
     } else {
       return Text('Error');
     }
+  }
+
+  String formatItems(int count) {
+    if (count == 1) {
+      return '$count ítem';
+    }
+    return '$count ítems';
   }
 
   Widget _buildRecentSearch(BuildContext context, RecentModel recent, int index) {

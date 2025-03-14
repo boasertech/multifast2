@@ -8,6 +8,10 @@ mixin MixinToggleSelection {
   void selectItem(int itemId, List<AbsModel> newList);
   void selectAllItems({bool? isSelect});
 
+  void closeMixin(){
+    allSelect.value = 'Todos';
+  }
+
   void toggleItemSelected(AbsModel item) {
     item.isSelected = !item.isSelected;
   }

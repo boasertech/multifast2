@@ -7,8 +7,9 @@ class QProductQuotation {
   int quantity;
   int typeTaxId;
   String? observation;
+  int? quotationDetailId;
 
-  QProductQuotation(this.qproduct, {this.quantity = 0, this.typeTaxId = 10, this.newPrice, this.observation});
+  QProductQuotation(this.qproduct, {this.quantity = 0, this.typeTaxId = 10, this.newPrice, this.observation, this.quotationDetailId});
 
   String getAffectationType() {
     int index = constAffectation.indexWhere((item) => item.id.toString() == typeTaxId.toString());

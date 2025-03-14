@@ -43,11 +43,6 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = context.read<CameraControllerProvider>().controller;
-    /*final scanAreaSizeWidth = 230.w;
-    final scanAreaSizeHeight = 178.h;
-    final screenSize = MediaQuery.of(context).size;
-    final center = screenSize.center(Offset.zero);
-    final scanWindow = Rect.fromCenter(center: center, width: scanAreaSizeWidth, height: scanAreaSizeHeight);*/
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
@@ -86,7 +81,7 @@ class _ScanScreenState extends State<ScanScreen> {
                   Positioned.fill(
                     child: MobileScanner(
                       controller: controller,
-                      //scanWindow: scanWindow,
+                      //scanWindow: Rect.fromLTWH(25.w, 65.h, 270.w, 180.h),
                       onDetect: (barcodeCapture) async {
                         if (isProcessing) return;
                         if (barcodeCapture.barcodes.isEmpty) return;
@@ -247,6 +242,11 @@ class _ScanScreenState extends State<ScanScreen> {
 
   String _centerText(bool reload) {
     String line1 = reload ? 'No pudimos detectar el código.' : 'Posicione el código de barras frente a';
+    /*String line2 = reload
+        ? (barcode != null)
+            ? barcode!.rawValue.toString()
+            : ''
+        : '';*/
     String line2 = reload ? 'Intenta escanerlo nuevamente, por favor' : 'la cámara para escanear.';
     final difference = (line1.length - line2.length) / 1.4;
     String spaces = ' ' * difference.toInt();

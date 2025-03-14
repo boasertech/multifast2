@@ -26,15 +26,18 @@ class FastCloudDb {
             quotationId INTEGER PRIMARY KEY not null,
             numberQuotation INTEGER not null,
             clientId INTEGER,
+            clientName TEXT,
             dateRegister TEXT,
-            validatyId INTEGER,
-            validatyDuration TEXT,
+            dateQuotation TEXT,
+            validityId INTEGER,
+            validityDuration TEXT,
             documentTypeId INTEGER,
-            coinId INTEGER,
+            coinId TEXT,
             coinChange REAL,
-            userSaleId INTEGER,
+            sellerId INTEGER,
+            sellerName TEXT,
             payId INTEGER,
-            formatPrintId INTEGER,
+            voucherId INTEGER,
             observation TEXT
           )
         ''');
@@ -45,11 +48,10 @@ class FastCloudDb {
             quotationId INTEGER,
             productId INTEGER,
             originalPrice REAL,
-            quantity REAL,
+            quantity INTEGER,
             taxTypeId INTEGER,
             observation TEXT,
-            percentDiscount REAL,
-            observation TEXT
+            newPrice REAL
           )
         ''');
       },

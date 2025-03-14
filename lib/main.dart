@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,8 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:multifast/core/app_routes.dart';
 import 'package:multifast/core/config.dart';
 import 'package:multifast/core/setup_locator.dart';
-import 'package:multifast/data/services/firebase_service.dart';
-import 'package:multifast/firebase_options.dart';
+//import 'package:multifast/data/services/firebase_service.dart';
+//import 'package:multifast/firebase_options.dart';
 import 'package:multifast/src/local_repositories/sqlite_bd/fastcloud_db.dart';
 import 'package:multifast/src/services/abs_auth_service.dart';
 import 'package:multifast/src/services/abs_qproduct_detail_service.dart';
@@ -31,8 +31,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb && Platform.isAndroid) {
     try {
-      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-      await FirebaseService.instance.initializate();
+      //await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      //await FirebaseService.instance.initializate();
     } catch (e) {
       Config.talker.error(e);
     }

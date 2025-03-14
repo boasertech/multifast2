@@ -12,9 +12,28 @@ class QuotationDb {
     );
   }
 
+  Future<int> updateQuotation(QuotationSql quotation) async {
+    final db = await FastCloudDb.instance.database;
+    return await db.update(
+      'quotation',
+      quotation.toJson(),
+      where: 'quotationId = ?',
+      whereArgs: [quotation.quotationId],
+    );
+  }
+
+  Future<int> deleteQuotation(int id) async {
+    final db = await FastCloudDb.instance.database;
+    return await db.delete(
+      'quotation',
+      where: 'quotationId = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<List<QuotationSql>> getAllQuotations() async {
     final db = await FastCloudDb.instance.database;
-    final List<Map<String, dynamic>> maps = await db.query('quotation');
+    final List<Map<String, dynamic>> maps = await db.query('quotation', orderBy: 'numberQuotation DESC');
 
     return List.generate(maps.length, (i) {
       return QuotationSql.fromJson(maps[i]);
@@ -22,8 +41,8 @@ class QuotationDb {
   }
 
   Future<int> getQuotationCount() async {
-  final db = await FastCloudDb.instance.database;
-  final result = await db.rawQuery('SELECT COUNT(*) as count FROM quotation');
-  return Sqflite.firstIntValue(result) ?? 0;
-}
+    final db = await FastCloudDb.instance.database;
+    final result = await db.rawQuery('SELECT COUNT(*) as count FROM quotation');
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
 }

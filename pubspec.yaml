@@ -15,9 +15,8 @@ dependencies:
   fixnum: ^1.1.1
   flutter:
     sdk: flutter
-  flutter_bloc: ^9.0.0
+  flutter_bloc: ^9.1.0
   flutter_launcher_icons: ^0.14.3
-  flutter_local_notifications: ^18.0.1
   flutter_screenutil: ^5.9.3
   fluttertoast: ^8.2.12
   fpdart: ^1.1.0
@@ -54,6 +53,7 @@ flutter:
     - assets/pngs/icons/
     - assets/pngs/options/
     - assets/pngs/core/
+    - assets/pngs/modals/
   fonts:
     - family: KoHo
       fonts:

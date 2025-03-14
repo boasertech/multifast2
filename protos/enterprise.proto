@@ -5,6 +5,7 @@ package enterprise;
 import "error.proto";
 import "storage.proto";
 import "category.proto";
+import "client.proto";
 
 service EnterpriseService {
   rpc GetDocumentsType (GlobalRequest) returns (ListDocumentTypeResponse);
@@ -23,6 +24,20 @@ message PayCondition {
 	bool isSunat = 3;
 }
 
+message VoucherType {
+	int32 voucherTypeId = 1;
+	string code = 2;
+	string name = 3;
+	bool isDefault = 4;
+	string abbreviation = 5;
+	bool isDni = 6;
+}
+
+message Seller {
+	int32 employeeId = 1;
+	string name = 2;
+	double saleCommissionPercentage = 3;
+}
 
 message GlobalRequest {
 	bool isGlobal = 1;
@@ -62,6 +77,14 @@ message ListPayConditionResponse {
 	repeated PayCondition payConditions = 1;
 }
 
+message ListVoucherTypeResponse {
+	repeated VoucherType vouchersType = 1;
+}
+
+message ListSellerResponse {
+	repeated Seller sellers = 1;
+}
+
 message DataEnterpriseResponse {
   error.Error error = 1;
   ListStorageResponse listStorageResponse = 2;
@@ -69,4 +92,7 @@ message DataEnterpriseResponse {
   ListSubCategoryResponse listSubCategoryResponse = 4;
   ListValidityOfferResponse listValidityOfferResponse = 5;
   ListPayConditionResponse listPayConditionResponse = 6;
+  ListVoucherTypeResponse listVoucherTypeResponse = 7;
+  client.DocumentResponse defaultClientResponse = 8;
+  ListSellerResponse listSellerResponse = 9;
 }

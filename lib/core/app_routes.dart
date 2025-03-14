@@ -1,3 +1,4 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:multifast/src/models/qproduct_model.dart';
 import 'package:multifast/src/models/qproduct_quotation.dart';
@@ -5,6 +6,7 @@ import 'package:multifast/src/views/auth/handle_login_screen.dart';
 import 'package:multifast/src/views/auth/trip/handle_trip_screen.dart';
 import 'package:multifast/src/views/auth/update_data/update_data_screen.dart';
 import 'package:multifast/src/views/home/handle_home_navigation.dart';
+import 'package:multifast/src/views/quotation/client_data/bloc/client_data_bloc.dart';
 import 'package:multifast/src/views/quotation/client_data/client_data_screen.dart';
 import 'package:multifast/src/views/quotation/detail_qproduct_quotation.dart';
 import 'package:multifast/src/views/quotation/new_quotation_screen.dart';
@@ -18,7 +20,6 @@ import 'package:multifast/src/views/sales/search/scan_screen.dart';
 class AppRoutes {
   static final routes = GoRouter(
     initialLocation: '/trip',
-    //initialLocation: '/quotation/create',
     routes: [
       GoRoute(
         path: '/auth',
@@ -75,9 +76,12 @@ class AppRoutes {
         },
       ),
       GoRoute(
-        path: '/client_data',
+        path: '/client_data/:onlySee',
         name: 'client data',
-        builder: (context, state) => ClientDataScreen(),
+        builder: (context, state) {
+          final onlySee = state.pathParameters['onlySee'] == 'true';
+          return ClientDataScreen(onlySee: onlySee);
+        },
       ),
       GoRoute(
         path: '/sales',
@@ -87,20 +91,29 @@ class AppRoutes {
       GoRoute(
         path: '/quotation',
         name: 'quotation',
-        builder: (context, state) => QuotationScreen(),
+        builder: (context, state) {
+          context.read<ClientDataBloc>().add(LoadQuotationEvent());
+          return QuotationScreen();
+        },
       ),
       GoRoute(
-        path: '/quotation/create',
+        path: '/quotation/create/:isEdit/:onlySee',
         name: 'quotation create',
-        builder: (context, state) => NewQuotationScreen(),
+        builder: (context, state) {
+          final isEdit = state.pathParameters['isEdit'] == 'true';
+          final onlySee = state.pathParameters['onlySee'] == 'true';
+          return NewQuotationScreen(isEdit: isEdit, onlySee: onlySee);
+        },
       ),
       GoRoute(
-        path: '/sales/quotation/qproduct/detail/:isEdit',
+        path: '/sales/quotation/qproduct/detail/:isEdit/:index/:onlySee',
         name: 'qproduct quotation detail',
         builder: (context, state) {
           final qproduct = state.extra as QProductQuotation;
           final isEdit = state.pathParameters['isEdit'] == 'true';
-          return DetailQProductQuotation(qproduct: qproduct, isEdit: isEdit);
+          final index = int.parse(state.pathParameters['index'] ?? '0');
+          final onlySee = state.pathParameters['onlySee'] == 'true';
+          return DetailQProductQuotation(qproduct: qproduct, isEdit: isEdit, index: index, onlySee: onlySee);
         },
       ),
     ],

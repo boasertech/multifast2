@@ -7,7 +7,7 @@ class CameraControllerProvider extends ChangeNotifier {
   MobileScannerController get controller => _controller;
 
   final MobileScannerController _controller = MobileScannerController(
-    detectionSpeed: DetectionSpeed.noDuplicates,  
+    detectionSpeed: DetectionSpeed.noDuplicates,
   );
 
   void startCamera() {

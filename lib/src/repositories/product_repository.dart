@@ -37,20 +37,9 @@ class ProductRepository extends AbsStreamProperties<QProductModel, QProduct> {
     listTemp = super.list;
   }
 
-  /*void searchByAllFilters(String value) {
-    final listAux = super.listTemp.where((p) => forSearch(p).contains(value.toUpperCase())).toList();
-    updateStreamWithTemp(listAux);
-  }*/
-
-  /*void searchByAllFilters(String value) {
-    final searchTerms = value.trim().split(RegExp(r'\s+')).map((e) => e.toUpperCase()).toList();
-
-    final listAux = super.listTemp.where((p) {
-      return searchTerms.every((term) => forSearch(p).contains(term));
-    }).toList();
-
-    updateStreamWithTemp(listAux);
-  }*/
+  QProductModel getQProductById(int productId){
+    return list.where((item) => item.entity.productId == productId).first;
+  }
 
   void searchByAllFilters(String value) {
     final searchTerms = value.trim().split(RegExp(r'\s+')).map((e) => e.toUpperCase()).toList();
@@ -83,7 +72,8 @@ class ProductRepository extends AbsStreamProperties<QProductModel, QProduct> {
       bool matchesCategory = allCategoriesSelected || selectedCategories.contains(qproduct.entity.category);
       //bool matchesSubCategory = allSubCategoriesSelected || selectedSubCategories == qproduct.entity.sub;
       bool matchesStorage = allStoragesSelected ||
-          (qproduct.storages?.any((storage) => selectedStorages.contains(storage.storageId)) ?? false);
+          (qproduct.storages?.any((storage) => selectedStorages.contains(storage.storageId) && storage.quantity > 0) ??
+              false);
       return matchesCategory && matchesStorage;
     }).toList();
     super.updateTempStrem();

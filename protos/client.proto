@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package client;
+
+import "error.proto";
+
+service ClientService {
+  rpc ConsultDocument (DocumentRequest) returns (OneOfDocumentResponse);
+}
+
+message DocumentRequest {
+	string document = 1;
+	string companyRuc = 2;
+	string codeDocument = 3;
+	int64 clientId = 4;
+}
+
+message DocumentResponse {
+	string document = 1;
+	string name = 2;
+	string documentTypeCode = 3;
+	string principalPhone = 4;
+	string secondPhone = 5;
+	string gender = 6;
+	string birthDate = 7;
+	int64 clientId = 8;
+}
+
+message OneOfDocumentResponse {
+	oneof response {
+		error.Error error = 1;
+		DocumentResponse documentResponse = 2;
+	}
+}

@@ -12,6 +12,25 @@ class DetailQuotationDb {
     );
   }
 
+  Future<int> updateQuotation(DetailQuotationSql detailQuotation) async {
+    final db = await FastCloudDb.instance.database;
+    return await db.update(
+      'detail_quotation',
+      detailQuotation.toJson(),
+      where: 'detailQuotationId = ?',
+      whereArgs: [detailQuotation.detailQuotationId],
+    );
+  }
+
+  Future<int> deleteQuotation(int id) async {
+    final db = await FastCloudDb.instance.database;
+    return await db.delete(
+      'detail_quotation',
+      where: 'detailQuotationId = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<List<DetailQuotationSql>> getAllQuotations() async {
     final db = await FastCloudDb.instance.database;
     final List<Map<String, dynamic>> maps = await db.query('detail_quotation');

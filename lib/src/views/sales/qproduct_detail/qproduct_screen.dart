@@ -15,6 +15,7 @@ import 'package:multifast/src/views/widgets/back_widget.dart';
 import 'package:multifast/styles/app_colors.dart';
 import 'package:multifast/styles/app_images.dart';
 import 'package:multifast/styles/app_text_style.dart';
+import 'package:multifast/utils/formats.dart';
 
 class QProductScreen extends StatefulWidget {
   final QProductModel qproduct;
@@ -262,13 +263,46 @@ class _QProductScreenState extends State<QProductScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('$count $countPrefix:', style: AppTextStyle.cls3Style()),
-                            Text('S/ ${total.toStringAsFixed(2)}', style: AppTextStyle.cls5Style(fontSize: 14, fontW: FontWeight.bold))
+                            Text('S/ ${formatAmount(total)}',
+                                style: AppTextStyle.cls5Style(fontSize: 14, fontW: FontWeight.bold))
                           ],
                         );
                       },
                     ),
                     Stack(
-                      children: [Positioned(child: Icon(Icons.abc)), Positioned(child: Icon(Icons.remove))],
+                      children: [
+                        Positioned(
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 10, top: 10),
+                            child: Image.asset(
+                              AppIcons.list,
+                              color: AppColors.cls3,
+                              scale: 1,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          child: Container(
+                            width: 25,
+                            height: 25,
+                            decoration: BoxDecoration(
+                              color: AppColors.cls5,
+                              shape: BoxShape.circle,
+                            ),
+                            alignment: Alignment.center,
+                            child: ValueListenableBuilder(
+                              valueListenable: getIt<NewQuotationController>().notifierList,
+                              builder: (context, value, child) {
+                                return Text(
+                                  value.length.toString(),
+                                  style: AppTextStyle.clsWhite(fontSize: 11),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     Container(
                       width: 151.w,

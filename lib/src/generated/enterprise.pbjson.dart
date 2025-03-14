@@ -43,6 +43,42 @@ final $typed_data.Uint8List payConditionDescriptor = $convert.base64Decode(
     'CgxQYXlDb25kaXRpb24SJgoOcGF5Q29uZGl0aW9uSWQYASABKAVSDnBheUNvbmRpdGlvbklkEh'
     'IKBG5hbWUYAiABKAlSBG5hbWUSGAoHaXNTdW5hdBgDIAEoCFIHaXNTdW5hdA==');
 
+@$core.Deprecated('Use voucherTypeDescriptor instead')
+const VoucherType$json = {
+  '1': 'VoucherType',
+  '2': [
+    {'1': 'voucherTypeId', '3': 1, '4': 1, '5': 5, '10': 'voucherTypeId'},
+    {'1': 'code', '3': 2, '4': 1, '5': 9, '10': 'code'},
+    {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'isDefault', '3': 4, '4': 1, '5': 8, '10': 'isDefault'},
+    {'1': 'abbreviation', '3': 5, '4': 1, '5': 9, '10': 'abbreviation'},
+    {'1': 'isDni', '3': 6, '4': 1, '5': 8, '10': 'isDni'},
+  ],
+};
+
+/// Descriptor for `VoucherType`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List voucherTypeDescriptor = $convert.base64Decode(
+    'CgtWb3VjaGVyVHlwZRIkCg12b3VjaGVyVHlwZUlkGAEgASgFUg12b3VjaGVyVHlwZUlkEhIKBG'
+    'NvZGUYAiABKAlSBGNvZGUSEgoEbmFtZRgDIAEoCVIEbmFtZRIcCglpc0RlZmF1bHQYBCABKAhS'
+    'CWlzRGVmYXVsdBIiCgxhYmJyZXZpYXRpb24YBSABKAlSDGFiYnJldmlhdGlvbhIUCgVpc0RuaR'
+    'gGIAEoCFIFaXNEbmk=');
+
+@$core.Deprecated('Use sellerDescriptor instead')
+const Seller$json = {
+  '1': 'Seller',
+  '2': [
+    {'1': 'employeeId', '3': 1, '4': 1, '5': 5, '10': 'employeeId'},
+    {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'saleCommissionPercentage', '3': 3, '4': 1, '5': 1, '10': 'saleCommissionPercentage'},
+  ],
+};
+
+/// Descriptor for `Seller`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sellerDescriptor = $convert.base64Decode(
+    'CgZTZWxsZXISHgoKZW1wbG95ZWVJZBgBIAEoBVIKZW1wbG95ZWVJZBISCgRuYW1lGAIgASgJUg'
+    'RuYW1lEjoKGHNhbGVDb21taXNzaW9uUGVyY2VudGFnZRgDIAEoAVIYc2FsZUNvbW1pc3Npb25Q'
+    'ZXJjZW50YWdl');
+
 @$core.Deprecated('Use globalRequestDescriptor instead')
 const GlobalRequest$json = {
   '1': 'GlobalRequest',
@@ -161,6 +197,32 @@ final $typed_data.Uint8List listPayConditionResponseDescriptor = $convert.base64
     'ChhMaXN0UGF5Q29uZGl0aW9uUmVzcG9uc2USPgoNcGF5Q29uZGl0aW9ucxgBIAMoCzIYLmVudG'
     'VycHJpc2UuUGF5Q29uZGl0aW9uUg1wYXlDb25kaXRpb25z');
 
+@$core.Deprecated('Use listVoucherTypeResponseDescriptor instead')
+const ListVoucherTypeResponse$json = {
+  '1': 'ListVoucherTypeResponse',
+  '2': [
+    {'1': 'vouchersType', '3': 1, '4': 3, '5': 11, '6': '.enterprise.VoucherType', '10': 'vouchersType'},
+  ],
+};
+
+/// Descriptor for `ListVoucherTypeResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listVoucherTypeResponseDescriptor = $convert.base64Decode(
+    'ChdMaXN0Vm91Y2hlclR5cGVSZXNwb25zZRI7Cgx2b3VjaGVyc1R5cGUYASADKAsyFy5lbnRlcn'
+    'ByaXNlLlZvdWNoZXJUeXBlUgx2b3VjaGVyc1R5cGU=');
+
+@$core.Deprecated('Use listSellerResponseDescriptor instead')
+const ListSellerResponse$json = {
+  '1': 'ListSellerResponse',
+  '2': [
+    {'1': 'sellers', '3': 1, '4': 3, '5': 11, '6': '.enterprise.Seller', '10': 'sellers'},
+  ],
+};
+
+/// Descriptor for `ListSellerResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listSellerResponseDescriptor = $convert.base64Decode(
+    'ChJMaXN0U2VsbGVyUmVzcG9uc2USLAoHc2VsbGVycxgBIAMoCzISLmVudGVycHJpc2UuU2VsbG'
+    'VyUgdzZWxsZXJz');
+
 @$core.Deprecated('Use dataEnterpriseResponseDescriptor instead')
 const DataEnterpriseResponse$json = {
   '1': 'DataEnterpriseResponse',
@@ -171,6 +233,9 @@ const DataEnterpriseResponse$json = {
     {'1': 'listSubCategoryResponse', '3': 4, '4': 1, '5': 11, '6': '.enterprise.ListSubCategoryResponse', '10': 'listSubCategoryResponse'},
     {'1': 'listValidityOfferResponse', '3': 5, '4': 1, '5': 11, '6': '.enterprise.ListValidityOfferResponse', '10': 'listValidityOfferResponse'},
     {'1': 'listPayConditionResponse', '3': 6, '4': 1, '5': 11, '6': '.enterprise.ListPayConditionResponse', '10': 'listPayConditionResponse'},
+    {'1': 'listVoucherTypeResponse', '3': 7, '4': 1, '5': 11, '6': '.enterprise.ListVoucherTypeResponse', '10': 'listVoucherTypeResponse'},
+    {'1': 'defaultClientResponse', '3': 8, '4': 1, '5': 11, '6': '.client.DocumentResponse', '10': 'defaultClientResponse'},
+    {'1': 'listSellerResponse', '3': 9, '4': 1, '5': 11, '6': '.enterprise.ListSellerResponse', '10': 'listSellerResponse'},
   ],
 };
 
@@ -185,5 +250,10 @@ final $typed_data.Uint8List dataEnterpriseResponseDescriptor = $convert.base64De
     'YWxpZGl0eU9mZmVyUmVzcG9uc2UYBSABKAsyJS5lbnRlcnByaXNlLkxpc3RWYWxpZGl0eU9mZm'
     'VyUmVzcG9uc2VSGWxpc3RWYWxpZGl0eU9mZmVyUmVzcG9uc2USYAoYbGlzdFBheUNvbmRpdGlv'
     'blJlc3BvbnNlGAYgASgLMiQuZW50ZXJwcmlzZS5MaXN0UGF5Q29uZGl0aW9uUmVzcG9uc2VSGG'
-    'xpc3RQYXlDb25kaXRpb25SZXNwb25zZQ==');
+    'xpc3RQYXlDb25kaXRpb25SZXNwb25zZRJdChdsaXN0Vm91Y2hlclR5cGVSZXNwb25zZRgHIAEo'
+    'CzIjLmVudGVycHJpc2UuTGlzdFZvdWNoZXJUeXBlUmVzcG9uc2VSF2xpc3RWb3VjaGVyVHlwZV'
+    'Jlc3BvbnNlEk4KFWRlZmF1bHRDbGllbnRSZXNwb25zZRgIIAEoCzIYLmNsaWVudC5Eb2N1bWVu'
+    'dFJlc3BvbnNlUhVkZWZhdWx0Q2xpZW50UmVzcG9uc2USTgoSbGlzdFNlbGxlclJlc3BvbnNlGA'
+    'kgASgLMh4uZW50ZXJwcmlzZS5MaXN0U2VsbGVyUmVzcG9uc2VSEmxpc3RTZWxsZXJSZXNwb25z'
+    'ZQ==');
 

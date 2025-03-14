@@ -1,9 +1,14 @@
 final List<ConstValue> constDocumentsTypes = [
   ConstValue(1, 'DNI', length: 8),
+  ConstValue(6, 'RUC', length: 11),
   ConstValue(7, 'Pasaporte', length: 12),
   ConstValue(4, 'Carnet de Extranjería', length: 12),
-  ConstValue(0, 'Licencia de Conducir', length: 8)
+  ConstValue(0, 'Otros', length: 20),
 ];
+ConstValue getDocumentType(int id){
+  return constDocumentsTypes.where((item) => int.parse(item.id.toString()) == id).first;
+}
+
 final List<ConstValue> constGendersTypes = [
   ConstValue('F', 'Femenino'),
   ConstValue('M', 'Masculino'),
@@ -27,6 +32,9 @@ final List<ConstValue> constCoins = [
   ConstValue('PEN', 'Soles'),
   ConstValue('USD', 'Dólares')
 ];
+ConstValue getCoin(String code){
+  return constCoins.where((item) => item.id.toString() == code).first;
+}
 
 class ConstValue {
   final dynamic id;
